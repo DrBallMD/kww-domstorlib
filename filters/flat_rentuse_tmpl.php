@@ -1,0 +1,50 @@
+<div class="domstor_filter">
+	<?php $this->displayOpenTag()?>
+	<?php $this->displayHidden()?>
+	<div class="domstor_filter_layout">
+	<div class="domstor_filter_fields">
+	<table>
+				<tr>
+					<td class="nasn"><strong><?php $this->displayLabel('room_count')?></strong></td>
+					<td>
+					  <?php $this->displayField('room_count')?><br />
+					  <?php $this->displayFieldLabel('in_communal')?>
+					</td>
+				</tr>
+				<tr>
+					<td class="nasn"><strong>ֱ‏הזוע:</strong></td>
+					<td>
+						<?php $this->getField('rent')->displayLabelField('min')?>
+						<?php $this->getField('rent')->displayLabelField('max')?> נ. 
+						<?php $this->getField('rent')->displayLabelField('period')?>
+					</td>
+				</tr>
+				<tr>
+					<td class="nasn"><strong><?php $this->displayLabel('code')?>:</strong></td>
+					<td>
+						<?php $this->displayField('code')?>
+					</td>
+				</tr>
+			</table>
+	</div>
+		<div class="domstor_filter_list">
+			<table>
+				<tr>
+					<td class="type">
+						<strong><?php $this->displayLabel('type')?>:</strong>
+						<?php $this->displayField('type')?>
+					</td>
+					<td class="district">
+						<strong><?php $this->displayLabel('district')?>:</strong>
+						<?php $this->displayField('district')?>
+					</td>
+				</tr>
+			</table>		
+		</div>
+	</div>
+	<noscript>
+		<div class="center"><?php $this->displayField('submit')?></div>
+	</noscript>
+	<?php $this->displayCloseTag()?>
+	<div class="center"><?php $this->displayField('submit_link')?></div>
+</div>
