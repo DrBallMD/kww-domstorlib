@@ -1,0 +1,7 @@
+{% if form.hasForm('exch_dist') %}
+    {{ form.getForm('exch_dist').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('exch_dist').render() }}
+{% endif %}
+
+{% if form.hasForm('exch_city') %}
+    {{ form.getForm('exch_city').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('exch_city').render() }}
+{% endif %}

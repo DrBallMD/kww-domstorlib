@@ -1,0 +1,17 @@
+{% extends '@list/table/table_row.html.twig' %}
+{% import '@list/macro/exchange_demand_flat.html.twig' as exchange %}
+{% block after_row %}
+<tr>
+    <td></td>
+    <td colspan="{{ list.count - 1 }}">
+        {% for flat in flats %}
+            {{ exchange.demand_flat(flat) }}{% if not loop.last %}<br />{% endif %}
+        {% endfor %}
+
+        {% for house in houses %}
+            {{ exchange.demand_house(house) }}{% if not loop.last %}<br />{% endif %}
+        {% endfor %}
+    </td>
+</tr>
+
+{% endblock %}

@@ -1,0 +1,3 @@
+{% extends 'fields/slider.html.twig' %}
+{% block label %}{{ label|default('Арендная ставка:') }}{% endblock %}
+{% block after_fields %}р. {{ form.getForm('period').render() }}{% endblock %}

@@ -1,0 +1,16 @@
+{% extends '@spv/select.html.twig' %}
+
+{% block form %}
+<form method="get" id="onpage_select_form">
+{{ parent() }}
+{% if hidden_fields is defined %}
+    {{ hidden_fields }}
+{% endif %}
+</form>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    
+</script>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% macro row(title, content, level = 0) %}
+{% if content %}
+<tr>
+    <th>{{ '&nbsp;'|repeat(4*level) }}{{ title }}</th>
+    <td>{{ content }}</td>
+</tr>
+{% endif %}
+{% endmacro %}
+
+{% macro emptyRow(title, level = 0) %}
+<tr>
+    <th>{{ '&nbsp;'|repeat(4*level) }}{{ title }}</th>
+    <td></td>
+</tr>
+{% endmacro %}
+
+{% macro conditionRow(title, content, condition, level = 0) %}
+{% if condition %}
+<tr>
+    <th>{{ '&nbsp;'|repeat(4*level) }}{{ title }}</th>
+    <td></td>
+</tr>
+{% endif %}
+{% endmacro %}

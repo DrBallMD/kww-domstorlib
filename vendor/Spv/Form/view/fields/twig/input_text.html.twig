@@ -1,0 +1,4 @@
+{% extends '@spv/base.html.twig' %}
+{% block form %}
+<input type="text" name="{{ form.getAttrName() }}" id="{{ form.getAttrId() }}" value="{{ form.getValue() }}" {{ form.renderAttrs() }} />
+{% endblock %}

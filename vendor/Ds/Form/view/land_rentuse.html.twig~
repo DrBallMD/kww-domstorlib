@@ -1,0 +1,11 @@
+{% extends 'base_form.html.twig' %}
+
+{% block regular_fields %}
+    {% include 'blocks/district_city.html.twig' %}
+    {{ form.getForm('rent').render() }}
+    {{ form.getForm('type').renderLabel('Тип участка:') }} {{ form.getForm('type').render() }}
+    {{ form.getForm('squareg').render({unit: 'сот.'}) }}
+{% endblock %}
+
+{% block optional %}{% endblock %}
+{% block optional_trigger %}{% endblock %}

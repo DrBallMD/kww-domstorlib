@@ -1,0 +1,3 @@
+{% extends 'fields/slider.html.twig' %}
+{% block label %}{{ label|default('÷ена:') }}{% endblock %}
+{% block after_fields %}р.{% endblock %}

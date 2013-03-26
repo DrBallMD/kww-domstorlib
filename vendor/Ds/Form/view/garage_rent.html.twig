@@ -1,0 +1,11 @@
+{% extends '@form/base_form.html.twig' %}
+
+{% block regular_fields %}
+    {{ form.getForm('car_count').renderLabel() }} {{ form.getForm('car_count').render() }}
+    {% include '@form/blocks/district_city.html.twig' %}
+    {{ form.getForm('rent').render() }}
+    {{ form.getForm('type').renderLabel('Тип:') }} {{ form.getForm('type').render() }}
+{% endblock %}
+
+{% block optional %}{% endblock %}
+{% block optional_trigger %}{% endblock %}

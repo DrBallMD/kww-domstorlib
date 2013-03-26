@@ -1,0 +1,5 @@
+<label class="label-checkbox">
+<input type="checkbox"
+       name="{{ form.getAttrName() }}"
+       id="{{ form.getAttrId() }}"
+       value="{{ form.getValueKey() }}" {{ form.checked() }} {{ form.renderAttrs() }} /><span>{{ form.getLabel() }}</span></label>

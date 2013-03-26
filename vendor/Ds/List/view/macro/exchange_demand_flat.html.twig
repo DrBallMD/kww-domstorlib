@@ -1,0 +1,16 @@
+{% macro demand_flat(flat) %}
+Заявка <a href="{{ flat.url }}">{{ flat.code }}</a> квартира{% if flat.rooms %},
+{{ flat.rooms|join(', ') }} комн.{% endif %}
+{% if flat.districts %}, {{ flat.districts|join(', ') }}{% endif %}
+{% if flat.cities %}, {{ flat.cities|join(', ') }}{% endif %}
+{% if flat.price %},
+    {{ flat.price|number_format(0, '.', ' ')|replace({' ': '&nbsp;'}) }}&nbsp;{{ flat.currency }}
+{% else %}{% if flat.price_min or flat.price_max %},{% endif %}
+    {% if flat.price_min %} от&nbsp;{{ flat.price_min|number_format(0, '.', ' ')|replace({' ': '&nbsp;'}) }}{% if not flat.price_max %}&nbsp;{{ flat.currency }}{% endif %}{% endif %}
+    {% if flat.price_max %} до&nbsp;{{ flat.price_max|number_format(0, '.', ' ')|replace({' ': '&nbsp;'}) }}&nbsp;{{ flat.currency }}{% endif %}
+{% endif %}
+{% endmacro %}
+
+{% macro demand_house(house) %}
+Заявка {{ house.code }} дом
+{% endmacro %}

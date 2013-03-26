@@ -1,0 +1,10 @@
+{% extends '@spv/input_text.html.twig' %}
+{% block script %}
+<script>
+    jQuery(document).ready(function(){
+		jQuery("#{{ form.getAttrId() }}").spinner({
+            min: 0
+        });
+    });
+</script>
+{% endblock %}

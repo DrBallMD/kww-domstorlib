@@ -1,0 +1,13 @@
+{% extends '@spv/base.html.twig' %}
+{% block form %}
+<select name="{{ form.getAttrName() }}" id="{{ form.getAttrId() }}" {{ form.renderAttrs() }} {{ form.multiple() }} >
+    {% if not (form.isRequired() or form.isMultiple()) %}
+    <option value=""></option>
+    {% endif %}
+{% block options %}
+    {% for key, value in form.getOptions() %}
+    <option value="{{ key }}" {{ form.selected(key) }}>{{ value }}</option>
+    {% endfor %}
+{% endblock %}
+</select>
+{% endblock %}

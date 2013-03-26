@@ -1,0 +1,501 @@
+<?php
+namespace Estate\Search\Form\Builder;
+
+use Estate\Search\Form\Field;
+
+/**
+ * Description of FlatFormBuilder
+ *
+ * @author pahhan
+ */
+class FlatFormBuilder extends BaseFormBuilder
+{
+    public function build($ref_city_id, $action, $in_region)
+    {
+        /* Create form for given action */
+        $form = $this->createForm($action);
+
+        /* Add district/city field */
+        $form->addForm($this->createLocationField($ref_city_id, $in_region));
+
+        /* Add exposition and code field */
+        $this->addCodeExpositionFields($form, $action);
+
+        $form->getForm('expo')->setValue(
+            \CommonSettings::getInstance()->get('flat', 'exposition')
+        );
+
+        /* Add options to type field */
+        $form->getForm('type')->setOptions(\ReferenceTable::getInstance()->getFlatTypes($ref_city_id));
+
+        /* Add options to state field if form has it */
+        if( $form->hasForm('state') )
+            $form->getForm('state')->setOptions(\ReferenceTable::getInstance()->getStates($ref_city_id));
+
+        /* Add location field for exchange if action is exchage */
+        if( $action == 'exchange' )
+            $form->addForm($this->createExchangeLocationField($ref_city_id, $in_region));
+
+        return $form;
+    }
+
+    /**
+     * Creates field for exchange location
+     * @param integer $ref_city_id
+     * @param boolean $in_region
+     * @return \Spv_Form_Form
+     */
+    private function createExchangeLocationField($ref_city_id, $in_region)
+    {
+        if( $in_region )
+        {
+            $field = new \Estate\Search\Form\Field\CityField('exch_city');
+            $field->setOptions(\Address1Table::getInstance()->getForSearch($ref_city_id));
+        }
+        else
+        {
+            $field = new \Estate\Search\Form\Field\DistrictField('exch_dist');
+            $field->setOptions(\Address2Table::getInstance()->getDistricts($ref_city_id));
+        }
+        return $field;
+    }
+
+    /**
+     *
+     * @param string $action
+     * @return \Estate\Search\Form\BaseForm
+     * @throws \Exception If action is undefined
+     */
+    protected function createForm($action)
+    {
+        if( $action === 'sale' )
+            $form = $this->buildSale();
+        elseif( $action === 'new' )
+            $form = $this->buildNew();
+        elseif( $action === 'rent' )
+            $form = $this->buildRent();
+        elseif( $action === 'purchase' )
+            $form = $this->buildPurchase();
+        elseif( $action === 'rentuse' )
+            $form = $this->buildRentuse();
+        elseif( $action === 'exchange' )
+            $form = $this->buildExchange();
+        else
+            throw new \Exception(sprintf('Unknown action "%s"', $action));
+
+        return $form;
+    }
+
+    protected function buildSale()
+    {
+        $form = new \Estate\Search\Form\BaseForm('f', array(
+            'templating_key' => 'twig_form',
+            'template' => 'flat_sale.html.twig',
+            'source_transformer' => new \Estate\Search\Form\Transformer\FlatTransformer(),
+        ));
+
+        $form->addForm(new Field\RoomsField());
+
+        $form->addForm(new Field\PriceField());
+
+        $form->addForm(new \Spv_Form_Field_Select('floor_type', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/select.html.twig',
+            'required' => FALSE,
+            'label' => 'Этаж:',
+            'options' => array(
+                'first' => 'только первый',
+                'last' => 'только последний',
+                'not_first' => 'кроме первого',
+                'not_last' => 'кроме последнего',
+                'not_first_last' => 'кроме первого и последнего',
+            ),
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Select('max_floor', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/select.html.twig',
+            'required' => FALSE,
+            'label' => 'не выше',
+            'options' => array_combine(range(1, 20), range(1, 20)),
+        )));
+
+        $form->addForm(new Field\IsNewField());
+
+        $form->addForm(new Field\SliderField('square', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Общая:',
+        )));
+
+        $form->addForm(new Field\SliderField('squarel', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Жилая:',
+        )));
+
+        $form->addForm(new Field\SliderField('squarek', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 5,
+            'slider_max' => 20,
+            'slider_step' => 1,
+            'label' => 'Кухня:',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Checkbox('together', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Совместная продажа соседних квартир',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Checkbox('for_com', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Квартиры под нежилое',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Checkbox('in_communal', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Комнаты в коммуналке',
+        )));
+
+        $form->addForm(new Field\TypeField());
+
+        $form->addForm(new Field\StateField());
+
+        return $form;
+    }
+
+
+    protected function buildRent()
+    {
+        $form = new \Estate\Search\Form\BaseForm('f', array(
+            'templating_key' => 'twig_form',
+            'template' => 'flat_rent.html.twig',
+            'source_transformer' => new \Estate\Search\Form\Transformer\FlatTransformer(),
+        ));
+
+        $form->addForm(new Field\RoomsField());
+
+        $form->addForm(new Field\RentField());
+
+        $form->addForm(new \Spv_Form_Field_Select('floor_type', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/select.html.twig',
+            'required' => FALSE,
+            'label' => 'Этаж:',
+            'options' => array(
+                'first' => 'только первый',
+                'last' => 'только последний',
+                'not_first' => 'кроме первого',
+                'not_last' => 'кроме последнего',
+                'not_first_last' => 'кроме первого и последнего',
+            ),
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Select('max_floor', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/select.html.twig',
+            'required' => FALSE,
+            'label' => 'не выше',
+            'options' => array_combine(range(1, 20), range(1, 20)),
+        )));
+
+        $form->addForm(new Field\SliderField('square', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Общая:',
+        )));
+
+        $form->addForm(new Field\SliderField('squarel', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Жилая:',
+        )));
+
+        $form->addForm(new Field\SliderField('squarek', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 5,
+            'slider_max' => 20,
+            'slider_step' => 1,
+            'label' => 'Кухня:',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Checkbox('furniture', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'С мебелью',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Checkbox('in_communal', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Комнаты в коммуналке',
+        )));
+
+        $form->addForm(new Field\TypeField());
+
+        $form->addForm(new Field\StateField());
+
+        return $form;
+    }
+
+    protected function buildPurchase()
+    {
+        $form = new \Estate\Search\Form\BaseForm('f', array(
+            'templating_key' => 'twig_form',
+            'template' => 'flat_purchase.html.twig',
+            'source_transformer' => new \Estate\Search\Form\Transformer\FlatTransformer(),
+        ));
+
+        $form->addForm(new Field\RoomsField());
+
+        $form->addForm(new Field\PriceField());
+
+        $form->addForm(new Field\IsNewField());
+
+        $form->addForm(new Field\SliderField('square', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Общая:',
+        )));
+
+        $form->addForm(new Field\SliderField('squarel', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Жилая:',
+        )));
+
+        $form->addForm(new Field\SliderField('squarek', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 5,
+            'slider_max' => 20,
+            'slider_step' => 1,
+            'label' => 'Кухня:',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Checkbox('together', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Совместная продажа соседних квартир',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Checkbox('for_com', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Квартиры под нежилое',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Checkbox('in_communal', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Комнаты в коммуналке',
+        )));
+
+        $form->addForm(new Field\TypeField());
+
+        $form->addForm(new Field\StateField());
+
+        return $form;
+    }
+
+    protected function buildRentuse()
+    {
+        $form = new \Estate\Search\Form\BaseForm('f', array(
+            'templating_key' => 'twig_form',
+            'template' => 'flat_rentuse.html.twig',
+            'source_transformer' => new \Estate\Search\Form\Transformer\FlatTransformer(),
+        ));
+
+        $form->addForm(new Field\RoomsField());
+
+        $form->addForm(new Field\RentField());
+
+        $form->addForm(new Field\SliderField('square', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Общая:',
+        )));
+
+        $form->addForm(new Field\SliderField('squarel', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Жилая:',
+        )));
+
+        $form->addForm(new Field\SliderField('squarek', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 5,
+            'slider_max' => 20,
+            'slider_step' => 1,
+            'label' => 'Кухня:',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Checkbox('furniture', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'С мебелью',
+        )));
+
+        $form->addForm(new Field\TypeField());
+
+        $form->addForm(new Field\StateField());
+
+        return $form;
+    }
+
+    protected function buildNew()
+    {
+        $form = new \Estate\Search\Form\BaseForm('f', array(
+            'templating_key' => 'twig_form',
+            'template' => 'flat_new.html.twig',
+            'source_transformer' => new \Estate\Search\Form\Transformer\FlatTransformer(),
+        ));
+
+        $form->addForm(new Field\RoomsField());
+
+        $form->addForm(new Field\PriceField());
+
+        $form->addForm(new \Spv_Form_Field_Select('floor_type', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/select.html.twig',
+            'required' => FALSE,
+            'label' => 'Этаж:',
+            'options' => array(
+                'first' => 'только первый',
+                'last' => 'только последний',
+                'not_first' => 'кроме первого',
+                'not_last' => 'кроме последнего',
+                'not_first_last' => 'кроме первого и последнего',
+            ),
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Select('max_floor', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/select.html.twig',
+            'required' => FALSE,
+            'label' => 'не выше',
+            'options' => array_combine(range(1, 20), range(1, 20)),
+        )));
+
+        $form->addForm(new Field\SliderField('square', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Общая:',
+        )));
+
+        $form->addForm(new Field\SliderField('squarel', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Жилая:',
+        )));
+
+        $form->addForm(new Field\SliderField('squarek', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/square.html.twig',
+            'slider_min' => 5,
+            'slider_max' => 20,
+            'slider_step' => 1,
+            'label' => 'Кухня:',
+        )));
+
+        $form->addForm(new Field\TypeField());
+
+        $form->addForm(new Field\StateField());
+
+        return $form;
+    }
+
+    protected function buildExchange()
+    {
+        $form = new \Estate\Search\Form\BaseForm('f', array(
+            'templating_key' => 'twig_form',
+            'template' => 'flat_exchange.html.twig',
+            'source_transformer' => new \Estate\Search\Form\Transformer\FlatTransformer(),
+        ));
+
+        $form->addForm(new Field\RoomsField());
+
+        $form->addForm(new Field\PriceField());
+
+        $form->addForm(new \Spv_Form_Field_Select('floor_type', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/select.html.twig',
+            'required' => FALSE,
+            'label' => 'Этаж:',
+            'options' => array(
+                'first' => 'только первый',
+                'last' => 'только последний',
+                'not_first' => 'кроме первого',
+                'not_last' => 'кроме последнего',
+                'not_first_last' => 'кроме первого и последнего',
+            ),
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Select('max_floor', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/select.html.twig',
+            'required' => FALSE,
+            'label' => 'не выше',
+            'options' => array_combine(range(1, 20), range(1, 20)),
+        )));
+
+        $form->addForm(new Field\IsNewField());
+
+        $form->addForm(new Field\TypeField());
+
+        $form->addForm(new Field\OneOfTwoField('exch_flat', array(
+            'options' => array(1 => 'Квартира', 0 => 'Дом')
+        )));
+
+        $form->addForm(new \Spv_Form_Field_InputText('exch_rooms', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/input_text.html.twig',
+            'label' => 'Число комнат:',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_InputText('exch_price', array(
+            'templating_key' => 'twig_form',
+            'template' => '@spv/input_text.html.twig',
+            'label' => 'Цена:',
+        )));
+
+        return $form;
+    }
+
+}

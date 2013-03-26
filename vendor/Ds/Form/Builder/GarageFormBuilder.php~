@@ -1,0 +1,181 @@
+<?php
+namespace Estate\Search\Form\Builder;
+
+use Estate\Search\Form\Field;
+
+/**
+ * Description of GarageFormBuilder
+ *
+ * @author pahhan
+ */
+class GarageFormBuilder extends BaseFormBuilder
+{
+    public function build($ref_city_id, $action, $in_region)
+    {
+        /* Create form for given action */
+        $form = $this->createForm($action);
+
+        /* Add district/city field */
+        $form->addForm($this->createLocationField($ref_city_id, $in_region));
+
+        /* Add exposition and code fields */
+        $this->addCodeExpositionFields($form, $action);
+
+        $form->getForm('expo')->setValue(
+            \CommonSettings::getInstance()->get('garage', 'exposition')
+        );
+
+        /* Add options to type field */
+        $form->getForm('type')->setOptions(\ReferenceTable::getInstance()->getGarageTypes($ref_city_id));
+
+        /* Add options to material wall field */
+        $form->getForm('mat_wall')->setOptions(\ReferenceTable::getInstance()->getMaterialWall($ref_city_id));
+
+        return $form;
+    }
+
+    protected function buildSale()
+    {
+        $form = new \Estate\Search\Form\BaseForm('f', array(
+            'templating_key' => 'twig_form',
+            'template' => 'garage_sale.html.twig',
+            'source_transformer' => new \Estate\Search\Form\Transformer\FlatTransformer(),
+        ));
+
+        $form->addForm(new Field\PriceField());
+
+        $form->addForm(new \Spv_Form_Field_Select('car_count', array(
+            'options' => array(1 => '1', 2 => '2', 3 => '3', 4 => '4'),
+            'required' => false,
+            'label' => 'Машиномест:',
+        )));
+
+        $form->addForm(new Field\SliderField('long', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/slider.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Длина:',
+        )));
+
+        $form->addForm(new Field\SliderField('width', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/slider.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Ширина:',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Select('mat_wall', array(
+            'required' => false,
+            'multiple' => true,
+            'label' => 'Материал стен:',
+        )));
+
+        $form->addForm(new Field\TypeField());
+
+        return $form;
+    }
+
+    protected function buildRent()
+    {
+        $form = new \Estate\Search\Form\BaseForm('f', array(
+            'templating_key' => 'twig_form',
+            'template' => 'garage_rent.html.twig',
+            'source_transformer' => new \Estate\Search\Form\Transformer\FlatTransformer(),
+        ));
+
+        $form->addForm(new Field\RentField());
+
+        $form->addForm(new \Spv_Form_Field_Select('car_count', array(
+            'options' => array(1 => '1', 2 => '2', 3 => '3', 4 => '4'),
+            'required' => false,
+            'label' => 'Паркомест:',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Select('mat_wall', array(
+            'required' => false,
+            'multiple' => true,
+            'label' => 'Материал стен:',
+        )));
+
+        $form->addForm(new Field\TypeField());
+
+        return $form;
+    }
+
+    protected function buildPurchase()
+    {
+        $form = new \Estate\Search\Form\BaseForm('f', array(
+            'templating_key' => 'twig_form',
+            'template' => 'garage_purchase.html.twig',
+            'source_transformer' => new \Estate\Search\Form\Transformer\FlatTransformer(),
+        ));
+
+        $form->addForm(new Field\PriceField());
+
+        $form->addForm(new \Spv_Form_Field_Select('car_count', array(
+            'options' => array(1 => '1', 2 => '2', 3 => '3', 4 => '4'),
+            'required' => false,
+            'label' => 'Машиномест:',
+        )));
+
+        $form->addForm(new Field\SliderField('long', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/slider.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Длина:',
+        )));
+
+        $form->addForm(new Field\SliderField('width', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/slider.html.twig',
+            'slider_min' => 20,
+            'slider_max' => 200,
+            'slider_step' => 5,
+            'label' => 'Ширина:',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Select('mat_wall', array(
+            'required' => false,
+            'multiple' => true,
+            'label' => 'Материал стен:',
+        )));
+
+        $form->addForm(new Field\TypeField());
+
+        return $form;
+    }
+
+    protected function buildRentuse()
+    {
+        $form = new \Estate\Search\Form\BaseForm('f', array(
+            'templating_key' => 'twig_form',
+            'template' => 'garage_rentuse.html.twig',
+            'source_transformer' => new \Estate\Search\Form\Transformer\FlatTransformer(),
+        ));
+
+        $form->addForm(new Field\RentField());
+
+        $form->addForm(new \Spv_Form_Field_Select('car_count', array(
+            'options' => array(1 => '1', 2 => '2', 3 => '3', 4 => '4'),
+            'required' => false,
+            'label' => 'Паркомест:',
+        )));
+
+        $form->addForm(new \Spv_Form_Field_Select('mat_wall', array(
+            'required' => false,
+            'multiple' => true,
+            'label' => 'Материал стен:',
+        )));
+
+        $form->addForm(new Field\TypeField());
+
+        return $form;
+    }
+
+}

@@ -1,0 +1,3 @@
+{% if row_data.object_floor %}
+{{ row_data.object_floor }}/{{ row_data.building_floor|default('-') }}
+{% endif %}

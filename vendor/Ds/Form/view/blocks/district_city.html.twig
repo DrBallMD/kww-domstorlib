@@ -1,0 +1,7 @@
+{% if form.hasForm('district') %}
+    {{ form.getForm('district').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('district').render() }}
+{% endif %}
+
+{% if form.hasForm('city') %}
+    {{ form.getForm('city').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('city').render() }}
+{% endif %}

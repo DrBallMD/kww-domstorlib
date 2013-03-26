@@ -1,0 +1,5 @@
+{% if url %}
+<a href="{{ url|replace({':id':row_data['id']}) }}">{{ row_data.code|default }}</a>
+{% else %}
+{{ row_data.code|default }}
+{% endif %}

@@ -1,0 +1,7 @@
+{% if row_data.thumb is defined %}
+{% if url %}
+<a href="{{ url|replace({':id':row_data['id']}) }}"><img src="http://domstor.ru/{{ row_data.thumb }}" alt="thumb" /></a>
+{% else %}
+<img src="http://domstor.ru/{{ row_data.thumb }}" alt="thumb" />
+{% endif %}
+{% endif %}

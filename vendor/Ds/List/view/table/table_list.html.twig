@@ -1,0 +1,22 @@
+{% block list %}
+<table {{ list.renderAttrs() }}>
+    <thead>
+        <tr>
+        {% for column in list.columns %}
+            <th {{ column.renderAttrs() }}>
+            {% if column.sortUrl %}<a href="{{ column.sortUrl }}">{% endif %}
+            {{ column.title }}
+            {% if column.sortUrl %}</a>{% endif %}
+            </th>
+        {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% block rows %}
+        {% for row in list.data %}
+        {{ list.renderRow(row) }}
+        {% endfor %}
+    {% endblock %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends '@spv/select.html.twig' %}
+{% block script %}
+<script>
+    jQuery(document).ready(function(){
+		jQuery("#{{ form.getAttrId() }}").multiselect({
+            noneSelectedText: 'выбрать',
+            header: false,
+            selectedList: 1,
+            selectedText: 'выбрано #'
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,3 @@
+{% if row_data.price_full|default %}
+{{ row_data.price_full|number_format(0, '.', ' ')|replace({' ': '&nbsp;'}) }}&nbsp;{{ row_data.price_currency|default }}
+{% endif %}

@@ -1,0 +1,9 @@
+{% block list %}
+<div {{ list.renderAttrs() }}>
+    {% block rows %}
+        {% for row in list.getData() %}
+        {{ list.renderRow(row) }}
+        {% endfor %}
+    {% endblock %}
+</div>
+{% endblock %}

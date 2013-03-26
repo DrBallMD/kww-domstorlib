@@ -1,0 +1,7 @@
+{% block row %}
+<div>
+    {% block row_content %}
+        {% for column in list.getColumns() %}<p {{ column.renderAttrs() }}>{{ column.render() }}</p>{% endfor %}
+    {% endblock %}
+</div>
+{% endblock %}

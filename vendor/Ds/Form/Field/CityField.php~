@@ -1,0 +1,21 @@
+<?php
+namespace Estate\Search\Form\Field;
+
+/**
+ * Description of CityField
+ *
+ * @author pahhan
+ */
+class CityField extends \Spv_Form_Field_Select
+{
+    public function __construct($name = 'city')
+    {
+        parent::__construct($name, array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/city.html.twig',
+            'multiple' => TRUE,
+            'required' => FALSE,
+            'label' => 'Район:',
+        ));
+    }
+}

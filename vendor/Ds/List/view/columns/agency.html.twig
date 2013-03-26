@@ -1,0 +1,5 @@
+{% if row_data.Agency.www %}
+<a href="{{ row_data.Agency.www }}">{{ row_data.Agency.short_name }}</a>
+{% else %}
+{{ row_data.Agency.short_name }}
+{% endif %}

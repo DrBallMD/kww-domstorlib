@@ -1,0 +1,21 @@
+<?php
+namespace Estate\Search\Form\Field;
+
+/**
+ * Description of Type
+ *
+ * @author pahhan
+ */
+class TypeField extends \Spv_Form_Field_Select
+{
+    public function __construct()
+    {
+        parent::__construct('type', array(
+            'templating_key' => 'twig_form',
+            'template' => 'fields/type.html.twig',
+            'multiple' => TRUE,
+            'required' => FALSE,
+        ));
+    }
+}
+

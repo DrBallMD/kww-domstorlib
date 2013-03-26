@@ -1,0 +1,18 @@
+<?php
+namespace Estate\Search\Form\Field;
+
+/**
+ * Description of IsNewField
+ *
+ * @author pahhan
+ */
+class IsNewField extends \Spv_Form_Field_RadioSet
+{
+    public function __construct()
+    {
+        parent::__construct('new');
+        $this->setTemplatingKey('twig_form')
+                ->setTemplate('fields/is_new.html.twig')
+                ->setOptions(array('Вторичный рынок', 'Новостройки'));
+    }
+}

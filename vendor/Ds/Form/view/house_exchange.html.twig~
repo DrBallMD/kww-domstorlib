@@ -1,0 +1,35 @@
+{% extends 'base_form.html.twig' %}
+
+{% block regular_fields %}
+<div class="row-fluid form-row">
+    <div class="span5 rooms">{{ form.getForm('rooms').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('rooms').render() }}</div>
+    <div class="span4 district">
+      {% include 'blocks/district_city.html.twig' %}
+      <div class="span3 region">{{ form.getRegionLinks() }}</div>
+    </div>   
+</div>
+<div class="row-fluid form-row">
+    <div class="span5 price">{{ form.getForm('price').render() }}</div>
+    <div class="span5 type_house">{{ form.getForm('type').renderLabel('Тип дома:', {class: 'label-heads'}) }} {{ form.getForm('type').render() }}</div>
+</div>
+
+<div><span class="sq">Площадь</span></div>
+<div class="row-fluid form-row">
+    <div class="span5 square_house">{{ form.getForm('square').render() }}</div>
+    <div class="span5 square_land">{{ form.getForm('squareg').render() }}</div>
+</div>
+
+<div class="row-fluid form-row">
+   <div class="span var_exch">Вариант на обмен:</div>
+   <div class="span5 type_exchange">{{ form.getForm('exch_flat').render() }}</div>
+   <div class="span5 rooms exch">{{ form.getForm('exch_rooms').renderLabel(null, {class: 'label-heads'}) }}{{ form.getForm('exch_rooms').render() }}</div>
+</div>
+
+<div class="row-fluid form-row">
+   <div class="span5 price exch">{{ form.getForm('exch_price').renderLabel(null, {class: 'label-heads'}) }}{{ form.getForm('exch_price').render() }}</div>
+   <div class="span4 district">{% include 'blocks/district_city_exch.html.twig' %}</div>
+</div>
+{% endblock %}
+
+{% block optional %}{% endblock %}
+{% block optional_trigger %}{% endblock %}
