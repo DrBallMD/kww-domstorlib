@@ -10,13 +10,6 @@ require_once(dirname(__FILE__).'/sp_form_filter.php');
 require_once(dirname(__FILE__).'/sort_client.php');
 require_once(dirname(__FILE__).'/locations_list.php');
 
-require_once('../domstorlib-1.3/lib/sp/loader.php');
-
-$loader = new SP_Loader();
-$path = dirname(__FILE__);
-$loader->registerPrefix('SP', $path.'/lib');
-$loader->register();
-
 interface iDomstorDataPump
 {
 	public function getData($url);
