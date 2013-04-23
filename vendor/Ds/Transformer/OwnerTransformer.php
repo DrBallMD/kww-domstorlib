@@ -65,8 +65,12 @@ class Ds_Transformer_OwnerTransformer implements Spv_Transformer_TransformerInte
         }
         elseif( $type == 3 )
         {
-            if( isset($agent['tel_work']) and $agent['tel_work'] )
+            if( isset($row['agent_phone']) and $row['agent_phone'] ) {
+                $contact['phone'] = $row['agent_phone'];
+            }
+            elseif( isset($agent['tel_work']) and $agent['tel_work'] ) {
                 $contact['phone'] = $agent['tel_work'];
+            }
 
             if( isset($agent['mail']) and $agent['mail'] )
                 $contact['email'] = $agent['mail'];
