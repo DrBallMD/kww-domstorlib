@@ -645,7 +645,8 @@ class Domstor
 		$params['object'] = $object;
 		$params['action'] = $action;
 		$url = $this->_getCountRequest($params);
-		$data = $this->_getData($url);
+        $cache_time = isset($params['cache'])? $params['cache'] : NULL;
+		$data = $this->_getData($url, $cache_time);
 		return $data[0];
 	}
 
@@ -867,7 +868,7 @@ class Domstor
 		return $this->_getData('http://'.$this->getServerName().$uri);
 	}
 
-	protected function _getData($url)
+	protected function _getData($url, $cache = NULL)
 	{
         // Создаем экземпляр загрузчика
 		$pump = new DomstorPump;
@@ -875,14 +876,16 @@ class Domstor
 
         $id = md5($url);
 
-        if( $this->cache_driver and $this->cache_time) {
+        if( is_null($cache) ) $cache = $this->cache_time;
+
+        if( $this->cache_driver and $cache) {
             if( $this->cache_driver->contains($id) ) {
                 $result = $this->cache_driver->fetch($id);
                 return unserialize($result);
             }
 
             $data = $pump->getData($url);
-            $this->cache_driver->save($id, serialize($data), $this->cache_time);
+            $this->cache_driver->save($id, serialize($data), $cache);
             return $data;
         }
 
