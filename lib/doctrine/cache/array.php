@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Apc.php 7490 2010-03-29 19:53:27Z jwage $
+ *  $Id: Array.php 7490 2010-03-29 19:53:27Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -20,7 +20,7 @@
  */
 
 /**
- * APC Cache Driver
+ * Array cache driver
  *
  * @package     Doctrine
  * @subpackage  Cache
@@ -31,20 +31,12 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
-class SP_Cache_Apc extends Doctrine_Cache_Driver
+class Doctrine_Cache_Array extends Doctrine_Cache_Driver
 {
     /**
-     * constructor
-     *
-     * @param array $options    associative array of cache driver options
+     * @var array $data         an array of cached data
      */
-    public function __construct($options = array())
-    {
-        if ( ! extension_loaded('apc')) {
-            throw new Doctrine_Cache_Exception('The apc extension must be loaded for using this backend !');
-        }
-        parent::__construct($options);
-    }
+    protected $data = array();
 
     /**
      * Fetch a cache record from this cache driver instance
@@ -55,7 +47,10 @@ class SP_Cache_Apc extends Doctrine_Cache_Driver
      */
     protected function _doFetch($id, $testCacheValidity = true)
     {
-        return apc_fetch($id);
+        if (isset($this->data[$id])) {
+            return $this->data[$id];
+        }
+        return false;
     }
 
     /**
@@ -66,9 +61,7 @@ class SP_Cache_Apc extends Doctrine_Cache_Driver
      */
     protected function _doContains($id)
     {
-        $found = false;
-        apc_fetch($id, $found);
-        return $found;
+        return isset($this->data[$id]);
     }
 
     /**
@@ -82,7 +75,9 @@ class SP_Cache_Apc extends Doctrine_Cache_Driver
      */
     protected function _doSave($id, $data, $lifeTime = false)
     {
-        return apc_store($id, $data, $lifeTime);
+        $this->data[$id] = $data;
+
+        return true;
     }
 
     /**
@@ -94,7 +89,11 @@ class SP_Cache_Apc extends Doctrine_Cache_Driver
      */
     protected function _doDelete($id)
     {
-        return apc_delete($id);
+        $exists = isset($this->data[$id]);
+
+        unset($this->data[$id]);
+
+        return $exists;
     }
 
     /**
@@ -104,12 +103,6 @@ class SP_Cache_Apc extends Doctrine_Cache_Driver
      */
     protected function _getCacheKeys()
     {
-        $ci = apc_cache_info('user');
-        $keys = array();
-
-        foreach ($ci['cache_list'] as $entry) {
-          $keys[] = $entry['info'];
-        }
-        return $keys;
+        return array_keys($this->data);
     }
 }

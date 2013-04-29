@@ -434,7 +434,7 @@ class DomstorFlatBalconyField extends DomstorCommonField
 	{
 		$a = $this->getRow();
         $out = $space = '';
-		if( $a['balcony_count'] )
+		if( !empty($a['balcony_count']) )
 		{
 
 			$out.='Балкон';
@@ -445,7 +445,7 @@ class DomstorFlatBalconyField extends DomstorCommonField
 			$space=', ';
 		}
 
-		if( $a['loggia_count'] )
+		if( !empty($a['loggia_count']) )
 		{
 			$out.=$space.'Лоджия';
 			if( $a['loggia_count']>1 )
@@ -455,7 +455,7 @@ class DomstorFlatBalconyField extends DomstorCommonField
 			$space=', ';
 		}
 
-		if( $a['balcony_arrangement'] )
+		if( !empty($a['balcony_arrangement']) )
 		{
 			$out.=$space.$a['balcony_arrangement'];
 		}

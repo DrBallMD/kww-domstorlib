@@ -31,7 +31,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
-interface SP_Cache_Interface
+interface Doctrine_Cache_Interface
 {
     /**
      * Fetch a cache record from this cache driver instance

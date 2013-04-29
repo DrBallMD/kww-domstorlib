@@ -285,8 +285,16 @@ class Domstor
      */
     protected $site_map_generator;
 
+    /**
+     *
+     * @var Doctrine_Cache_Interface
+     */
+    protected $cache_driver;
 
-	public function __construct()
+    protected $cache_time = 0;
+
+
+    public function __construct()
 	{
 		$this->sort_client = new DomstorSortClient;
 		$this->pager = new SP_Helper_Pager;
@@ -516,7 +524,15 @@ class Domstor
 		return $href;
 	}
 
-	public function createFilter($object, $action, array $filter_factory_params = array())
+    public function setCacheDriver(Doctrine_Cache_Interface $cache_driver) {
+        $this->cache_driver = $cache_driver;
+    }
+
+    public function setCacheTime($cache_time) {
+        $this->cache_time = $cache_time;
+    }
+
+    public function createFilter($object, $action, array $filter_factory_params = array())
 	{
 		$filter_factory = new DomstorFilterFactory;
 		if( !isset($filter_factory_params['filter_dir']) ) $filter_factory_params['filter_dir'] = $this->filter_tmpl_dir;
@@ -856,7 +872,23 @@ class Domstor
         // Создаем экземпляр загрузчика
 		$pump = new DomstorPump;
 		// Получаем данные
-		return $pump->getData($url);
+
+        $id = md5($url);
+
+        if( $this->cache_driver and $this->cache_time) {
+            if( $this->cache_driver->contains($id) ) {
+                $result = $this->cache_driver->fetch($id);
+                return unserialize($result);
+            }
+
+            $data = $pump->getData($url);
+            $this->cache_driver->save($id, serialize($data), $this->cache_time);
+            return $data;
+        }
+
+		$data = $pump->getData($url);
+
+        return $data;
 	}
 
 	public function getSortClient()

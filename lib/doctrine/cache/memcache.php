@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Xcache.php  2007-11-19 14:47:59Z demongloom $
+ *  $Id: Memcache.php 7490 2010-03-29 19:53:27Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -20,20 +20,24 @@
  */
 
 /**
- * Xcache cache driver
+ * Memcache cache driver
  *
  * @package     Doctrine
  * @subpackage  Cache
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.doctrine-project.org
  * @since       1.0
- * @version     $Revision: $
- * @author      Dmitry Bakaleinik (dima@snaiper.net)
+ * @version     $Revision: 7490 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
-class SP_Cache_Xcache extends Doctrine_Cache_Driver
+class Doctrine_Cache_Memcache extends Doctrine_Cache_Driver
 {
+    /**
+     * @var Memcache $_memcache     memcache object
+     */
+    protected $_memcache = null;
+
     /**
      * constructor
      *
@@ -41,11 +45,31 @@ class SP_Cache_Xcache extends Doctrine_Cache_Driver
      */
     public function __construct($options = array())
     {
-        if ( ! extension_loaded('xcache') ) {
-            throw new Doctrine_Cache_Exception('In order to use Xcache driver, the xcache extension must be loaded.');
+        if ( ! extension_loaded('memcache')) {
+            throw new Doctrine_Cache_Exception('In order to use Memcache driver, the memcache extension must be loaded.');
+        }
+        parent::__construct($options);
+
+        if (isset($options['servers'])) {
+            $value= $options['servers'];
+            if (isset($value['host'])) {
+                // in this case, $value seems to be a simple associative array (one server only)
+                $value = array(0 => $value); // let's transform it into a classical array of associative arrays
+            }
+            $this->setOption('servers', $value);
         }
 
-        parent::__construct($options);
+        $this->_memcache = new Memcache;
+
+        foreach ($this->_options['servers'] as $server) {
+            if ( ! array_key_exists('persistent', $server)) {
+                $server['persistent'] = true;
+            }
+            if ( ! array_key_exists('port', $server)) {
+                $server['port'] = 11211;
+            }
+            $this->_memcache->addServer($server['host'], $server['port'], $server['persistent']);
+        }
     }
 
     /**
@@ -56,7 +80,7 @@ class SP_Cache_Xcache extends Doctrine_Cache_Driver
      */
     protected function _doFetch($id, $testCacheValidity = true)
     {
-        return $this->_doContains($id) ? xcache_get($id) : false;
+        return $this->_memcache->get($id);
     }
 
     /**
@@ -67,7 +91,7 @@ class SP_Cache_Xcache extends Doctrine_Cache_Driver
      */
     protected function _doContains($id)
     {
-        return xcache_isset($id);
+        return (bool) $this->_memcache->get($id);
     }
 
     /**
@@ -81,7 +105,13 @@ class SP_Cache_Xcache extends Doctrine_Cache_Driver
      */
     protected function _doSave($id, $data, $lifeTime = false)
     {
-        return xcache_set($id, $data, $lifeTime);
+        if ($this->_options['compression']) {
+            $flag = MEMCACHE_COMPRESSED;
+        } else {
+            $flag = 0;
+        }
+
+        return $this->_memcache->set($id, $data, $flag, $lifeTime);
     }
 
     /**
@@ -93,7 +123,7 @@ class SP_Cache_Xcache extends Doctrine_Cache_Driver
      */
     protected function _doDelete($id)
     {
-        return xcache_unset($id);
+        return $this->_memcache->delete($id);
     }
 
     /**
@@ -103,29 +133,19 @@ class SP_Cache_Xcache extends Doctrine_Cache_Driver
      */
     protected function _getCacheKeys()
     {
-        $this->checkAuth();
         $keys = array();
-        for ($i = 0, $count = xcache_count(XC_TYPE_VAR); $i < $count; $i++) {
-            $entries = xcache_list(XC_TYPE_VAR, $i);
-            if (is_array($entries['cache_list'])) {
-                foreach ($entries['cache_list'] as $entry) {
-                    $keys[] = $entry['name'];
+        $allSlabs = $this->_memcache->getExtendedStats('slabs');
+
+        foreach ($allSlabs as $server => $slabs) {
+            foreach (array_keys($slabs) as $slabId) {
+                $dump = $this->_memcache->getExtendedStats('cachedump', (int) $slabId);
+                foreach ($dump as $entries) {
+                    if ($entries) {
+                        $keys = array_merge($keys, array_keys($entries));
+                    }
                 }
             }
         }
         return $keys;
-    }
-
-    /**
-     * Checks that xcache.admin.enable_auth is Off
-     *
-     * @throws Doctrine_Cache_Exception When xcache.admin.enable_auth is On
-     * @return void
-     */
-    protected function checkAuth()
-    {
-        if (ini_get('xcache.admin.enable_auth')) {
-            throw new Doctrine_Cache_Exception('To use all features of Doctrine_Cache_Xcache, you must set "xcache.admin.enable_auth" to "Off" in your php.ini.');
-        }
     }
 }

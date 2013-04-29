@@ -10,7 +10,7 @@
  *
  * @author pahhan
  */
-class SP_Cache_File extends SP_Cache_Driver
+class Doctrine_Cache_File extends Doctrine_Cache_Driver
 {
     protected $_expire_array;
     protected $_expire_file_name = '_expires.txt';
@@ -23,10 +23,10 @@ class SP_Cache_File extends SP_Cache_Driver
     public function __construct($options = array())
     {
 
-        if ( !isset($options['directory']) ) throw new SP_Cache_Exception('Directory not defined');
+        if ( !isset($options['directory']) ) throw new Doctrine_Cache_Exception('Directory not defined');
         $options['directory'] = realpath($options['directory']);
-        if ( !is_dir($options['directory']) ) throw new SP_Cache_Exception($options['directory'].' is not a directory');
-        if ( !is_writable($options['directory']) ) throw new SP_Cache_Exception($options['directory'].' directory is not writable');
+        if ( !is_dir($options['directory']) ) throw new Doctrine_Cache_Exception($options['directory'].' is not a directory');
+        if ( !is_writable($options['directory']) ) throw new Doctrine_Cache_Exception($options['directory'].' directory is not writable');
 
         $this->_options['directory'] = rtrim($options['directory'], '/').'/';
     }
@@ -166,7 +166,7 @@ class SP_Cache_File extends SP_Cache_Driver
 
         if( is_file($file) )
         {
-            if( !is_writable($file) ) throw new SP_Cache_Exception('Can not overwrite cache file '.$file);
+            if( !is_writable($file) ) throw new Doctrine_Cache_Exception('Can not overwrite cache file '.$file);
         }
 
         $handle = fopen($this->getFile($id), 'w');

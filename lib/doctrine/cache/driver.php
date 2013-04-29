@@ -31,7 +31,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
-abstract class SP_Cache_Driver implements SP_Cache_Interface
+abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
 {
     /**
      * @var array $_options      an array of options

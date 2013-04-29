@@ -31,6 +31,6 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
-class SP_Cache_Exception extends Exception
+class Doctrine_Cache_Exception extends Exception
 {
 }
