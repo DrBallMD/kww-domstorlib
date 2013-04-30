@@ -5,11 +5,17 @@ require_once(__DIR__.'/../domstorlib/domstorlib.php');
 $loader = new SP_Loader();
 $path = dirname(__FILE__);
 $loader->registerPrefix('SP', $path.'/../domstorlib/lib');
+$loader->registerPrefix('Doctrine', $path.'/../domstorlib/lib');
 $loader->register();
 
 $domstor = new Domstor();
-$domstor->setMyId(1);
-$domstor->setServerName('t-domstor.ru');
+$domstor->setMyId(13);
+$domstor->setServerName('domstor.ru');
+$domstor->setHomeLocation(2004);
+
+$driver = extension_loaded('apc')? new Doctrine_Cache_Apc() : new Doctrine_Cache_Array();
+$domstor->setCacheDriver($driver);
+$domstor->setCacheTime(600);
 
 $object = isset($_GET['object'])? $_GET['object'] : null;
 $action = isset($_GET['action'])? $_GET['action'] : null;
@@ -30,13 +36,19 @@ if( $object and $action )
             $html = $detail->render();
             $title = $detail->getPageTitle();
         }
+        $filter = '';
     }
     else
     {
-        $list = $domstor->getList($object, $action, $page);
+        //if( isset($_GET['ids']) ) $domstor->addParam('id', $_GET['ids'] );
+        $params = isset($_GET['ids'])? array('id' => $_GET['ids']) : array();
+        $list = $domstor->getList($object, $action, $page, $params);
         $html = $list->getHtml();
+        $filter = $list->getFilter();
     }
 }
 
 echo $title, '<br/>';
+echo $filter;
 echo $html;
+echo $domstor->getCount($object, $action);
