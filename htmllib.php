@@ -75,12 +75,24 @@ class HtmlTable
 		return $this;
 	}
 
+    /**
+     *
+     * @param string $name
+     * @return HtmlTableField
+     */
 	public function getField($name)
 	{
 		return $this->fields[$name];
 	}
 
-	public function getFieldsCount()
+    public function dumpFields()
+    {
+        foreach ($this->fields as $name => $field) {
+            printf("%s\t%s\n", $name, $field->getPosition());
+        }
+    }
+
+    public function getFieldsCount()
 	{
 		return count($this->fields);
 	}
