@@ -10,7 +10,7 @@ $loader->register();
 
 $domstor = new Domstor();
 $domstor->setMyId(13);
-$domstor->setServerName('domstor.ru');
+//$domstor->setServerName('domstor.ru');
 $domstor->setHomeLocation(2004);
 
 $driver = extension_loaded('apc')? new Doctrine_Cache_Apc() : new Doctrine_Cache_Array();
@@ -43,6 +43,8 @@ if( $object and $action )
         //if( isset($_GET['ids']) ) $domstor->addParam('id', $_GET['ids'] );
         $params = isset($_GET['ids'])? array('id' => $_GET['ids']) : array();
         $list = $domstor->getList($object, $action, $page, $params);
+        $list->deleteField('contact_phone');
+        $list->deleteField('code');
         $html = $list->getHtml();
         $filter = $list->getFilter();
     }
@@ -52,3 +54,5 @@ echo $title, '<br/>';
 echo $filter;
 echo $html;
 echo $domstor->getCount($object, $action);
+?>
+<pre><?php $list->dumpFields() ?></pre>
