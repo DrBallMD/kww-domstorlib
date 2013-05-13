@@ -945,6 +945,11 @@ class Domstor
 		if( $value > 0 ) $this->getPager()->set('on_page', $value);
 	}
 
+    public function setPaginationCount($pagination_count)
+    {
+        $this->pagination_count = $pagination_count;
+    }
+
 	public function getListLink($object, $action)
 	{
 		$page = $this->loadPageNumber();
