@@ -524,6 +524,12 @@ class Domstor
 		return $href;
 	}
 
+    protected function _getLocationInfo($location_id)
+    {
+		$data = $this->read('/gateway/location/info?id='.$location_id);
+		return $data;
+    }
+
     public function setCacheDriver(Doctrine_Cache_Interface $cache_driver) {
         $this->cache_driver = $cache_driver;
     }
@@ -865,7 +871,7 @@ class Domstor
 
 	public function read($uri)
 	{
-		return $this->_getData('http://'.$this->getServerName().$uri);
+        return $this->_getData('http://'.$this->getServerName().$uri);
 	}
 
 	protected function _getData($url, $cache = NULL)
@@ -923,7 +929,12 @@ class Domstor
 	protected function _isInRegion()
 	{
 		if( isset($_GET['inreg']) ) return TRUE;
-		return $this->in_region;
+        $ref_city_param = $this->getRealParam('ref_city');
+        $loc_id = $ref_city_param? $ref_city_param : $this->home_location;
+        if( !$loc_id ) return $this->in_region;
+        $info = $this->_getLocationInfo($loc_id);
+
+        return $info['type'] == '2';
 	}
 
 	public function inRegion($value = NULL)
