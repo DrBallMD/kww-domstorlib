@@ -97,7 +97,8 @@ class DomstorListFactory
      */
     public function create($object, $action, array $params)
 	{
-		if( !$this->check( $object, $action) ) return FALSE;
+		if( !$this->check( $object, $action) )
+                throw new Exception('Wrong object/action pair');
 		$class = $object.$action.'list';
 		$list = new $class($params);
 		return $list;
@@ -293,6 +294,10 @@ class Domstor
 
     protected $cache_time = 0;
 
+    public static function checkObjectAction($object, $action)
+    {
+        return DomstorListFactory::check($object, $action);
+    }
 
     public function __construct()
 	{
@@ -607,6 +612,11 @@ class Domstor
 		return $list;
 	}
 
+    public function getObject($object, $action, $id, array $params = array())
+    {
+        return $this->getDetail($object, $action, $id, $params);
+    }
+
 	/**
      *
      * @param string $object
@@ -615,7 +625,7 @@ class Domstor
      * @param array $params
      * @return false|DomstorCommonObject
      */
-    public function getObject($object, $action, $id, array $params = array())
+    public function getDetail($object, $action, $id, array $params = array())
 	{
         $params['object'] = $object;
 		$params['action'] = $action;
@@ -632,6 +642,7 @@ class Domstor
 
 		// Получаем данные
 		$data = $this->_getData($url);
+        if( !isset($data['id']) ) return NULL;
 
 		// Создаем фабрику объектов
 		$factory = new DomstorObjectFactory;
