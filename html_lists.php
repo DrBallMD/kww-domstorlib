@@ -268,15 +268,17 @@ class DomstorAddressField extends DomstorCommonField
                     if( is_numeric($a['corpus']) ) {
                         $street.= '/';
                     }
-                    $out.= $a['corpus'];
+                    $street.= $a['corpus'];
                 }
             }
         }
 
 		if( $this->in_region )
 		{
-			$address = $a['location_id']? $a['location_name'] : $a['Subregion']['name'].' '.$a['Subregion']['socr'];
-            $address.= ', '.($street? $street : $a['address_note']);
+			if( $a['subregion'] ) $address.= $a['subregion'].', ';
+            if( $a['location_name'] ) $address.= $a['location_name'].', ';
+            $address.= $street? $street : $a['address_note'];
+            $address = trim($address, ', ');
 		}
 		else
 		{

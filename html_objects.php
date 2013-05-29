@@ -1627,6 +1627,7 @@ class DomstorHouse extends DomstorCommonObject
 	{
 		$a = &$this->object;
         $out = '';
+        $show = false;
 
         $communications = '';
 		if( $this->getVar('phone') ) $communications.='телефон, ';
