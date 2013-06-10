@@ -52,7 +52,7 @@ class Custom_FlatSaleFactory extends Ds_Factory_AbstractFactory
 
         $params = array_merge($params, array(
             'entity' => 'flat',
-            'ref_city' => $this->ref_city,
+            'master_city' => $this->ref_city,
             'sale' => true,
         ));
 
@@ -72,7 +72,7 @@ class Custom_FlatSaleFactory extends Ds_Factory_AbstractFactory
     {
         $params = array_merge($params, array(
             'entity' => 'flat',
-            'ref_city' => $this->ref_city,
+            'master_city' => $this->ref_city,
             'sale' => true,
         ));
 
