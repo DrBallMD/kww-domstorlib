@@ -1,0 +1,7 @@
+{% extends '@spv/select.html.twig' %}
+
+{% block options %}
+    {% for options in form.getOptions() %}
+    <option value="{{ options.id }}" {{ form.selected(options.id) }}>{{ options.name }}</option>
+    {% endfor %}
+{% endblock %}

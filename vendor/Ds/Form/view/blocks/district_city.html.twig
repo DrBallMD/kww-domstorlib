@@ -1,5 +1,6 @@
 {% if form.hasForm('district') %}
     {{ form.getForm('district').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('district').render() }}
+    {{ form.getForm('suburban').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('suburban').render() }}
 {% endif %}
 
 {% if form.hasForm('city') %}
