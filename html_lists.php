@@ -256,79 +256,44 @@ class DomstorAddressField extends DomstorCommonField
 	public function getValue()
 	{
 		$a = $this->getTable()->getRow();
-		$out = '';
-		if( $this->in_region or $a['district']=='Пригород' or $a['district_parent']=='Пригород')
+
+		$address = '';
+
+        $street = '';
+        if( $a['street'] and $a['street_id'] ) {
+            $street = $a['street'];
+            if( isset($a['building_num']) and $a['building_num'] ) {
+                $street.= ', '.$a['building_num'];
+                if( $a['corpus'] ) {
+                    if( is_numeric($a['corpus']) ) {
+                        $street.= '/';
+                    }
+                    $street.= $a['corpus'];
+                }
+            }
+        }
+
+		if( $this->in_region )
 		{
-			if( $this->in_region ) $out.=$this->getIf($a['city'], '', ', ');
-			$out.=$this->getIf($a['district'], '', ', ');
-			$out.=$this->getIf($a['address_note'], '', ', ');
-			$out=substr($out, 0, -2);
+			if( $a['subregion'] ) $address.= $a['subregion'].', ';
+            if( $a['location_name'] ) $address.= $a['location_name'].', ';
+            $address.= $street? $street : $a['address_note'];
+            $address = trim($address, ', ');
 		}
 		else
 		{
-			if( $a['street'] and $a['street_id'] )
-			{
-				$out=$a['street'];
-				if( isset($a['building_num']) and $a['building_num'] )
-				{
-					$out.=', '.$a['building_num'];
-					if( $a['corpus'] )
-					{
-						if( is_numeric($a['corpus']) )
-						{
-							$out.='/'.$a['corpus'];
-						}
-						else
-						{
-							$out.=strtoupper($a['corpus']);
-						}
-					}
-				}
-			}
-
-			if( $out and $a['city'] and $this->getTable()->cityId() and $a['city_id'] != $this->getTable()->cityId() )
-			{
-				$out = $a['city'].', '.$out;
-			}
-
-			if( !$out )
-			{
-				$space = (isset($a['address_note']) and $a['address_note'])? ', ' : '';
-				$region_city = $a['city']? $a['city'] : $a['Region']['Names']['im'];
-
-				if( $a['district'] )
-				{
-					$out = $a['address_note'];
-				}
-				else
-				{
-					$out = $region_city.$space.$a['address_note'];
-				}
-			}
-
-
-			if( $a['district'] )
-			{
-
-				if( !$out and isset($a['address_note']) and $a['address_note'] ) $out = $region_city.$space.$a['address_note'];
-			}
-			else
-			{
-				$region_city = $a['city']? $a['city'] : $a['Region']['Names']['im'];
-				if( !$out ) $out = $region_city.$space.$a['address_note'];
-			}
-
-
+			$address = $street;
 		}
 
-		$s = $out? ', ' : '';
+		if( isset($a['cooperative_name']) and $a['cooperative_name'] ) $address.= ', '.$a['cooperative_name'];
+        $clear_address = trim($address, ', ');
 
-		if( isset($a['cooperative_name']) and $a['cooperative_name'] ) $out.= $s.$a['cooperative_name'];
-
-		if( $out )
+        $out = '';
+		if( $clear_address )
 		{
-			$href=str_replace('%id', $a['id'], $this->object_href);
-			$out='<a href="'.$href.'" title="Перейти на страницу объекта '.$a['code'].'" class="domstor_link">'.$out.'</a>';
+			$href = str_replace('%id', $a['id'], $this->object_href);
+            $out = sprintf('<a href="%s" title="Перейти на страницу объекта %s" class="domstor_link">%s</a>',
+                    $href, $a['code'], $clear_address);
 		}
 		return $out;
 	}

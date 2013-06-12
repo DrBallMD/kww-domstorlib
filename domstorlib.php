@@ -944,8 +944,9 @@ class Domstor
         $loc_id = $ref_city_param? $ref_city_param : $this->home_location;
         if( !$loc_id ) return $this->in_region;
         $info = $this->_getLocationInfo($loc_id);
-
-        return $info['type'] == '2';
+        if( isset($info['type']) ) {
+            return $info['type'] == '2';
+        }
 	}
 
 	public function inRegion($value = NULL)
