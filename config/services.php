@@ -58,7 +58,7 @@ return array(
         // Use calls to call any object methods after creation
         'calls' => array(
             'key' => array('value'=>'e84403a3-66d6-47f7-83df-19017a558c52', 'method' => 'setKey'),
-            'server'=>array('value'=>'http://domstor.ru', 'method' => 'setServer'),
+            'server'=>array('value'=>'http://domstor.test', 'method' => 'setServer'),
         ),
     ),
     'definer.page' => array(
@@ -107,6 +107,9 @@ return array(
     'list.builder.flat' => array(
         'class' => 'Ds_List_Builder_FlatListBuilder',
     ),
+    'list.builder.house' => array(
+        'class' => 'Ds_List_Builder_HouseListBuilder',
+    ),
     'list.column' => array(
         'class' => 'Ds_List_Column_TableColumn',
         /*
@@ -125,6 +128,13 @@ return array(
     ),
     'detail.flat.sale' => array(
         'class' => 'Ds_Detail_Flat_FlatSale',
+        'arguments' => array(
+            'templating' => array('value' => '@templating'),
+            'block_factory' => array('value' => '@detail.block.factory'),
+        ),
+    ),
+    'detail.house.sale' => array(
+        'class' => 'Ds_Detail_House_HouseSale',
         'arguments' => array(
             'templating' => array('value' => '@templating'),
             'block_factory' => array('value' => '@detail.block.factory'),
