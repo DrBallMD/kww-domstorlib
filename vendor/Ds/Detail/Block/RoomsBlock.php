@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SaleRoomsBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_RoomsBlock extends Ds_Detail_Block_AbstractBlock
 {
     // Returns room count text
 	public function rooms()

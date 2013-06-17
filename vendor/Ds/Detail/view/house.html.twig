@@ -1,22 +1,21 @@
 {% extends "@detail/base.html.twig" %}
 
-{% block annotation %}{{ detail.block('flat.sale.annotation') }}{% endblock %}
+{% block annotation %}{{ detail.block('house.sale.annotation') }}{% endblock %}
 
-{% block images %}{{ detail.block('flat.sale.images') }}{% endblock %}
+{% block images %}{{ detail.block('images') }}{% endblock %}
 
 {% block inline_blocks %}
-    {{ detail.block('flat.sale.location') }}
-    {{ detail.block('flat.sale.rooms') }}
-    {{ detail.block('flat.sale.floors') }}
+    {{ detail.block('city_location') }}
+    {{ detail.block('rooms') }}
+    {{ detail.block('house.sale.floors') }}
 {% endblock %}
 
 {% block content %}
-    {{ detail.block('flat.sale.types') }}
-    {{ detail.block('flat.sale.sizes') }}
+    {{ detail.block('house.sale.sizes') }}
     {{ detail.block('flat.sale.technical') }}
     {{ detail.block('flat.sale.placing') }}
     {{ detail.block('flat.sale.finance') }}
     {{ detail.block('flat.sale.comment') }}
     {{ detail.block('flat.sale.contacts').render() }}
-    {{ detail.block('flat.sale.navigation').render() }}
+    {{ detail.block('navigation').render() }}
 {% endblock %}

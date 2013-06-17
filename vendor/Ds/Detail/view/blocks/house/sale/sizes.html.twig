@@ -1,0 +1,24 @@
+{% import '@detail/macro/table.html.twig' as table %}
+
+<div class="domstor_object_size">
+    <h3>Размеры</h3>
+    <table>
+        {% set h = block.squareHouse %}{% set l = block.squareLiving %}{% set k = block.squareKitchen %}{% set u = block.squareUtility %}
+        {% if h or l or k or u %}
+            {{ table.emptyRow('Площадь, кв.м.:') }}
+            {{ table.row('Общая:', h, 1) }}
+            {{ table.row('Жилая:', l, 1) }}
+            {{ table.row('Кухня:', k, 1) }}
+            {{ table.row('Подсобные помещения:', u, 1) }}
+        {% endif %}
+
+        {% set h = block.height %}{% set fh = block.fullHeight %}{% set w = block.width %}{% set l = block.height %}
+        {% if h or fh or w or l %}
+            {{ table.emptyRow('Размеры:') }}
+            {{ table.conditionRow('Периметр:', l~'&times;'~w~' м', w or l, 1) }}
+            {{ table.row('Высота под крышу:', h, 1) }}
+            {{ table.row('Высота с крышей:', fh, 1) }}
+        {% endif %}
+
+    </table>
+</div>

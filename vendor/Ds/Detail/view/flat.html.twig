@@ -2,11 +2,11 @@
 
 {% block annotation %}{{ detail.block('flat.sale.annotation') }}{% endblock %}
 
-{% block images %}{{ detail.block('flat.sale.images') }}{% endblock %}
+{% block images %}{{ detail.block('images') }}{% endblock %}
 
 {% block inline_blocks %}
-    {{ detail.block('flat.sale.location') }}
-    {{ detail.block('flat.sale.rooms') }}
+    {{ detail.block('city_location') }}
+    {{ detail.block('rooms') }}
     {{ detail.block('flat.sale.floors') }}
 {% endblock %}
 
@@ -18,5 +18,5 @@
     {{ detail.block('flat.sale.finance') }}
     {{ detail.block('flat.sale.comment') }}
     {{ detail.block('flat.sale.contacts').render() }}
-    {{ detail.block('flat.sale.navigation').render() }}
+    {{ detail.block('navigation').render() }}
 {% endblock %}

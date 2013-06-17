@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SaleLocationBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_CityLocationBlock extends Ds_Detail_Block_AbstractBlock
 {
     public function render(array $params = array())
     {
@@ -20,11 +20,13 @@ class Ds_Detail_Block_Flat_SaleLocationBlock extends Ds_Detail_Block_AbstractBlo
 
 		$out = Ds_Detail_Helper::getAddress($data);
 
-        if( $data->isSetAnd('District') and $data->District->id > 0 ) $out.= ', '.$data->District->name.', ';
+        $distr = isset($data['location_name'])? $data->location_name : (isset($data['District']['name'])? $data['District']['name'] : '');
 
-        if( isset($data['City']) ) $out.= Ds_Detail_Helper::getCity($data['City']).', ';
+        if( $distr ) $out.= $distr.', ';
 
         if( $data['address_note'] ) $out.= $data['address_note'].', ';
+
+        if( !empty($data['Subregion']['name']) ) $out.= $data['Subregion']['name'].' '.$data['Subregion']['socr'].', ';
 
 		$out = substr($out, 0, -2);
 
@@ -99,11 +101,11 @@ class Ds_Detail_Block_Flat_SaleLocationBlock extends Ds_Detail_Block_AbstractBlo
 	{
 		$data = $this->getData();
 		$out = '';
-		$city = $data->isSetAndArray('City')? $data['City']['name'] : FALSE;
-		if( $city )
+		$location = Ds_Detail_Helper::getLocation($data);
+		if( $location )
 		{
 			$addr = sprintf('%s, %s',
-				Ds_Detail_Helper::getLocation($data),
+				$location,
 				str_replace('/', 'К', Ds_Detail_Helper::getBuilding($data))
 			);
             $addr = iconv('UTF-8', 'WINDOWS-1251', $addr);
@@ -116,13 +118,32 @@ class Ds_Detail_Block_Flat_SaleLocationBlock extends Ds_Detail_Block_AbstractBlo
 	public function fourGeoMapLink()
 	{
 		$data = $this->getData();
+		//var_dump($data);
 		$out = '';
-		$city = $data->isSetAndArray('City')? $data['City']['name'] : FALSE;
-		$street = $data->isSetAndArray('Street')? $data['Street']['name'] : FALSE;
+		$city = isset($data['location_name'])? $data['location_name'] : '';
+		$street = !empty($data['street_name'])? $data['street_name'] : $data['address_note'];
+        $city_id = $data['master_city_id'];
+        $cities4geo = array(
+            2466, // vologda
+            2471, // voronezh
+            2653, // izhevsk
+            2004, // kemerovo
+            2707, // krasnoyarsk
+            2049, // kotlas
+            2784, // nizhnevartovsk
+            2006, // novokuznetsk
+            2253, // orenburg
+            2254, // orsk
+            2279, // rostov-na-donu
+            2783, // surgut
+            2411, // tula
+            2782, // hanty-mansiysk
+            2467, // cherepovets
+        );
 
-		if( $city and $street )
+		if( in_array($city_id, $cities4geo) )
 		{
-			$addr = sprintf('%s, %s, %s',
+            $addr = sprintf('%s, %s, %s',
 				$city,
 				$street,
 				Ds_Detail_Helper::getBuilding($data)
@@ -130,7 +151,8 @@ class Ds_Detail_Block_Flat_SaleLocationBlock extends Ds_Detail_Block_AbstractBlo
             $addr = iconv('UTF-8', 'WINDOWS-1251', $addr);
 			$addr = urlencode($addr);
 			$out = sprintf('http://domstor.ru/gateway/maps/4geo?address=%s', $addr);
-		}
+        }
+
 		return $out;
 	}
 

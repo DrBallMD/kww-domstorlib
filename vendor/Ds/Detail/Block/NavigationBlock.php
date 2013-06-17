@@ -4,7 +4,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SaleNavigationBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_NavigationBlock extends Ds_Detail_Block_AbstractBlock
 {
     protected $prev;
     protected $next;

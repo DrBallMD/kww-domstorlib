@@ -1,4 +1,6 @@
 {% if row_data.street_name %}
 {{ row_data.street_name }}{% if row_data.building_num is defined %}, {{ row_data.building_num }}
 {% if row_data.corpus is numeric %}/{% endif%}{{ row_data.corpus }}{% endif %}
+{% else %}
+{{ row_data.address_note }}
 {% endif %}

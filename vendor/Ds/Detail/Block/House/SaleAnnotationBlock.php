@@ -5,27 +5,8 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SaleAnnotationBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_House_SaleAnnotationBlock extends Ds_Detail_Block_AbstractBlock
 {
-    protected function getSquare()
-    {
-        $data = $this->getData();
-        return sprintf('%s/%s/%s',
-                $data->isSetAnd('square_house')? $data->square_house : '-',
-                $data->isSetAnd('square_living')? $data->square_living : '-',
-                $data->isSetAnd('square_kitchen')? $data->square_kitchen : '-'
-                );
-    }
-
-    protected function getFloors()
-    {
-        $data = $this->getData();
-        return sprintf('%s/%s',
-                $data->isSetAnd('object_floor')? $data->object_floor : '-',
-                $data->isSetAnd('building_floor')? $data->building_floor : '-'
-                );
-    }
-
     protected function getAddress()
     {
         $data = $this->getData();
@@ -63,12 +44,9 @@ class Ds_Detail_Block_Flat_SaleAnnotationBlock extends Ds_Detail_Block_AbstractB
         $data = $this->getData();
         $out = 'Продажа';
         if( $data->isSetAnd('room_count') ) $out.= sprintf(' %d комн.', $data->room_count);
-        if( $data->isSetAnd('flat_type') ) $out.= ', '.$data->flat_type;
-        if( $rooms = $this->getSquare() ) $out.= ', '.$rooms;
-        if( $floors = $this->getFloors() ) $out.= ', '.$floors;
+        if( $data->isSetAnd('house_type') ) $out.= ', '.$data->house_type;
         if( $address = $this->getAddress() ) $out.= ', '.$address;
         if( $data->isSetAndArray('District') and $dist = $data->District->name ) $out.= ', '.$dist;
-        if( $data->isSetAndArray('City') and $city = $data->City->name ) $out.= ', '.$city;
         if( $price = $this->getPrice() ) $out.= ', '.$price;
         if( $data->isSetAnd('note_addition') ) $out.= ', '.$data->note_addition;
         return $out;

@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SaleImagesBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_ImagesBlock extends Ds_Detail_Block_AbstractBlock
 {
     protected $flash;
 
@@ -19,10 +19,12 @@ class Ds_Detail_Block_Flat_SaleImagesBlock extends Ds_Detail_Block_AbstractBlock
 	public function photos()
 	{
 		$out = array();
-		if( $this->getData()->isSetAndArray('img_photo') )
-            foreach ($this->getData()->get('img_photo') as $photo)
-                $out[] = 'http://domstor.ru'.$photo;
-
+        $data = $this->getData();
+		if( $data->isSetAndArray('img_photo') ) {
+            foreach ($data->img_photo as $photo) {
+                $out[] = $photo;
+            }
+        }
 
 		return $out;
 	}
@@ -32,7 +34,7 @@ class Ds_Detail_Block_Flat_SaleImagesBlock extends Ds_Detail_Block_AbstractBlock
 		$out = array();
 		if( $this->getData()->isSetAndArray('img_plan') )
             foreach ($this->getData()->get('img_plan') as $photo)
-                $out[] = 'http://domstor.ru'.$photo;
+                $out[] = $photo;
 
 
 		return $out;

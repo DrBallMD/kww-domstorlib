@@ -39,8 +39,14 @@ class Ds_List_Builder_HouseListBuilder extends Ds_List_Builder_AbstractListBuild
             'classes' => array('domstor_code'),
             'sort' => 'code',
         )))
-
-            ->addColumn('rooms ', $this->createColumn('list.column', array(
+        ->addColumn('type ', $this->createColumn('list.column', array(
+            'template' => '@list/table/table_column.html.twig',
+            'data_key' => 'house_type',
+            'title' => 'Тип',
+            'classes' => array('domstor_type'),
+            'sort' => 'type',
+        )))
+        ->addColumn('rooms ', $this->createColumn('list.column', array(
             'template' => '@list/table/table_column.html.twig',
             'data_key' => 'room_count',
             'title' => 'Число комнат',
