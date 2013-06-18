@@ -10,8 +10,23 @@ class Ds_Detail_Block_House_SaleSizesBlock extends Ds_Detail_Block_AbstractBlock
     public function render(array $params = array())
     {
         $vars = array('block' => $this);
+        if( $this->fullHeight()
+                or  $this->height()
+                or $this->width()
+                or $this->long()
+                or $this->groundWidth()
+                or $this->groundLong()
+                or $this->squareHouse()
+                or $this->squareGround()
+                or $this->squareKitchen()
+                or $this->squareLiving()
+                or $this->squareUtility()
+                )
+        {
+            return $this->getTemplating()->render($this->getTemplate(), $vars);
+        }
+        return '';
 
-        return $this->getTemplating()->render($this->getTemplate(), $vars);
     }
 
     // Высота потолков
@@ -36,6 +51,16 @@ class Ds_Detail_Block_House_SaleSizesBlock extends Ds_Detail_Block_AbstractBlock
     public function long()
 	{
 		return (float) $this->getData()->get('size_house_y');
+	}
+
+    public function groundWidth()
+	{
+		return (float) $this->getData()->get('size_ground_x');
+	}
+
+    public function groundLong()
+	{
+		return (float) $this->getData()->get('size_ground_y');
 	}
 
 	// Общая площадь

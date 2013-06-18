@@ -20,5 +20,12 @@
             {{ table.row('Высота с крышей:', fh, 1) }}
         {% endif %}
 
+        {% set g = block.squareGround %}{% set w = block.width %}{% set l = block.height %}
+        {% if g or w or l %}
+            {{ table.emptyRow('Земельный участок:') }}
+            {{ table.conditionRow('Периметр:', l~'&times;'~w~' м', w or l, 1) }}
+            {{ table.row('Площадь:', g, 1) }}
+        {% endif %}
+
     </table>
 </div>

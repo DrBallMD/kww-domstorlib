@@ -18,9 +18,13 @@ class Ds_Detail_Block_CityLocationBlock extends Ds_Detail_Block_AbstractBlock
 	{
 		$data = $this->getData();
 
-		$out = Ds_Detail_Helper::getAddress($data);
+		$out = Ds_Detail_Helper::getAddress($data).', ';
 
-        $distr = isset($data['location_name'])? $data->location_name : (isset($data['District']['name'])? $data['District']['name'] : '');
+        $distr = (!empty($data['location_id']) and isset($data['location_name']))?
+                $data->location_name :
+                (isset($data['District']['name'])?
+                        $data['District']['name'].', '.$data['location_name'] :
+                        '');
 
         if( $distr ) $out.= $distr.', ';
 
@@ -28,9 +32,7 @@ class Ds_Detail_Block_CityLocationBlock extends Ds_Detail_Block_AbstractBlock
 
         if( !empty($data['Subregion']['name']) ) $out.= $data['Subregion']['name'].' '.$data['Subregion']['socr'].', ';
 
-		$out = substr($out, 0, -2);
-
-		return $out;
+		return trim($out, ', ');
 	}
 
 	public function metro()

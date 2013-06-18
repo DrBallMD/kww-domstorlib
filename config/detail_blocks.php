@@ -18,4 +18,5 @@ return array(
     'house.sale.annotation' =>  array('class' => 'Ds_Detail_Block_House_SaleAnnotationBlock'),
     'house.sale.floors' =>  array('class' => 'Ds_Detail_Block_House_SaleFloorsBlock', 'template' => '@detail/blocks/house/sale/floors.html.twig'),
     'house.sale.sizes' =>  array('class' => 'Ds_Detail_Block_House_SaleSizesBlock', 'template' => '@detail/blocks/house/sale/sizes.html.twig'),
+    'house.sale.buildings' =>  array('class' => 'Ds_Detail_Block_House_SaleBuildingsBlock', 'template' => '@detail/blocks/house/sale/buildings.html.twig'),
 );

@@ -39,60 +39,49 @@ class Ds_Detail_Block_Flat_SaleTechnicalblock extends Ds_Detail_Block_AbstractBl
     public function active()
     {
         return  $this->communication() ||
-                $this->santechActive() ||
-                $this->balconyActive() ||
+                $this->santechToiletCount() ||
+                $this->electroActive() ||
                 $this->materialActive()||
+                $this->balconyActive() ||
                 $this->windowsActive() ||
                 $this->doorsActive()   ||
                 $this->finishActive()  ||
                 $this->stateActive();
-
     }
 
-    public function santechActive()
-    {
-        return $this->santechToilet() ||
-			   $this->santechToiletCount() ||
-			   $this->santechYear() ||
-			   $this->santechMaterial() ||
-			   $this->santechSewerageMaterial() ||
-			   $this->santechHeatBattery();
-    }
-
-    // Санузел
-	public function santechToilet()
-	{
-		return $this->getData()->get('toilet');
-	}
-
-	// Количество санузлов
+    // Количество санузлов
 	public function santechToiletCount()
 	{
 		return (int) $this->getData()->get('toilet_count');
 	}
 
-	// Год замены/установки сантехники
-	public function santechYear()
-	{
-		return $this->getData()->get('santech_year');
-	}
+    public function electroVoltage()
+    {
+        return (int) $this->getData()->electro_voltage;
+    }
 
-	// Материал труб
-	public function santechMaterial()
-	{
-		return $this->getData()->get('santech_material');
-	}
-	// Материал канализационных труб
-	public function santechSewerageMaterial()
-	{
-		return $this->getData()->get('sewerage_material');
-	}
+    public function electroPower()
+    {
+        return (float) $this->getData()->electro_power;
+    }
 
-	// Батареи отопления
-	public function santechHeatBattery()
-	{
-		return $this->getData()->get('heat_battery');
-	}
+    public function electroResrve()
+    {
+        return (bool) $this->getData()->electro_reserve;
+    }
+
+    public function electroNot()
+    {
+        return (bool) $this->getData()->electro_not;
+    }
+
+    public function electroActive()
+    {
+        return  $this->electroVoltage() or
+                $this->electroPower()  or
+                $this->electroResrve() or
+                $this->electroNot();
+    }
 
     public function materialActive()
     {
