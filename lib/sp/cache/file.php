@@ -10,7 +10,7 @@
  *
  * @author pahhan
  */
-class Doctrine_Cache_File extends Doctrine_Cache_Driver
+class SP_Cache_File extends Doctrine_Cache_Driver
 {
     protected $_expire_array;
     protected $_expire_file_name = '_expires.txt';
