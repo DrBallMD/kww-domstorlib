@@ -41,6 +41,7 @@ class Ds_Detail_Block_Flat_SaleTechnicalblock extends Ds_Detail_Block_AbstractBl
         return  $this->communication() ||
                 $this->santechToiletCount() ||
                 $this->electroActive() ||
+                $this->heat()          ||
                 $this->materialActive()||
                 $this->balconyActive() ||
                 $this->windowsActive() ||
@@ -81,6 +82,11 @@ class Ds_Detail_Block_Flat_SaleTechnicalblock extends Ds_Detail_Block_AbstractBl
                 $this->electroPower()  or
                 $this->electroResrve() or
                 $this->electroNot();
+    }
+
+    public function heat()
+    {
+        return $this->getData()->heat;
     }
 
     public function materialActive()
