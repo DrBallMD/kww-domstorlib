@@ -5,10 +5,9 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SaleTechnicalblock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_House_SaleTechnicalblock extends Ds_Detail_Block_AbstractBlock
 {
     protected $communication;
-    protected $doors_front;
 
 
     public function render(array $params = array())
@@ -42,6 +41,8 @@ class Ds_Detail_Block_Flat_SaleTechnicalblock extends Ds_Detail_Block_AbstractBl
                 $this->santechToiletCount() ||
                 $this->electroActive() ||
                 $this->heat()          ||
+                $this->water()         ||
+                $this->sewerage()      ||
                 $this->materialActive()||
                 $this->balconyActive() ||
                 $this->windowsActive() ||
@@ -89,11 +90,24 @@ class Ds_Detail_Block_Flat_SaleTechnicalblock extends Ds_Detail_Block_AbstractBl
         return $this->getData()->heat;
     }
 
+    public function water()
+    {
+        return $this->getData()->water;
+    }
+
+    public function sewerage()
+    {
+        return $this->getData()->sewerage;
+    }
+
     public function materialActive()
     {
         return  $this->materialCarrying() ||
                 $this->materialCeiling() ||
-                $this->materialWall();
+                $this->materialWall() ||
+                $this->roofMaterial() ||
+                $this->roofType() ||
+                $this->foundation();
     }
 
     // Материал несущих конструкций
@@ -114,30 +128,20 @@ class Ds_Detail_Block_Flat_SaleTechnicalblock extends Ds_Detail_Block_AbstractBl
 		return $this->getData()->get('material_ceiling');
 	}
 
-    public function balconyActive()
+    public function roofMaterial()
     {
-        return  $this->balconyLoggia() ||
-                $this->balconyBalcony() ||
-                $this->balconyArrangement();
+        return $this->getData()->get('roof_material');
     }
 
-    // Количество лоджий
-	public function balconyLoggia()
-	{
-		return (int) $this->getData()->get('loggia_count');
-	}
+    public function roofType()
+    {
+        return $this->getData()->get('roof_type');
+    }
 
-	// Количество балконов
-	public function balconyBalcony()
-	{
-		return (int) $this->getData()->get('balcony_count');
-	}
-
-	// Обустройство
-	public function balconyArrangement()
-	{
-		return $this->getData()->get('balcony_arrangement');
-	}
+    public function foundation()
+    {
+        return $this->getData()->get('foundation');
+    }
 
     public function windowsActive()
     {
@@ -164,55 +168,12 @@ class Ds_Detail_Block_Flat_SaleTechnicalblock extends Ds_Detail_Block_AbstractBl
 		return $this->getData()->get('window_opening');
 	}
 
-    public function doorsActive()
-    {
-        return  $this->doorsRoom() ||
-                $this->doorsFront() ||
-                $this->doorsPocket();
-    }
-
-    // Межкомнатные двери
-	public function doorsRoom()
-	{
-		return $this->getData()->get('door_room');
-	}
-
-	// Входная дверь
-	public function doorsFront()
-	{
-        if( $this->doors_front ) return $this->doors_front;
-        $out = '';
-		$space = '';
-        $door_front = $this->getData()->get('door_front');
-        if( $door_front )
-        {
-            $space = ', ';
-            $out = $door_front;
-        }
-
-        $door_front_material = $this->getData()->get('door_front_material');
-        if( $door_front_material )
-        {
-            if( $door_front )
-                $out = $door_front.$space.$door_front_material;
-            else
-                $out = $door_front_material;
-        }
-        $this->doors_front = $out;
-        return $out;
-	}
-
-	// Дверь в карман
-	public function doorsPocket()
-	{
-		return $this->getData()->get('door_pocket_material');
-	}
-
     public function finishActive()
     {
         return  $this->finishCeiling() ||
                 $this->finishFloor() ||
-                $this->finishPartition();
+                $this->finishPartition()||
+                $this->facade();
     }
 
     // Потолки
@@ -231,6 +192,11 @@ class Ds_Detail_Block_Flat_SaleTechnicalblock extends Ds_Detail_Block_AbstractBl
 	public function finishPartition()
 	{
 		return $this->getData()->get('finish_partition');
+	}
+
+    public function facade()
+	{
+		return $this->getData()->get('facade');
 	}
 
     public function stateActive()

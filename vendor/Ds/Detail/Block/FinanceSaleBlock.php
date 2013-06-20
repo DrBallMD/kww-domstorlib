@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SaleFinanceBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_FinanceSaleBlock extends Ds_Detail_Block_AbstractBlock
 {
     protected $price;
     protected $price_m2;
@@ -37,7 +37,7 @@ class Ds_Detail_Block_Flat_SaleFinanceBlock extends Ds_Detail_Block_AbstractBloc
         $price = $this->getData()->get('price_m2');
         if( $price ) $price = number_format ($price, 0, '', ' ');
         $this->price_m2 = $price;
-        return $price;       
+        return $price;
     }
 
     public function currency()

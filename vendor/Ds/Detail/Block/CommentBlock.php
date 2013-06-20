@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SaleCommentBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_CommentBlock extends Ds_Detail_Block_AbstractBlock
 {
     public function render(array $params = array())
     {

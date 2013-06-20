@@ -1,0 +1,22 @@
+{% import '@detail/macro/table.html.twig' as table %}
+
+{% if block.active %}
+<div class="domstor_object_technic">
+    <h3>Технические характеристики</h3>
+    <table>
+    {% if block.furniture %}
+        {{ table.row('Обстановка:', block.furniture) }}
+    {% endif %}
+
+    {{ table.row('Ограда:', block.data.fence) }}
+
+    {% if block.roadsActive %}
+        {{ table.emptyRow('Дорожные условия:') }}
+        {{ table.row('Покрытие дорог:', block.data.road_covering, 1) }}
+        {{ table.row('Состояние покрытия дорог:', block.data.road_state, 1) }}
+    {% endif %}
+
+    </table>
+</div>
+
+{% endif %}

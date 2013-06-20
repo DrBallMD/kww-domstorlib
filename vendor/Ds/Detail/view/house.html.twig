@@ -13,10 +13,10 @@
 {% block content %}
     {{ detail.block('house.sale.sizes') }}
     {{ detail.block('house.sale.buildings') }}
-    {{ detail.block('flat.sale.technical') }}
+    {{ detail.block('house.sale.technical') }}
     {{ detail.block('flat.sale.placing') }}
-    {{ detail.block('flat.sale.finance') }}
-    {{ detail.block('flat.sale.comment') }}
-    {{ detail.block('flat.sale.contacts').render() }}
+    {{ detail.block('finance_sale') }}
+    {{ detail.block('comment') }}
+    {{ detail.block('contacts').render() }}
     {{ detail.block('navigation').render() }}
 {% endblock %}

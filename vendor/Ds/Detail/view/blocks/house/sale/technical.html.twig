@@ -17,18 +17,18 @@
         {{ table.row('Нет электричества:', block.electroNot, 1) }}
     {% endif %}
 
+    {{ table.row('Теплоснабжение:', block.heat) }}
+    {{ table.row('Водоснабжение:', block.water) }}
+    {{ table.row('Канализация:', block.sewerage) }}
+
     {% if block.materialActive %}
         {{ table.emptyRow('Конструкции строения:') }}
         {{ table.row('Материал наружных стен:', block.materialWall, 1) }}
         {{ table.row('Материал перекрытий:', block.materialCeiling, 1) }}
         {{ table.row('Материал несущих конструкций:', block.materialCarrying, 1) }}
-    {% endif %}
-
-    {% if block.balconyActive %}
-        {{ table.emptyRow('Балкон, лоджия:') }}
-        {{ table.row('Количество балконов:', block.balconyLoggia, 1) }}
-        {{ table.row('Количество лоджий:', block.balconyBalcony, 1) }}
-        {{ table.row('Обустройство:', block.balconyArrangement, 1) }}
+        {{ table.row('Материал кровли:', block.roofMaterial, 1) }}
+        {{ table.row('Тип кровли:', block.roofType, 1) }}
+        {{ table.row('Фундамент:', block.foundation, 1) }}
     {% endif %}
 
     {% if block.windowsActive %}
@@ -38,18 +38,12 @@
         {{ table.row('Тип открывания окон:', block.windowsOpening, 1) }}
     {% endif %}
 
-    {% if block.doorsActive %}
-        {{ table.emptyRow('Двери:') }}
-        {{ table.row('Двери межкомнатные:', block.doorsRoom, 1) }}
-        {{ table.row('Входная дверь:', block.doorsFront, 1) }}
-        {{ table.row('Дверь в карман:', block.doorsPocket, 1) }}
-    {% endif %}
-
     {% if block.finishActive %}
         {{ table.emptyRow('Отделка:') }}
         {{ table.row('Потолки:', block.finishCeiling, 1) }}
         {{ table.row('Полы:', block.finishFloor, 1) }}
         {{ table.row('Перегородки:', block.finishPartition, 1) }}
+        {{ table.row('Фасад:', block.facade, 1) }}
     {% endif %}
 
     {% if block.stateActive %}

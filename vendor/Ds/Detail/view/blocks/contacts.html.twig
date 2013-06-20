@@ -9,7 +9,7 @@
                 {% if block.email %}<p>Эл. почта: <a href="mailto:{{ block.email }}">{{ block.email }}</a></p>{% endif %}
             </td>
             <td>
-                {% if block.lastUpdate %}<p>Обновлено: {{ block.lastUpdate }}</p>{% endif %}
+                {% if block.lastUpdate %}<p>Обновлено: {{ block.lastUpdate|date('d.m.Y H:i') }}</p>{% endif %}
                 {% if block.views %}<p>Просмотров: {{ block.views }}</p>{% endif %}
             </td>
         </tr>
