@@ -7,7 +7,7 @@
  */
 class Ds_Detail_Flat_FlatSale extends Ds_Detail_AbstractDetail
 {
-    protected $template = '@detail/flat.html.twig';
+    protected $template = '@detail/flat_sale.html.twig';
 
     public function getHeadTitle()
     {
