@@ -93,7 +93,7 @@ class Custom_HouseFactory extends Custom_AbstractFactory
         ));
 
         /* @var $detail Ds_Detail_AbstractDetail */
-        $detail = $this->getContainer()->get('detail.house.sale');
+        $detail = $this->getContainer()->get('detail.house.'.$this->action);
         $chain = new Spv_Transformer_TransformerChain();
         $chain->addTransformer('owner', new Ds_Transformer_OwnerTransformer());
         $detail->setTransformerChain($chain);

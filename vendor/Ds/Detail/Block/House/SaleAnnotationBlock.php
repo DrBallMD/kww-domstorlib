@@ -5,27 +5,9 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_House_SaleAnnotationBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_House_SaleAnnotationBlock extends Ds_Detail_Block_House_SupplyAnnotationBlock
 {
-    protected function getAddress()
-    {
-        $data = $this->getData();
-        $out = '';
-        if( !($data->isSetAndArray('Street') or $data->Street->name) ) return;
-
-        $out.= ($data->Street->isSetAnd('abbr')? $data->Street->abbr.' ' : '').$data->Street->name;
-        if( $data->isSetAnd('building_num') ) $out.= ', '.$data->building_num;
-        if( $data->isSetAnd('corpus') ) $out.= (is_numeric($data->corpus)? '/' : '').$data->corpus;
-
-        return $out;
-    }
-
-    protected function getDistrict()
-    {
-        $data = $this->getData();
-    }
-
-    protected function getPrice()
+    protected function getCost()
     {
         $data = $this->getData();
         $out = '';
@@ -41,15 +23,7 @@ class Ds_Detail_Block_House_SaleAnnotationBlock extends Ds_Detail_Block_Abstract
 
     public function render(array $params = array())
     {
-        $data = $this->getData();
-        $out = 'Продажа';
-        if( $data->isSetAnd('room_count') ) $out.= sprintf(' %d комн.', $data->room_count);
-        if( $data->isSetAnd('house_type') ) $out.= ', '.$data->house_type;
-        if( $address = $this->getAddress() ) $out.= ', '.$address;
-        if( $data->isSetAndArray('District') and $dist = $data->District->name ) $out.= ', '.$dist;
-        if( $price = $this->getPrice() ) $out.= ', '.$price;
-        if( $data->isSetAnd('note_addition') ) $out.= ', '.$data->note_addition;
-        return $out;
+        return 'Продажа '.parent::render($params);
     }
 }
 

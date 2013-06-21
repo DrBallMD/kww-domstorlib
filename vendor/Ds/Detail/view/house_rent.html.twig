@@ -1,0 +1,22 @@
+{% extends "@detail/base.html.twig" %}
+
+{% block annotation %}{{ detail.block('house.rent.annotation') }}{% endblock %}
+
+{% block images %}{{ detail.block('images') }}{% endblock %}
+
+{% block inline_blocks %}
+    {{ detail.block('city_location') }}
+    {{ detail.block('rooms') }}
+    {{ detail.block('house.floors') }}
+{% endblock %}
+
+{% block content %}
+    {{ detail.block('house.sizes') }}
+    {{ detail.block('house.buildings') }}
+    {{ detail.block('house.technical') }}
+    {{ detail.block('house.furniture') }}
+    {{ detail.block('finance_rent') }}
+    {{ detail.block('comment') }}
+    {{ detail.block('contacts').render() }}
+    {{ detail.block('navigation').render() }}
+{% endblock %}

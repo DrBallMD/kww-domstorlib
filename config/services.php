@@ -147,4 +147,11 @@ return array(
             'block_factory' => array('value' => '@detail.block.factory'),
         ),
     ),
+    'detail.house.rent' => array(
+        'class' => 'Ds_Detail_House_HouseRent',
+        'arguments' => array(
+            'templating' => array('value' => '@templating'),
+            'block_factory' => array('value' => '@detail.block.factory'),
+        ),
+    ),
 );

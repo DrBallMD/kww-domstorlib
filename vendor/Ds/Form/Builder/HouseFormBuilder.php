@@ -136,10 +136,11 @@ class Ds_Form_Builder_HouseFormBuilder extends Ds_Form_Builder_BaseFormBuilder
 
     protected function buildRent()
     {
-        $form = new Ds_Form_BaseForm('f', array(
-            'templating_key' => 'ds_twig',
+        $form = $this->getContainer()->get('form.base');
+        $form->setProperties(array(
+            'name' => 'f',
             'template' => '@form/house_rent.html.twig',
-            'source_transformer' => new Ds_Form_Transformer_FlatTransformer(),
+            'source_transformer' => new Ds_Form_Transformer_HouseTransformer(),
         ));
 
         $form->addForm(new Ds_Form_Field_RoomsField());

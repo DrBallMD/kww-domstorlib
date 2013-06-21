@@ -112,8 +112,14 @@ class Ds_List_Builder_HouseListBuilder extends Ds_List_Builder_AbstractListBuild
             'classes' => array('domstor_code'),
             'sort' => 'code',
         )))
-
-            ->addColumn('rooms ', $this->createColumn('list.column', array(
+        ->addColumn('type ', $this->createColumn('list.column', array(
+            'template' => '@list/table/table_column.html.twig',
+            'data_key' => 'house_type',
+            'title' => 'Тип',
+            'classes' => array('domstor_type'),
+            'sort' => 'type',
+        )))
+        ->addColumn('rooms ', $this->createColumn('list.column', array(
             'template' => '@list/table/table_column.html.twig',
             'data_key' => 'room_count',
             'title' => 'Число комнат',
@@ -124,19 +130,19 @@ class Ds_List_Builder_HouseListBuilder extends Ds_List_Builder_AbstractListBuild
         $this->addDistrictOrCityColumn($list);
         $this->addAddressColumn($list);
 
-        $list->addColumn('floor', $this->createColumn('list.column', array(
-            'template' => '@list/columns/floor.html.twig',
-            'title' => 'Этаж',
-            'classes' => array('domstor_floor'),
-        )));
-
         $list->addColumn('square', $this->createColumn('list.column', array(
             'template' => '@list/columns/square.html.twig',
             'title' => 'Площадь<br/>общ./жил./кух.',
             'classes' => array('domstor_square'),
             'sort'=>'square',
-        )))
-            ->addColumn('price ', $this->createColumn('list.column', array(
+        )))->addColumn('squareg', $this->createColumn('list.column', array(
+            'template' => '@list/columns/square_ground.html.twig',
+            'title' => 'Площадь участка',
+            'classes' => array('domstor_square_ground'),
+            'sort'=>'squareg',
+        )));
+
+        $list->addColumn('price ', $this->createColumn('list.column', array(
             'template' => '@list/columns/rent.html.twig',
             'title' => 'Арендная ставка',
             'classes' => array('domstor_rent'),

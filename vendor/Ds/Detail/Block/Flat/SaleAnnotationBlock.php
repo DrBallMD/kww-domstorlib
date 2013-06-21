@@ -12,7 +12,7 @@ class Ds_Detail_Block_Flat_SaleAnnotationBlock extends Ds_Detail_Block_Flat_Supp
         return 'Продажа '.parent::render($params);
     }
 
-    protected function getCost()
+    public function getCost()
     {
         $data = $this->getData();
         $out = '';

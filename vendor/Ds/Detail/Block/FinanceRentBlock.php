@@ -58,6 +58,4 @@ class Ds_Detail_Block_FinanceRentBlock extends Ds_Detail_Block_AbstractBlock
         return $this->getData()->get('rent_period');
     }
 
-
 }
-

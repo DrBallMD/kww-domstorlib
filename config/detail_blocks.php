@@ -21,6 +21,7 @@ return array(
     'flat.rent.finance' =>  array('class' => 'Ds_Detail_Block_Flat_RentFinanceBlock', 'template' => '@detail/blocks/flat/rent/finance.html.twig'),
 
     'house.sale.annotation' =>  array('class' => 'Ds_Detail_Block_House_SaleAnnotationBlock'),
+    'house.rent.annotation' =>  array('class' => 'Ds_Detail_Block_House_RentAnnotationBlock'),
     'house.floors' =>  array('class' => 'Ds_Detail_Block_House_FloorsBlock', 'template' => '@detail/blocks/house/floors.html.twig'),
     'house.sizes' =>  array('class' => 'Ds_Detail_Block_House_SizesBlock', 'template' => '@detail/blocks/house/sizes.html.twig'),
     'house.buildings' =>  array('class' => 'Ds_Detail_Block_House_BuildingsBlock', 'template' => '@detail/blocks/house/buildings.html.twig'),
