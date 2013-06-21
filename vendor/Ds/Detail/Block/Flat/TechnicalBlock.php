@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SaleTechnicalblock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_Flat_Technicalblock extends Ds_Detail_Block_AbstractBlock
 {
     protected $communication;
     protected $doors_front;

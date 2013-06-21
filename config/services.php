@@ -133,6 +133,13 @@ return array(
             'block_factory' => array('value' => '@detail.block.factory'),
         ),
     ),
+    'detail.flat.rent' => array(
+        'class' => 'Ds_Detail_Flat_FlatRent',
+        'arguments' => array(
+            'templating' => array('value' => '@templating'),
+            'block_factory' => array('value' => '@detail.block.factory'),
+        ),
+    ),
     'detail.house.sale' => array(
         'class' => 'Ds_Detail_House_HouseSale',
         'arguments' => array(

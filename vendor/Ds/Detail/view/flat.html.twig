@@ -7,14 +7,14 @@
 {% block inline_blocks %}
     {{ detail.block('city_location') }}
     {{ detail.block('rooms') }}
-    {{ detail.block('flat.sale.floors') }}
+    {{ detail.block('flat.floors') }}
 {% endblock %}
 
 {% block content %}
-    {{ detail.block('flat.sale.types') }}
-    {{ detail.block('flat.sale.sizes') }}
-    {{ detail.block('flat.sale.technical') }}
-    {{ detail.block('flat.sale.placing') }}
+    {{ detail.block('flat.types') }}
+    {{ detail.block('flat.sizes') }}
+    {{ detail.block('flat.technical') }}
+    {{ detail.block('flat.placing') }}
     {{ detail.block('finance_sale') }}
     {{ detail.block('comment') }}
     {{ detail.block('contacts').render() }}

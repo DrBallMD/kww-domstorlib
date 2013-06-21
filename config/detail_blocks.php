@@ -9,11 +9,11 @@ return array(
     'contacts' =>  array('class' => 'Ds_Detail_Block_ContactsBlock', 'template' => '@detail/blocks/contacts.html.twig'),
 
     'flat.sale.annotation' =>  array('class' => 'Ds_Detail_Block_Flat_SaleAnnotationBlock'),
-    'flat.sale.floors' =>  array('class' => 'Ds_Detail_Block_Flat_SaleFloorsBlock', 'template' => '@detail/blocks/flat/sale/floors.html.twig'),
-    'flat.sale.types' =>  array('class' => 'Ds_Detail_Block_Flat_SaleTypesBlock', 'template' => '@detail/blocks/flat/sale/types.html.twig'),
-    'flat.sale.sizes' =>  array('class' => 'Ds_Detail_Block_Flat_SaleSizesBlock', 'template' => '@detail/blocks/flat/sale/sizes.html.twig'),
-    'flat.sale.technical' =>  array('class' => 'Ds_Detail_Block_Flat_SaleTechnicalBlock', 'template' => '@detail/blocks/flat/sale/technical.html.twig'),
-    'flat.sale.placing' =>  array('class' => 'Ds_Detail_Block_Flat_SalePlacingBlock', 'template' => '@detail/blocks/flat/sale/placing.html.twig'),
+    'flat.floors' =>  array('class' => 'Ds_Detail_Block_Flat_FloorsBlock', 'template' => '@detail/blocks/flat/floors.html.twig'),
+    'flat.types' =>  array('class' => 'Ds_Detail_Block_Flat_TypesBlock', 'template' => '@detail/blocks/flat/types.html.twig'),
+    'flat.sizes' =>  array('class' => 'Ds_Detail_Block_Flat_SizesBlock', 'template' => '@detail/blocks/flat/sizes.html.twig'),
+    'flat.technical' =>  array('class' => 'Ds_Detail_Block_Flat_TechnicalBlock', 'template' => '@detail/blocks/flat/technical.html.twig'),
+    'flat.placing' =>  array('class' => 'Ds_Detail_Block_Flat_PlacingBlock', 'template' => '@detail/blocks/flat/placing.html.twig'),
     'flat.sale.finance' =>  array('class' => 'Ds_Detail_Block_Flat_SaleFinanceBlock', 'template' => '@detail/blocks/flat/sale/finance.html.twig'),
 
     'house.sale.annotation' =>  array('class' => 'Ds_Detail_Block_House_SaleAnnotationBlock'),

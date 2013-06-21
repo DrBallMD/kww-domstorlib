@@ -1,6 +1,6 @@
 <?php
 
-class Custom_FlatSaleFactory extends Custom_AbstractFactory
+class Custom_FlatFactory extends Custom_AbstractFactory
 {
     protected $ref_city = 2004;
     protected $in_region = false;
@@ -30,13 +30,13 @@ class Custom_FlatSaleFactory extends Custom_AbstractFactory
      *
      * @return Ds_List_ListInterface
      */
-    public function createList(array $params)
+    public function createList($detail_url, array $params)
     {
         $list_builder = $this->getContainer()->get('list.builder.flat');
         $list_builder->init(array(
             'action' => $this->action,
             'in_region' => $this->in_region,
-            'detail_sale_url' => '/detail.php?id=:id',
+            'detail_url' => $detail_url,
         ));
         $list = $list_builder->build();
         $data_loader = $this->getDataLoader();

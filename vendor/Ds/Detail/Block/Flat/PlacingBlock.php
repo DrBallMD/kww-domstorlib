@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SalePlacingBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_Flat_PlacingBlock extends Ds_Detail_Block_AbstractBlock
 {
     protected $windows;
     protected $parking;

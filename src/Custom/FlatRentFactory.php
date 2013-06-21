@@ -1,9 +1,10 @@
 <?php
 
-class Custom_FlatSaleFactory extends Custom_AbstractFactory
+class Custom_FlatRentFactory extends Custom_AbstractFactory
 {
     protected $ref_city = 2004;
     protected $in_region = false;
+    protected $action = 'rent';
 
     /**
      *
@@ -43,8 +44,8 @@ class Custom_FlatSaleFactory extends Custom_AbstractFactory
 
         $params = array_merge($params, array(
             'entity' => 'flat',
-            'master_city' => $this->ref_city,
-            'sale' => true,
+            'ref_city' => $this->ref_city,
+            'rent' => true,
         ));
 
         $list_client = new Ds_List_DataLoaderClient($params);
@@ -63,7 +64,7 @@ class Custom_FlatSaleFactory extends Custom_AbstractFactory
     {
         $params = array_merge($params, array(
             'entity' => 'flat',
-            'master_city' => $this->ref_city,
+            'ref_city' => $this->ref_city,
             'sale' => true,
         ));
 
@@ -87,7 +88,7 @@ class Custom_FlatSaleFactory extends Custom_AbstractFactory
     }
 
     /**
-     * Ds_Counter_CounterInterface
+     * @return Ds_Counter_CounterInterface
      */
     public function createCounter()
     {
@@ -99,4 +100,6 @@ class Custom_FlatSaleFactory extends Custom_AbstractFactory
 
         return $counter;
     }
+
+
 }

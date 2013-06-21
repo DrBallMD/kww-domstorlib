@@ -33,13 +33,13 @@ class Ds_List_Builder_FlatListBuilder extends Ds_List_Builder_AbstractListBuilde
         $list = $this->getContainer()->get('list.base');
         $list->addColumn('thumb ', $this->createColumn('list.column', array(
             'template' => '@list/columns/thumb.html.twig',
-            'template_vars' => array('url' => $this->detail_sale_url ),
+            'template_vars' => array('url' => $this->detail_url ),
             'title' => 'Фото',
             'classes' => array('domstor_thumb'),
 
         )))->addColumn('code', $this->createColumn('list.column', array(
             'template' => '@list/columns/code.html.twig',
-            'template_vars' => array('url' => $this->detail_sale_url),
+            'template_vars' => array('url' => $this->detail_url),
             'data_key' => 'code',
             'title' => 'Код',
             'classes' => array('domstor_code'),
@@ -100,13 +100,13 @@ class Ds_List_Builder_FlatListBuilder extends Ds_List_Builder_AbstractListBuilde
         $list = $this->getContainer()->get('list.base');
         $list->addColumn('thumb ', $this->createColumn('list.column', array(
             'template' => '@list/columns/thumb.html.twig',
-            'template_vars' => array('url' => $this->detail_sale_url ),
+            'template_vars' => array('url' => $this->detail_url ),
             'title' => 'Фото',
             'classes' => array('domstor_thumb'),
 
         )))->addColumn('code', $this->createColumn('list.column', array(
             'template' => '@list/columns/code.html.twig',
-            'template_vars' => array('url' => $this->detail_sale_url),
+            'template_vars' => array('url' => $this->detail_url),
             'data_key' => 'code',
             'title' => 'Код',
             'classes' => array('domstor_code'),
