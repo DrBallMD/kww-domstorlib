@@ -5,6 +5,7 @@ return array(
     'city_location' =>  array('class' => 'Ds_Detail_Block_CityLocationBlock', 'template' => '@detail/blocks/city_location.html.twig'),
     'rooms' =>  array('class' => 'Ds_Detail_Block_RoomsBlock', 'template' => '@detail/blocks/rooms.html.twig'),
     'finance_sale' =>  array('class' => 'Ds_Detail_Block_FinanceSaleBlock', 'template' => '@detail/blocks/finance_sale.html.twig'),
+    'finance_rent' =>  array('class' => 'Ds_Detail_Block_FinanceRentBlock', 'template' => '@detail/blocks/finance_rent.html.twig'),
     'comment' =>  array('class' => 'Ds_Detail_Block_CommentBlock', 'template' => '@detail/blocks/comment.html.twig'),
     'contacts' =>  array('class' => 'Ds_Detail_Block_ContactsBlock', 'template' => '@detail/blocks/contacts.html.twig'),
 
