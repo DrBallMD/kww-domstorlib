@@ -1,12 +1,15 @@
 <?php
-require __DIR__.'/../domstorlib/bootstrap.php';
-
+require_once  dirname(__FILE__).'/../domstorlib/bootstrap.php';
 /*
  * In controller
  */
 
-// Creating factory
-$factory = new Custom_FlatSaleFactory();
+$estate_type = empty($_GET['estate'])? 'flat' : $_GET['estate'];
+$action_type = empty($_GET['action'])? 'sale' : $_GET['action'];
+
+
+$builder = new Custom_FactoryBuilder();
+$factory = $builder->build(sprintf('%s_%s', $estate_type, $action_type));
 
 // Create form, bind with request and get value for request to data source
 $form = $factory->createForm();
@@ -15,7 +18,7 @@ $form_value = $form->getSourceValue();
 
 // Get UrlGenetrator and set url pattern for current page
 $url_generator = $factory->getUrlGenerator();
-$url_generator->setUrlPattern('/index2.php');
+$url_generator->setUrlPattern(sprintf('/index2.php?estate=%s&action=%s', $estate_type, $action_type));
 
 // Set form value to UrlGenerator
 $url_generator->setFormValue(array('f' => $form->getValue()));
@@ -45,26 +48,26 @@ $hs->set('form', $form_value);
 $hs->set('sort', array('s' => $sort_value));
 
 // Create list with params for data request
-$list = $factory->createList($form_value
+$list = $factory->createList('/detail.php?id=:id', $form_value
         + array(
             'room_no_empty' => 1,
             's' => $sort_value,
             'page' => $page_value,
-            'limit'=>$onpage_value,
-            'target' => 'table'
+            'limit' => $onpage_value,
+            'target' => 'table',
             )
         );
 
 // Create counter with params for data request
 $counter = $factory->createCounter();
-$counter->need('flat_sale', $form_value + array('sale' => true, 'room_no_empty' => 1));
+$counter->need('total_count', $form_value + array('room_no_empty' => 1));
 
 // Load data
 $factory->getDataLoader()->load();
 
 // Get and setup pagination
 $pagination = $factory->createPagination();
-$pagination->setTotal($counter->get('flat_sale'))
+$pagination->setTotal($counter->get('total_count'))
            ->setCurrent($page_value)
            ->setOnPage($onpage_value);
 
