@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_House_SaleFurnitureBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_House_FurnitureBlock extends Ds_Detail_Block_AbstractBlock
 {
     protected $furniture;
 
@@ -14,6 +14,11 @@ class Ds_Detail_Block_House_SaleFurnitureBlock extends Ds_Detail_Block_AbstractB
         $vars = array('block' => $this);
 
         return $this->getTemplating()->render($this->getTemplate(), $vars);
+    }
+
+    public function active()
+    {
+        return $this->furniture or $this->getData()->fence or $this->roadsActive();
     }
 
     public function furniture()

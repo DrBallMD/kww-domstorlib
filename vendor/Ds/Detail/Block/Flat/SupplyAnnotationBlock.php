@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_Flat_SupplyAnnotationBlock extends Ds_Detail_Block_AbstractBlock
+abstract class Ds_Detail_Block_Flat_SupplyAnnotationBlock extends Ds_Detail_Block_AbstractBlock
 {
     protected function getSquare()
     {
@@ -44,19 +44,7 @@ class Ds_Detail_Block_Flat_SupplyAnnotationBlock extends Ds_Detail_Block_Abstrac
         $data = $this->getData();
     }
 
-    protected function getPrice()
-    {
-        $data = $this->getData();
-        $out = '';
-
-        if( $price = $data->price_full )
-            $out = number_format ($price, 0, '', ' ');
-
-        if( $price and $curr = $data->price_currency )
-            $out.= ' '.$curr;
-
-        return $out;
-    }
+    abstract public function getCost();
 
     public function render(array $params = array())
     {
@@ -69,7 +57,7 @@ class Ds_Detail_Block_Flat_SupplyAnnotationBlock extends Ds_Detail_Block_Abstrac
         if( $address = $this->getAddress() ) $out.= ', '.$address;
         if( $data->isSetAndArray('District') and $dist = $data->District->name ) $out.= ', '.$dist;
         if( $data->isSetAndArray('City') and $city = $data->City->name ) $out.= ', '.$city;
-        if( $price = $this->getPrice() ) $out.= ', '.$price;
+        if( $price = $this->getCost() ) $out.= ', '.$price;
         if( $data->isSetAnd('note_addition') ) $out.= ', '.$data->note_addition;
         return $out;
     }

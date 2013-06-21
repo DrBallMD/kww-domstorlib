@@ -5,54 +5,10 @@
  *
  * @author pahhan
  */
-class Custom_HouseSaleFactory extends Ds_Factory_AbstractFactory
+class Custom_HouseFactory extends Custom_AbstractFactory
 {
     protected $location = 2004;
     protected $in_region = false;
-    protected $action = 'sale';
-
-    /**
-     * @return Ds_DataLoader_DataLoaderInterface
-     */
-    public function getDataLoader()
-    {
-        return $this->getContainer()->get('data_loader');
-    }
-
-    /**
-     * @return Ds_UrlGenerator_UrlGeneratorInterface
-     */
-    public function getUrlGenerator()
-    {
-        return $this->getContainer()->get('url_generator');
-    }
-
-    /**
-     *
-     * @return Ds_Definer_PageDefiner
-     */
-    public function getPageDefiner()
-    {
-        return $this->getContainer()->get('definer.page');
-    }
-
-    /**
-     *
-     * @return Ds_Definer_OnPageDefiner
-     */
-    public function getOnPageDefiner()
-    {
-        return $this->getContainer()->get('definer.onpage');
-    }
-
-    /**
-     *
-     * @return Ds_Definer_SortDefiner
-     */
-    public function getSortDefiner()
-    {
-        return $this->getContainer()->get('definer.sort');
-    }
 
     /**
      *
@@ -79,13 +35,13 @@ class Custom_HouseSaleFactory extends Ds_Factory_AbstractFactory
      *
      * @return Ds_List_ListInterface
      */
-    public function createList(array $params)
+    public function createList($detail_url, array $params)
     {
         $list_builder = $this->getContainer()->get('list.builder.house');
         $list_builder->init(array(
             'action' => $this->action,
             'in_region' => $this->in_region,
-            'detail_sale_url' => '/house_detail.php?id=:id',
+            'detail_url' => $detail_url,
         ));
         $list = $list_builder->build();
         $data_loader = $this->getDataLoader();
@@ -93,7 +49,7 @@ class Custom_HouseSaleFactory extends Ds_Factory_AbstractFactory
         $params = array_merge($params, array(
             'entity' => 'house',
             'master_city' => $this->location,
-            'sale' => true,
+            $this->action => true,
         ));
 
         $list_client = new Ds_List_DataLoaderClient($params);
@@ -101,6 +57,21 @@ class Custom_HouseSaleFactory extends Ds_Factory_AbstractFactory
         $data_loader->registerClient($list_client);
 
         return $list;
+    }
+
+    /**
+     * Ds_Counter_CounterInterface
+     */
+    public function createCounter()
+    {
+        $counter = $this->getContainer()->get('counter');
+        $counter->setParams(array(
+            'entity' => 'house',
+            'ref_city' => $this->location,
+            $this->action => true,
+        ));
+
+        return $counter;
     }
 
     public function getDefaultSort()
@@ -118,7 +89,7 @@ class Custom_HouseSaleFactory extends Ds_Factory_AbstractFactory
         $params = array_merge($params, array(
             'entity' => 'house',
             'master_city' => $this->location,
-            'sale' => true,
+            $this->action => true,
         ));
 
         /* @var $detail Ds_Detail_AbstractDetail */

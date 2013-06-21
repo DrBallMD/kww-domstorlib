@@ -44,7 +44,7 @@ class Custom_FlatFactory extends Custom_AbstractFactory
         $params = array_merge($params, array(
             'entity' => 'flat',
             'master_city' => $this->ref_city,
-            'sale' => true,
+            $this->action => true,
         ));
 
         $list_client = new Ds_List_DataLoaderClient($params);
@@ -64,11 +64,11 @@ class Custom_FlatFactory extends Custom_AbstractFactory
         $params = array_merge($params, array(
             'entity' => 'flat',
             'master_city' => $this->ref_city,
-            'sale' => true,
+            $this->action => true,
         ));
 
         /* @var $detail Ds_Detail_AbstractDetail */
-        $detail = $this->getContainer()->get('detail.flat.sale');
+        $detail = $this->getContainer()->get('detail.flat.'.$this->action);
         $chain = new Spv_Transformer_TransformerChain();
         $chain->addTransformer('owner', new Ds_Transformer_OwnerTransformer());
         $detail->setTransformerChain($chain);
@@ -95,6 +95,7 @@ class Custom_FlatFactory extends Custom_AbstractFactory
         $counter->setParams(array(
             'entity' => 'flat',
             'ref_city' => $this->ref_city,
+            $this->action => true,
         ));
 
         return $counter;

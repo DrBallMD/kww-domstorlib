@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Ds_Detail_Block_House_SaleFloorsBlock extends Ds_Detail_Block_AbstractBlock
+class Ds_Detail_Block_House_FloorsBlock extends Ds_Detail_Block_AbstractBlock
 {
     public function render(array $params = array())
     {

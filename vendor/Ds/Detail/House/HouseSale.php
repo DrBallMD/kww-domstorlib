@@ -7,7 +7,7 @@
  */
 class Ds_Detail_House_HouseSale extends Ds_Detail_AbstractDetail
 {
-    protected $template = '@detail/house.html.twig';
+    protected $template = '@detail/house_sale.html.twig';
 
     public function getHeadTitle()
     {

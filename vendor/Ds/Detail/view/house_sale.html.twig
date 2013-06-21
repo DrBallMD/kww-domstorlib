@@ -7,14 +7,14 @@
 {% block inline_blocks %}
     {{ detail.block('city_location') }}
     {{ detail.block('rooms') }}
-    {{ detail.block('house.sale.floors') }}
+    {{ detail.block('house.floors') }}
 {% endblock %}
 
 {% block content %}
-    {{ detail.block('house.sale.sizes') }}
-    {{ detail.block('house.sale.buildings') }}
-    {{ detail.block('house.sale.technical') }}
-    {{ detail.block('flat.sale.placing') }}
+    {{ detail.block('house.sizes') }}
+    {{ detail.block('house.buildings') }}
+    {{ detail.block('house.technical') }}
+    {{ detail.block('house.furniture') }}
     {{ detail.block('finance_sale') }}
     {{ detail.block('comment') }}
     {{ detail.block('contacts').render() }}
