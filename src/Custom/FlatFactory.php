@@ -2,7 +2,7 @@
 
 class Custom_FlatFactory extends Custom_AbstractFactory
 {
-    protected $ref_city = 2004;
+    protected $location = 2004;
     protected $in_region = false;
 
     /**
@@ -13,7 +13,7 @@ class Custom_FlatFactory extends Custom_AbstractFactory
     {
         $builder = $this->getContainer()->get('form.builder.flat');
         $builder->init(array(
-            'ref_city' => $this->ref_city,
+            'ref_city' => $this->location,
             'in_region' => $this->in_region,
             'action' => $this->action,
         ));
@@ -43,7 +43,7 @@ class Custom_FlatFactory extends Custom_AbstractFactory
 
         $params = array_merge($params, array(
             'entity' => 'flat',
-            'master_city' => $this->ref_city,
+            'master_city' => $this->location,
             $this->action => true,
         ));
 
@@ -63,7 +63,7 @@ class Custom_FlatFactory extends Custom_AbstractFactory
     {
         $params = array_merge($params, array(
             'entity' => 'flat',
-            'master_city' => $this->ref_city,
+            'master_city' => $this->location,
             $this->action => true,
         ));
 
@@ -81,6 +81,11 @@ class Custom_FlatFactory extends Custom_AbstractFactory
         return $detail;
     }
 
+    public function getAdditionalApiParams()
+    {
+        return array('room_no_empty' => 1);
+    }
+
     public function getDefaultSort()
     {
         return array('rooms' => 'a', 'district' => 'a', 'city' => 'a','address' => 'a');
@@ -94,7 +99,7 @@ class Custom_FlatFactory extends Custom_AbstractFactory
         $counter = $this->getContainer()->get('counter');
         $counter->setParams(array(
             'entity' => 'flat',
-            'ref_city' => $this->ref_city,
+            'ref_city' => $this->location,
             $this->action => true,
         ));
 

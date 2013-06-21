@@ -15,7 +15,10 @@ $hs = new Ds_Helper_Session();
 
 $form_params = $hs->get('form', array());
 $sort_params = $hs->get('sort', array());
-$params = $form_params + $sort_params + array('room_no_empty' => 1,'target' => 'detail');
+$params = $form_params
+        + $sort_params
+        + array('target' => 'detail')
+        + $factory->getAdditionalApiParams();
 $params['id'] = $_GET['id'];
 if( !$params['id'] )
     die('Undefined id');

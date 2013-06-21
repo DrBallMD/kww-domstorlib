@@ -19,13 +19,14 @@ abstract class Custom_AbstractFactory extends Ds_Factory_AbstractFactory
         $this->action = $action;
     }
 
-        /**
+    /**
      * @return Ds_DataLoader_DataLoaderInterface
      */
     public function getDataLoader()
     {
         return $this->getContainer()->get('data_loader');
     }
+
     /**
      *
      * @return Ds_Pagination_Pagination
@@ -68,6 +69,11 @@ abstract class Custom_AbstractFactory extends Ds_Factory_AbstractFactory
     public function getUrlGenerator()
     {
         return $this->getContainer()->get('url_generator');
+    }
+
+    public function getAdditionalApiParams()
+    {
+        return array();
     }
 }
 

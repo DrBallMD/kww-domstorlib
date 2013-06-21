@@ -50,17 +50,17 @@ $hs->set('sort', array('s' => $sort_value));
 // Create list with params for data request
 $list = $factory->createList('/detail.php?id=:id', $form_value
         + array(
-            'room_no_empty' => 1,
             's' => $sort_value,
             'page' => $page_value,
             'limit' => $onpage_value,
             'target' => 'table',
             )
+        + $factory->getAdditionalApiParams()
         );
 
 // Create counter with params for data request
 $counter = $factory->createCounter();
-$counter->need('total_count', $form_value + array('room_no_empty' => 1));
+$counter->need('total_count', $form_value + $factory->getAdditionalApiParams());
 
 // Load data
 $factory->getDataLoader()->load();
