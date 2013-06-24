@@ -15,7 +15,7 @@
 					<td class="nasn"><strong>ֱ‏הזוע:</strong></td>
 					<td>
 						<?php $this->getField('rent')->displayLabelField('min')?>
-						<?php $this->getField('rent')->displayLabelField('max')?> נ. 
+						<?php $this->getField('rent')->displayLabelField('max')?> נ.
 						<?php $this->getField('rent')->displayLabelField('period')?>
 					</td>
 				</tr>
@@ -38,8 +38,14 @@
 						<strong><?php $this->displayLabel('district')?>:</strong>
 						<?php $this->displayField('district')?>
 					</td>
+                    <?php if( $this->hasField('suburban') ): ?>
+                    <td class="suburban">
+						<strong><?php $this->displayLabel('suburban')?>:</strong>
+						<?php $this->displayField('suburban')?>
+					</td>
+                    <?php endif ?>
 				</tr>
-			</table>		
+			</table>
 		</div>
 	</div>
 	<noscript>

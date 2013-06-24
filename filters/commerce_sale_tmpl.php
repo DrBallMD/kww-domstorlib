@@ -7,7 +7,7 @@
 				<tr>
 					<td class="nasn"><strong>÷ена:</strong></td>
 					<td>
-						<?php $this->getField('price')->displayLabelField('min')?> 
+						<?php $this->getField('price')->displayLabelField('min')?>
 						<?php $this->getField('price')->displayLabelField('max')?> тыс.р.
 					</td>
 				</tr>
@@ -44,8 +44,14 @@
 						<strong><?php $this->displayLabel('district')?>:</strong>
 						<?php $this->displayField('district')?>
 					</td>
+                    <?php if( $this->hasField('suburban') ): ?>
+                    <td class="suburban">
+						<strong><?php $this->displayLabel('suburban')?>:</strong>
+						<?php $this->displayField('suburban')?>
+					</td>
+                    <?php endif ?>
 				</tr>
-			</table>		
+			</table>
 		</div>
 	</div>
 	<noscript>
@@ -53,4 +59,4 @@
 	</noscript>
 	<?php $this->displayCloseTag()?>
 	<div class="center"><?php $this->displayField('submit_link')?></div>
-</div>    
+</div>
