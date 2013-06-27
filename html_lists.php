@@ -1,5 +1,5 @@
 <?php
-class DomstorCommonField extends HtmlTableField
+class Domstor_List_Field_Common extends HtmlTableField
 {
 	protected $in_region;
 
@@ -118,7 +118,7 @@ class DomstorCommonField extends HtmlTableField
 	}
 }
 
-class DomstorContactField extends DomstorCommonField
+class Domstor_List_Field_Contact extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -148,7 +148,7 @@ class DomstorContactField extends DomstorCommonField
 	}
 }
 
-class DomstorCommentField extends DomstorCommonField
+class Domstor_List_Field_Comment extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -158,7 +158,7 @@ class DomstorCommentField extends DomstorCommonField
 	}
 }
 
-class DomstorCodeField extends DomstorCommonField
+class Domstor_List_Field_Code extends Domstor_List_Field_Common
 {
 	protected $object_href;
 
@@ -171,7 +171,7 @@ class DomstorCodeField extends DomstorCommonField
 	}
 }
 
-class DomstorThumbField extends DomstorCommonField
+class Domstor_List_Field_Thumb extends Domstor_List_Field_Common
 {
 	protected $object_href;
 
@@ -189,7 +189,7 @@ class DomstorThumbField extends DomstorCommonField
 	}
 }
 
-class DomstorPriceField extends DomstorCommonField
+class Domstor_List_Field_Price extends Domstor_List_Field_Common
 {
 	protected $action;
 
@@ -233,7 +233,7 @@ class DomstorPriceField extends DomstorCommonField
 	}
 }
 
-class DomstorDemandPriceField extends DomstorCommonField
+class Domstor_List_Field_DemandPrice extends Domstor_List_Field_Common
 {
 	protected $action;
 
@@ -254,7 +254,7 @@ class DomstorDemandPriceField extends DomstorCommonField
 
 }
 
-class DomstorFlatTypeField extends DomstorCommonField
+class Domstor_List_Field_FlatType extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -265,58 +265,7 @@ class DomstorFlatTypeField extends DomstorCommonField
 	}
 }
 
-class DomstorAddressField extends DomstorCommonField
-{
-	protected $in_region;
-	protected $object_href;
-
-	public function getValue()
-	{
-		$a = $this->getTable()->getRow();
-
-		$address = '';
-
-        $street = '';
-        if( $a['street'] and $a['street_id'] ) {
-            $street = $a['street'];
-            if( isset($a['building_num']) and $a['building_num'] ) {
-                $street.= ', '.$a['building_num'];
-                if( $a['corpus'] ) {
-                    if( is_numeric($a['corpus']) ) {
-                        $street.= '/';
-                    }
-                    $street.= $a['corpus'];
-                }
-            }
-        }
-
-		if( $this->in_region )
-		{
-			if( $a['subregion'] ) $address.= $a['subregion'].', ';
-            if( $a['location_name'] ) $address.= $a['location_name'].', ';
-            $address.= $street? $street : $a['address_note'];
-            $address = trim($address, ', ');
-		}
-		else
-		{
-			$address = $street;
-		}
-
-		if( isset($a['cooperative_name']) and $a['cooperative_name'] ) $address.= ', '.$a['cooperative_name'];
-        $clear_address = trim($address, ', ');
-
-        $out = '';
-		if( $clear_address )
-		{
-			$href = str_replace('%id', $a['id'], $this->object_href);
-            $out = sprintf('<a href="%s" title="Перейти на страницу объекта %s" class="domstor_link">%s</a>',
-                    $href, $a['code'], $clear_address);
-		}
-		return $out;
-	}
-}
-
-class DomstorAddressDemandField extends DomstorCommonField
+class Domstor_List_Field_AddressDemand extends Domstor_List_Field_Common
 {
 	protected $in_region;
 	protected $object_href;
@@ -346,7 +295,7 @@ class DomstorAddressDemandField extends DomstorCommonField
 	}
 }
 
-class DomstorSquareGroundField extends DomstorCommonField
+class Domstor_List_Field_SquareGround extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -364,7 +313,7 @@ class DomstorSquareGroundField extends DomstorCommonField
 	}
 }
 
-class DomstorSquareGroundDeamandField extends DomstorCommonField
+class Domstor_List_Field_SquareGroundDeamand extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -376,7 +325,7 @@ class DomstorSquareGroundDeamandField extends DomstorCommonField
 
 //FLAT-FIELDS**********************************************
 
-class DomstorFlatFloorField extends DomstorCommonField
+class DomstorFlatFloorField extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -392,7 +341,7 @@ class DomstorFlatFloorField extends DomstorCommonField
 	}
 }
 
-class DomstorFlatSquareField extends DomstorCommonField
+class DomstorFlatSquareField extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -410,7 +359,7 @@ class DomstorFlatSquareField extends DomstorCommonField
 	}
 }
 
-class DomstorFlatBalconyField extends DomstorCommonField
+class DomstorFlatBalconyField extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -445,7 +394,7 @@ class DomstorFlatBalconyField extends DomstorCommonField
 	}
 }
 
-class DomstorFlatDemandRoomsField extends DomstorCommonField
+class DomstorFlatDemandRoomsField extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -460,7 +409,7 @@ class DomstorFlatDemandRoomsField extends DomstorCommonField
 	}
 }
 
-class DomstorFlatDemandFloorField extends DomstorCommonField
+class DomstorFlatDemandFloorField extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -475,7 +424,7 @@ class DomstorFlatDemandFloorField extends DomstorCommonField
 
 //LAND-FIELDS**********************************************
 
-class DomstorLandAddressField extends DomstorCommonField
+class DomstorLandAddressField extends Domstor_List_Field_Common
 {
 	protected $object_href;
 	public function getValue()
@@ -495,7 +444,7 @@ class DomstorLandAddressField extends DomstorCommonField
 }
 
 //COMMERCE-FIELDS**********************************************
-class DomstorCommercePurposeField extends DomstorCommonField
+class DomstorCommercePurposeField extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -524,7 +473,7 @@ class DomstorCommercePurposeField extends DomstorCommonField
 	}
 }
 
-class DomstorCommerceFloorField extends DomstorCommonField
+class DomstorCommerceFloorField extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -567,7 +516,7 @@ class DomstorCommerceFloorField extends DomstorCommonField
 	}
 }
 
-class DomstorCommerceSquareField extends DomstorCommonField
+class DomstorCommerceSquareField extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -578,7 +527,7 @@ class DomstorCommerceSquareField extends DomstorCommonField
 	}
 }
 
-class DomstorCommerceSquareGroundField extends DomstorCommonField
+class DomstorCommerceSquareGroundField extends Domstor_List_Field_Common
 {
 	public function getValue()
 	{
@@ -592,7 +541,7 @@ class DomstorCommerceSquareGroundField extends DomstorCommonField
 	}
 }
 
-class DomstorCommercePriceField extends DomstorCommonField
+class DomstorCommercePriceField extends Domstor_List_Field_Common
 {
 	protected $action;
 
@@ -655,7 +604,7 @@ class DomstorCommercePriceField extends DomstorCommonField
 	}
 }
 
-class DomstorCommerceDemandPriceField extends DomstorCommonField
+class DomstorCommerceDemandPriceField extends Domstor_List_Field_Common
 {
 	protected $action;
 
@@ -751,7 +700,7 @@ class DomstorCommerceDemandPriceField extends DomstorCommonField
 	}
 }
 
-class DomstorCommerceAddressField extends DomstorCommonField
+class DomstorCommerceAddressField extends Domstor_List_Field_Common
 {
 	protected $in_region;
 	protected $object_href;
@@ -905,7 +854,7 @@ class DomstorCommerceAddressField extends DomstorCommonField
  */
  }
 
-class DomstorCommerceDemandAddressField extends DomstorCommonField
+class DomstorCommerceDemandAddressField extends Domstor_List_Field_Common
 {
 	protected $in_region;
 	protected $object_href;
@@ -1045,7 +994,7 @@ class DomstorCommonTable extends HtmlTable
 		//print_r($this->data);
 		$this->css_class='domstor_table';
 
-		$code_field = new DomstorCodeField( array(
+		$code_field = new Domstor_List_Field_Code( array(
 				'name'=>'code',
 				'title'=>'Код',
 				'css_class'=>'domstor_code',
@@ -1062,7 +1011,7 @@ class DomstorCommonTable extends HtmlTable
 			'sort_name'=>'sort-type',
 		) );
 
-		$contact_field = new DomstorContactField( array(
+		$contact_field = new Domstor_List_Field_Contact( array(
 				'name'=>'contact_phone',
 				'title'=>'Контактный телефон',
 				'css_class'=>'domstor_contact',
@@ -1070,7 +1019,7 @@ class DomstorCommonTable extends HtmlTable
 				'position'=>300,
 		));
 
-		$note_web_field = new DomstorCommentField( array(
+		$note_web_field = new Domstor_List_Field_Comment( array(
 				'name'=>'note_web',
 				'title'=>'Комментарий',
 				'css_class'=>'domstor_note_web',
@@ -1104,7 +1053,7 @@ class DomstorObjectTable extends DomstorCommonTable
 	{
 		parent::__construct($attr);
 
-		$thumb_field = new DomstorThumbField( array(
+		$thumb_field = new Domstor_List_Field_Thumb( array(
 				'name'=>'thumb',
 				'title'=>'Фото',
 				'css_class'=>'domstor_thumb',
@@ -1112,7 +1061,7 @@ class DomstorObjectTable extends DomstorCommonTable
 				'object_href'=>$this->object_href,
 		));
 
-		$price_field = new DomstorPriceField( array(
+		$price_field = new Domstor_List_Field_Price( array(
 				'name'=>'price',
 				'css_class'=>'domstor_price',
 				'action'=>$this->action,
@@ -1120,7 +1069,7 @@ class DomstorObjectTable extends DomstorCommonTable
 				'position'=>260,
 		));
 
-        $district_field = new DomstorCommonField( array(
+        $district_field = new Domstor_List_Field_Common( array(
 				'name'=>'district',
 				'title'=>'Район',
 				'css_class'=>'domstor_district',
@@ -1131,7 +1080,7 @@ class DomstorObjectTable extends DomstorCommonTable
                     new Domstor_Transformer_Supply_CityDistrict(),
 		));
 
-        $address_field = new DomstorCommonField( array(
+        $address_field = new Domstor_List_Field_Common( array(
 				'name'=>'address',
 				'title'=>'Адрес',
 				'css_class'=>'domstor_address',
@@ -1156,7 +1105,7 @@ class DomstorDemandTable extends DomstorCommonTable
 	public function __construct($attr)
 	{
 		parent::__construct($attr);
-		$price_field = new DomstorDemandPriceField( array(
+		$price_field = new Domstor_List_Field_DemandPrice( array(
 				'name'=>'price',
 				'css_class'=>'domstor_price',
 				'title'=>'Бюджет',
@@ -1348,7 +1297,7 @@ class HouseSaleList extends DomstorObjectTable
 			'position'=>234,
 		) );
 
-		$square_ground_field = new DomstorSquareGroundField( array(
+		$square_ground_field = new Domstor_List_Field_SquareGround( array(
 			'name'=>'square_round',
 			'title'=>'Площадь участка',
 			'css_class'=>'domstor_square_round',
@@ -1411,7 +1360,7 @@ class HousePurchaseList extends DomstorDemandTable
 			'position'=>234,
 		));
 
-		$square_ground_field = new DomstorSquareGroundDeamandField( array(
+		$square_ground_field = new Domstor_List_Field_SquareGroundDeamand( array(
 			'name'=>'square_round',
 			'title'=>'Площадь участка',
 			'css_class'=>'domstor_square_round',
@@ -1533,7 +1482,7 @@ class LandSaleList extends DomstorObjectTable
 
 		$this->getField('type')->setTitle('Тип участка');
 
-		$square_field = new DomstorSquareGroundField( array(
+		$square_field = new Domstor_List_Field_SquareGround( array(
 			'name'=>'square_ground',
 			'title'=>'Площадь',
 			'css_class'=>'domstor_square_ground',
@@ -1585,14 +1534,14 @@ class LandPurchaseList extends DomstorDemandTable
 		parent::__construct($attr);
 		$this->getField('type')->setTitle('Тип участка');
 
-		$square_field = new DomstorSquareGroundDeamandField( array(
+		$square_field = new Domstor_List_Field_SquareGroundDeamand( array(
 			'name'=>'square_ground',
 			'title'=>'Площадь',
 			'css_class'=>'domstor_square_ground',
 			'position'=>101,
 		) );
 
-		$address_field = new DomstorAddressDemandField( array(
+		$address_field = new Domstor_List_Field_AddressDemand( array(
 			'name'=>'address',
 			'title'=>'Местоположение',
 			'css_class'=>'domstor_address',
