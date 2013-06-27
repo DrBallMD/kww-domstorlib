@@ -3,6 +3,23 @@ class DomstorCommonField extends HtmlTableField
 {
 	protected $in_region;
 
+    /**
+     *
+     * @var Domstor_Transformer_Interface
+     */
+    protected $transformer;
+
+    public function setTransformer(Domstor_Transformer_Interface $transformer) {
+        $this->transformer = $transformer;
+    }
+
+    public function getValue() {
+        if( $this->transformer ) {
+            return $this->transformer->get($this->getRow());
+        }
+        return parent::getValue();
+    }
+
 	public function isInRegion()
 	{
 		return $this->getTable()->isInRegion();
@@ -1025,7 +1042,7 @@ class DomstorCommonTable extends HtmlTable
 	public function __construct($attr)
 	{
 		parent::__construct($attr);
-		//var_dump($this->data);
+		//print_r($this->data);
 		$this->css_class='domstor_table';
 
 		$code_field = new DomstorCodeField( array(
@@ -1045,15 +1062,6 @@ class DomstorCommonTable extends HtmlTable
 			'sort_name'=>'sort-type',
 		) );
 
-		$district_field = new HtmlTableField( array(
-				'name'=>'district',
-				'title'=>'Район',
-				'css_class'=>'domstor_district',
-				'position'=>200,
-				'sort_name'=>'sort-district',
-		));
-
-
 		$contact_field = new DomstorContactField( array(
 				'name'=>'contact_phone',
 				'title'=>'Контактный телефон',
@@ -1072,7 +1080,7 @@ class DomstorCommonTable extends HtmlTable
 
 		$this->addField($code_field)
 			 ->addField($type_field)
-			 ->addField($district_field)
+			 //->addField($district_field)
 			 ->addField($contact_field)
 			 ->addField($note_web_field)
 		;
@@ -1112,18 +1120,31 @@ class DomstorObjectTable extends DomstorCommonTable
 				'position'=>260,
 		));
 
-		$address_field = new DomstorAddressField( array(
+        $district_field = new DomstorCommonField( array(
+				'name'=>'district',
+				'title'=>'Район',
+				'css_class'=>'domstor_district',
+				'position'=>200,
+				'sort_name'=>'sort-district',
+                'transformer' => $this->in_region?
+                    new Domstor_Transformer_Supply_RegionDistrict() :
+                    new Domstor_Transformer_Supply_CityDistrict(),
+		));
+
+        $address_field = new DomstorCommonField( array(
 				'name'=>'address',
 				'title'=>'Адрес',
 				'css_class'=>'domstor_address',
-				'in_region'=>$this->in_region,
-				'object_href'=>$this->object_href,
 				'position'=>230,
 				'sort_name'=>'sort-street',
+                'transformer' => $this->in_region?
+                    new Domstor_Transformer_Supply_RegionAddress() :
+                    new Domstor_Transformer_Supply_CityAddress(),
 		));
 
 		$this->addField($price_field)
 			 ->addField($address_field)
+             ->addField($district_field)
 		;
 		if( $this->checkThumb() ) $this->addField($thumb_field);
 		if( $this->action=='rent' )$this->getField('price')->setSortName('sort-rent');
@@ -1143,9 +1164,17 @@ class DomstorDemandTable extends DomstorCommonTable
 				'sort_name'=>'sort-price',
 				'position'=>260,
 		));
+        $this->addField($price_field);
 
-		$this->addField($price_field)
-		;
+        $district_field = new HtmlTableField( array(
+				'name'=>'district',
+				'title'=>'Район',
+				'css_class'=>'domstor_district',
+				'position'=>200,
+				'sort_name'=>'sort-district',
+		));
+		$this->addField($district_field);
+
 		if( $this->action=='rent' )$this->getField('price')->setSortName('sort-rent');
 	}
 }
@@ -1293,8 +1322,6 @@ class HouseSaleList extends DomstorObjectTable
 	{
 		parent::__construct($attr);
 
-		$this->getField('address')->setTitle('Местоположение');
-
 		$room_count_field = new HtmlTableField( array(
 			'name'=>'room_count',
 			'title'=>'Число комнат',
@@ -1343,11 +1370,11 @@ class HouseSaleList extends DomstorObjectTable
 			 ->addField($other_building_field)
 		;
 
-		if( $this->in_region )
-		{
-			$this->deleteField('district');
-			$this->getField('address')->setTitle('Местоположение');
-		}
+//		if( $this->in_region )
+//		{
+//			$this->deleteField('district');
+//			$this->getField('address')->setTitle('Местоположение');
+//		}
 	}
 }
 
@@ -1419,7 +1446,6 @@ class GarageSaleList extends DomstorObjectTable
 	{
 		parent::__construct($attr);
 
-		$this->getField('address')->setTitle('Местоположение');
 		$this->getField('type')->setTitle('Вид гаража');
 
 		$placing_type_field = new HtmlTableField( array(
@@ -1515,16 +1541,6 @@ class LandSaleList extends DomstorObjectTable
 			'sort_name'=>'sort-square',
 		) );
 
-		$address_field = new DomstorAddressField( array(
-			'name'=>'address',
-			'title'=>'Местоположение',
-			'css_class'=>'domstor_address',
-			'position'=>230,
-			'object_href'=>$this->object_href,
-			'in_region'=>$this->in_region,
-		) );
-
-
 		$living_building_field = new HtmlTableField( array(
 			'name'=>'living_building',
 			'title'=>'Жилые постройки',
@@ -1550,16 +1566,10 @@ class LandSaleList extends DomstorObjectTable
 		) );
 
 		$this->addField($square_field)
-			 ->addField($address_field)
 			 ->addField($living_building_field)
 			 ->addField($square_house_field)
 			 ->addField($other_building_field)
 		;
-
-		if( $this->in_region )
-		{
-			$this->deleteField('district');
-		}
 	}
 }
 
