@@ -1,7 +1,7 @@
 <?php
 $path = dirname(__FILE__);
 
-require_once($path.'/lib/sp/loader.php');
+require_once($path.'/lib/SP/Loader.php');
 
 $loader = new SP_Loader();
 $loader->registerPrefix('SP', $path.'/lib');
