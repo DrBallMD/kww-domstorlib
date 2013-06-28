@@ -4,7 +4,6 @@
  */
 
 require_once(dirname(__FILE__).'/htmllib.php');
-require_once(dirname(__FILE__).'/html_lists.php');
 require_once(dirname(__FILE__).'/html_objects.php');
 require_once(dirname(__FILE__).'/sp_form_filter.php');
 require_once(dirname(__FILE__).'/sort_client.php');
@@ -75,6 +74,16 @@ class DomstorListFactory
 		'other',
 	);
 
+    protected $commerce_objects = array(
+		'commerce',
+		'trade',
+		'office',
+		'product',
+		'storehouse',
+		'landcom',
+		'other',
+	);
+
 	public static function check($object, $action)
 	{
 		if( in_array($object, self::$standart) )
@@ -93,13 +102,16 @@ class DomstorListFactory
      * @param type $object
      * @param type $action
      * @param array $params
-     * @return boolean|DomstorCommonTable
+     * @return boolean|Domstor_List_Common
      */
     public function create($object, $action, array $params)
 	{
 		if( !$this->check( $object, $action) )
                 throw new Exception('Wrong object/action pair');
-		$class = $object.$action.'list';
+        if(in_array($object, $this->commerce_objects) ) {
+            $object = 'commerce';
+        }
+		$class = sprintf('Domstor_List_%s_%s', ucfirst($object), ucfirst($action));
 		$list = new $class($params);
 		return $list;
 	}
@@ -558,7 +570,7 @@ class Domstor
      * @param string $action
      * @param integer $page
      * @param array $params
-     * @return boolean|DomstorCommonTable
+     * @return boolean|Domstor_List_Common
      */
     public function getList($object, $action, $page, array $params = array())
 	{
@@ -1033,7 +1045,7 @@ class DomstorSiteMapGenerator
 
     /**
      * List for map generation
-     * @var DomstorCommonTable
+     * @var Domstor_List_Common
      */
     protected $_list;
 
@@ -1057,7 +1069,7 @@ class DomstorSiteMapGenerator
 
     /**
      *
-     * @param DomstorCommonTable $list
+     * @param Domstor_List_Common $list
      */
     public function setList($list)
     {
