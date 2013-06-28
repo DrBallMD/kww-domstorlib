@@ -15,21 +15,7 @@ interface iDomstorDataPump
 	public function getData($url);
 }
 
-class DomstorHelper
-{
-	public static function getCommerceTypes()
-	{
-		return array(
-			'trade',
-			'office',
-			'product',
-			'storehouse',
-			'other',
-			'landcom',
-			'complex'
-		);
-	}
-}
+
 
 class DomstorPump implements iDomstorDataPump
 {
@@ -55,97 +41,12 @@ class DomstorPump implements iDomstorDataPump
 	}
 }
 
-class DomstorListFactory
-{
-	protected static $available=array(
-		'flat' => array('sale', 'rent', 'purchase', 'rentuse', 'exchange', 'new'),
-		'house' => array('sale', 'rent', 'purchase', 'rentuse', 'exchange'),
-		'complex' => array('sale', 'rent'),
-		'standart' => array('sale', 'rent', 'purchase', 'rentuse'),
-	);
-	protected static $standart = array(
-		'garage',
-		'land',
-		'commerce',
-		'trade',
-		'office',
-		'product',
-		'storehouse',
-		'landcom',
-		'other',
-	);
-
-	public static function check($object, $action)
-	{
-		if( in_array($object, self::$standart) )
-		{
-			return in_array($action, self::$available['standart']);
-		}
-		elseif( array_key_exists($object, self::$available) )
-		{
-			return in_array($action, self::$available[$object]);
-		}
-		return false;
-	}
-
-	/**
-     *
-     * @param type $object
-     * @param type $action
-     * @param array $params
-     * @return boolean|Domstor_List_Common
-     */
-    public function create($object, $action, array $params)
-	{
-		if( !$this->check( $object, $action) )
-                throw new Exception('Wrong object/action pair');
-        if(in_array($object, DomstorHelper::getCommerceTypes()) ) {
-            $object = 'commerce';
-        }
-		$class = sprintf('Domstor_List_%s_%s', ucfirst($object), ucfirst($action));
-		$list = new $class($params);
-		return $list;
-	}
-}
-
-class DomstorObjectFactory
-{
-	/**
-     *
-     * @param string $object
-     * @param string $action
-     * @param array $params
-     * @return boolean|DomstorCommonObject
-     */
-    public function create($object, $action, array $params)
-	{
-		if( !DomstorListFactory::check( $object, $action) ) return FALSE;
-
-		$demand = ($action=='purchase' or $action=='rentuse')? 'Demand' : '';
-
-		$commerce = array(
-			'trade',
-			'office',
-			'product',
-			'storehouse',
-			'landcom',
-			'other',
-		);
-		if( in_array($object, $commerce) ) $object = 'Commerce';
-
-		$class = 'Domstor'.$object.$demand;
-
-		$obj = new $class($params);
-		return $obj;
-	}
-}
-
 class DomstorFilterFactory
 {
 	public function create($object, $action, $params = array())
 	{
 		require_once(dirname(__FILE__).'/filters/builders.php');
-		if( in_array($object, DomstorHelper::getCommerceTypes()) ) $object = 'commerce';
+		if( Domstor_Helper::isCommerceType($object) ) $object = 'commerce';
 		$builder_class = 'Domstor'.ucfirst($object).ucfirst($action).'FilterBuilder';
 		if( !class_exists($builder_class) ) return FALSE;//throw new Excepion($builder_class.' not found');
 		$builder = new $builder_class;
@@ -299,7 +200,7 @@ class Domstor
 
     public static function checkObjectAction($object, $action)
     {
-        return DomstorListFactory::check($object, $action);
+        return Domstor_Helper::checkEstateAction($object, $action);
     }
 
     public function __construct()
@@ -586,7 +487,7 @@ class Domstor
 		$total = array_pop($data);
 
 		// Создаем фабрику списков
-		$factory = new DomstorListFactory;
+		$factory = new Domstor_List_ListFactory;
 
 		// Получаем параметры для списка
 		$list_params = $this->_prepareListParams($params);
@@ -648,7 +549,7 @@ class Domstor
         if( !isset($data['id']) ) return NULL;
 
 		// Создаем фабрику объектов
-		$factory = new DomstorObjectFactory;
+		$factory = new Domstor_Detail_DetailFactory;
 
 		// Получаем параметры для списка
 		$object_params = $this->_prepareObjectParams($params);
@@ -693,7 +594,7 @@ class Domstor
 		$total = array_pop($data);
 
 		// Создаем фабрику списков
-		$factory = new DomstorListFactory;
+		$factory = new Domstor_List_ListFactory;
 
 		// Получаем параметры для списка
 		$list_params = $this->_prepareListParams($params);
@@ -962,7 +863,7 @@ class Domstor
 
 	public function check($object, $action)
 	{
-		return DomstorListFactory::check($object, $action);
+		return Domstor_Helper::checkEstateAction($object, $action);
 	}
 
 	public function setPaginationOnPage($value)
