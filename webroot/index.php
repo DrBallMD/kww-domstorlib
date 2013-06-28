@@ -1,12 +1,5 @@
 <?php
-require_once(__DIR__.'/../domstorlib/lib/sp/loader.php');
-require_once(__DIR__.'/../domstorlib/domstorlib.php');
-
-$loader = new SP_Loader();
-$path = dirname(__FILE__);
-$loader->registerPrefix('SP', $path.'/../domstorlib/lib');
-$loader->registerPrefix('Doctrine', $path.'/../domstorlib/lib');
-$loader->register();
+require_once(__DIR__.'/../domstorlib/autoload.php');
 
 $domstor = new Domstor();
 $domstor->setMyId(1);
