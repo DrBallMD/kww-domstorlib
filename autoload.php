@@ -9,4 +9,5 @@ $loader->registerPrefix('Domstor', $path.'/lib');
 $loader->registerPrefix('Doctrine', $path.'/lib');
 $loader->register();
 
-require_once($path.'/domstorlib.php');
+require_once($path.'/lib/htmllib.php');
+require_once($path.'/lib/domstorlib.php');

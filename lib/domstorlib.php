@@ -3,9 +3,6 @@
  * Author: Pavel Stepanets
  * Email:  pahhan.ne@gmail.com
  */
-
-require_once(dirname(__FILE__).'/htmllib.php');
-
 interface iDomstorDataPump
 {
 	public function getData($url);
