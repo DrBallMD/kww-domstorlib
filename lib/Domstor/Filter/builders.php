@@ -158,7 +158,7 @@ class DomstorSubmitConstructor
 		$submit_field = new SP_Form_Field_Submit;
 		$submit_field->setLabel('Найти');
 
-		$submitlink_field = new SP_Form_Filter_SubmitLink;
+		$submitlink_field = new SP_Form_Field_SubmitLink;
 		$submitlink_field->setLabel('Найти');
 
 		$form->addFields(array(
@@ -213,7 +213,7 @@ class DomstorDistrictConstructor
 		else
 		{
 			// Районы города
-			$district = new DomstorDistrictField;
+			$district = new Domstor_Filter_Field_District;
 			$options = $domstor->read('/gateway/location/district?ref_city='.$domstor->getRealParam('ref_city'));
 			$district->setName('district')
 				->setLabel('Район')
@@ -232,7 +232,7 @@ class DomstorRoomCountConstructor
 	public static function add($form)
 	{
 		// Число комнат
-		$room_count = new SP_Form_Filter_CheckboxSet;
+		$room_count = new SP_Form_Field_CheckboxSet;
 		$room_count->setOptions(array(1=>'1', 2=>'2', 3=>'3', 4=>'4', 5=>'5 и более'));
 		$room_count->setName('room_count')->setLabel('Число комнат: ');
 		$form->addField($room_count);
@@ -325,7 +325,7 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 		DomstorRoomCountConstructor::add($this->_form);
 
         // В коммуналке или нет
-		$in_communal = new SP_Form_Filter_CheckBox;
+		$in_communal = new SP_Form_Field_Checkbox;
 		$in_communal
 			->setName('in_communal')
 			->setLabel('Комнаты в коммуналке')
@@ -348,7 +348,7 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 		$max_floor->setName('max_floor')->setLabel('Не выше')->setRange(2, 20, array(''=>''));
 
 		// Новостройка или нет
-		$new_building = new SP_Form_Filter_RadioSet;
+		$new_building = new SP_Form_Field_RadioSet;
 		$new_building
 			->setName('new_building')
 			->setLabel('')
@@ -411,7 +411,7 @@ class DomstorFlatPurchaseFilterBuilder extends DomstorCommonBuilder
 		DomstorRoomCountConstructor::add($this->_form);
 
         // В коммуналке или нет
-		$in_communal = new SP_Form_Filter_CheckBox;
+		$in_communal = new SP_Form_Field_Checkbox;
 		$in_communal
 			->setName('in_communal')
 			->setLabel('Комнаты в коммуналке')
@@ -451,7 +451,7 @@ class DomstorFlatRentuseFilterBuilder extends DomstorCommonBuilder
 		DomstorRoomCountConstructor::add($this->_form);
 
         // В коммуналке или нет
-		$in_communal = new SP_Form_Filter_CheckBox;
+		$in_communal = new SP_Form_Field_Checkbox;
 		$in_communal
 			->setName('in_communal')
 			->setLabel('Комнаты в коммуналке')
@@ -495,7 +495,7 @@ class DomstorFlatExchangeFilterBuilder extends DomstorCommonBuilder
 		DomstorRoomCountConstructor::add($this->_form);
 
         // В коммуналке или нет
-		$in_communal = new SP_Form_Filter_CheckBox;
+		$in_communal = new SP_Form_Field_Checkbox;
 		$in_communal
 			->setName('in_communal')
 			->setLabel('Комнаты в коммуналке')
