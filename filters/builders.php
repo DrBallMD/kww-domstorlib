@@ -5,7 +5,7 @@ class DomstorCommonBuilder
 	protected $_domstor;
 	protected $_object;
 	protected $_action;
-	
+
 	public function __construct()
 	{
 		$this->_form = new DomstorFilterForm;
@@ -18,41 +18,41 @@ class DomstorCommonBuilder
 		$code->setName('code')->setLabel('Код объекта');
 		$this->_form->addField($code);
 	}
-	
+
 	public function setDomstor($val)
 	{
 		$this->_domstor = $val;
 		$this->_form->getDataLoader()->setConfig($this->_domstor->getFilterDataLoaderConfig());
 		return $this;
 	}
-	
+
 	public function getDomstor()
 	{
 		return $this->_domstor;
 	}
-	
+
 	public function setObject($val)
 	{
 		$this->_object = $val;
 		return $this;
 	}
-	
+
 	public function getObject()
 	{
 		return $this->_object;
 	}
-	
+
 	public function setAction($val)
 	{
 		$this->_action = $val;
 		return $this;
-		
+
 	}
-	
+
 	public function getAction()
 	{
-		return $this->_action ;		
-	}	
+		return $this->_action ;
+	}
 }
 
 class DomstorPriceConstructor
@@ -61,15 +61,15 @@ class DomstorPriceConstructor
 	{
 		/* $price_min_field = new SP_Form_Filter_InputText;
 		$price_min_field->setName('price_min')->setLabel('от');
-		
+
 		$price_max_field = new SP_Form_Filter_InputText;
 		$price_max_field->setName('price_max')->setLabel('до');
-		
+
 		$form->addFields(array(
 			$price_min_field,
 			$price_max_field,
 		)); */
-		
+
 		$price_form = new DomstorPriceForm;
 		$form->addField($price_form);
 
@@ -82,23 +82,23 @@ class DomstorRentForm extends DomstorFilterForm
 	public function __construct()
 	{
 		$this->setName('rent');
-		
+
 		$min = new SP_Form_Filter_InputText;
 		$min->setName('min')->setLabel('от');
-		
+
 		$max = new SP_Form_Filter_InputText;
 		$max->setName('max')->setLabel('до');
-		
+
 		$period = new SP_Form_Filter_Select;
 		$period->setName('period')->setOptions(array('1'=>'в месяц', '12'=>'в год'));
-		
+
 		$this->addFields(array(
 			$min,
 			$max,
 			$period,
 		));
 	}
-	
+
 	public function getServerRequestString()
 	{
 		$values = $this->getValue();
@@ -106,7 +106,7 @@ class DomstorRentForm extends DomstorFilterForm
 		$coef = (float) $values['period'];
 		if( $values['min'] ) $out.= '&rent_min='.$values['min']/$coef;
 		if( $values['max'] ) $out.= '&rent_max='.$values['max']/$coef;
-		
+
 		return $out;
 	}
 }
@@ -116,26 +116,26 @@ class DomstorPriceForm extends DomstorFilterForm
 	public function __construct()
 	{
 		$this->setName('price');
-		
+
 		$min = new SP_Form_Filter_InputText;
 		$min->setName('min')->setLabel('от');
-		
+
 		$max = new SP_Form_Filter_InputText;
 		$max->setName('max')->setLabel('до');
-		
+
 		$this->addFields(array(
 			$min,
 			$max,
 		));
 	}
-	
+
 	public function getServerRequestString()
 	{
 		$values = $this->getValue();
 		$out = '';
 		if( $values['min'] ) $out.= '&price_min='.$values['min'] * 1000;
 		if( $values['max'] ) $out.= '&price_max='.$values['max'] * 1000;
-		
+
 		return $out;
 	}
 }
@@ -157,16 +157,42 @@ class DomstorSubmitConstructor
 	{
 		$submit_field = new SP_Form_Filter_Submit;
 		$submit_field->setLabel('Найти');
-		
+
 		$submitlink_field = new SP_Form_Filter_SubmitLink;
 		$submitlink_field->setLabel('Найти');
-		
+
 		$form->addFields(array(
 			$submit_field,
 			$submitlink_field,
 		));
 		return $form;
 	}
+}
+
+class DomstorSuburbanConstructor
+{
+    public static function add($form, $domstor)
+	{
+        $field = new SP_Form_Filter_CheckboxList;
+        $options = $form->getDataLoader()->getSuburbans();
+        $field->setName('suburban')
+				->setLabel('Пригород')
+				->setOptions($options)
+				->isDropDown(FALSE)
+			;
+        $form->addField($field);
+    }
+}
+
+class DomstorLocationsConstructor
+{
+    public static function add($form, $domstor)
+	{
+		if( $domstor->inRegion() ) // Если объект в регионе
+		{
+
+        }
+    }
 }
 
 class DomstorDistrictConstructor
@@ -177,16 +203,8 @@ class DomstorDistrictConstructor
 		{
 			// Районы и мелкие города региона
 			$district = new SP_Form_Filter_CheckboxList;
-			/* $url = '/gateway/location/subregion?ref_city='.$domstor->getRealParam('ref_city');
-			if( $domstor->getFilterDataLoaderConfig()->subregionsWithBig() ) $url.= '&with_big=1';
-			if( $domstor->getFilterDataLoaderConfig()->subregionsWithoutEmpty() )
-			{
-				$url.= '&agency='.$domstor->getMyId();
-				$url.= '&object='.$form->getBuilder()->getObject();
-				$url.= '&action='.$form->getBuilder()->getAction();
-			} */
 			$options = $form->getDataLoader()->getSubregions();//$domstor->read($url);
-			$district->setName('city')
+			$district->setName('subregion')
 				->setLabel('Район / населенный&nbsp;пункт')
 				->setOptions($options)
 				->isDropDown(FALSE)
@@ -203,7 +221,7 @@ class DomstorDistrictConstructor
 				->isDropDown(FALSE)
 			;
 		}
-		
+
 		$form->addField($district, 'district');
 		return $form;
 	}
@@ -295,10 +313,14 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 	{
 		// Добавление полей цены объекта
 		DomstorPriceConstructor::add($this->_form);
-		
+
 		// Добавление поля района (зависит от типа местоположения)
 		DomstorDistrictConstructor::add($this->_form, $this->_domstor);
-		
+
+        if( !$this->_domstor->inRegion() ) {
+            DomstorSuburbanConstructor::add($this->_form, $this->_domstor);
+        }
+
 		// Число комнат
 		DomstorRoomCountConstructor::add($this->_form);
 
@@ -308,7 +330,7 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 			->setName('in_communal')
 			->setLabel('Комнаты в коммуналке')
 		;
-		
+
 		// Тип этажа
 		$floor_type = new SP_Form_Filter_Select;
 		$floor_type->setOptions(array(
@@ -320,11 +342,11 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 			'not_first_last'=>'кроме первого и последнего'
 		));
 		$floor_type->setName('floor_type')->setLabel('Этаж');
-		
+
 		// Максимальный этаж
 		$max_floor = new SP_Form_Filter_Select;
 		$max_floor->setName('max_floor')->setLabel('Не выше')->setRange(2, 20, array(''=>''));
-		
+
 		// Новостройка или нет
 		$new_building = new SP_Form_Filter_RadioSet;
 		$new_building
@@ -335,7 +357,7 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 			->setSeparator('<br />')
 			->setDefault('')
 		;
-		
+
 		// Тип квартиры
 		$type = new SP_Form_Filter_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
@@ -344,7 +366,7 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 			->setOptions($options)
 			->isDropDown(FALSE)
 		;
-		
+
 		// Добавление полей в форму
 		$this->_form
 			->addField($in_communal)
@@ -353,7 +375,7 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 			->addField($new_building)
 			->addField($type)
 		;
-		
+
 		return $this->_form;
 	}
 }
@@ -363,13 +385,13 @@ class DomstorFlatRentFilterBuilder extends DomstorFlatSaleFilterBuilder
 {
 	public function buildFilter()
 	{
-		$filter = parent::buildFilter();	
+		$filter = parent::buildFilter();
 		// Удаление полей не нужных для аренды
 		$filter->deleteField('price');
 		$filter->deleteField('new_building');
 		// Добавление полей стоимости аренды объекта
 		DomstorRentLivingConstructor::add($filter);
-		
+
 		return $filter;
 	}
 }
@@ -381,10 +403,10 @@ class DomstorFlatPurchaseFilterBuilder extends DomstorCommonBuilder
 	{
 		// Добавление полей цены объекта
 		DomstorPriceConstructor::add($this->_form);
-		
+
 		// Добавление поля района (зависит от типа местоположения)
 		DomstorDistrictConstructor::add($this->_form, $this->_domstor);
-		
+
 		// Число комнат
 		DomstorRoomCountConstructor::add($this->_form);
 
@@ -394,7 +416,7 @@ class DomstorFlatPurchaseFilterBuilder extends DomstorCommonBuilder
 			->setName('in_communal')
 			->setLabel('Комнаты в коммуналке')
 		;
-		
+
 		// Тип квартиры
 		$type = new SP_Form_Filter_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
@@ -403,13 +425,13 @@ class DomstorFlatPurchaseFilterBuilder extends DomstorCommonBuilder
 			->setOptions($options)
 			->isDropDown(FALSE)
 		;
-		
+
 		// Добавление полей в форму
 		$this->_form
 			->addField($in_communal)
 			->addField($type)
 		;
-		
+
 		return $this->_form;
 	}
 }
@@ -421,10 +443,10 @@ class DomstorFlatRentuseFilterBuilder extends DomstorCommonBuilder
 	{
 		// Добавление полей цены объекта
 		DomstorRentLivingConstructor::add($this->_form);
-		
+
 		// Добавление поля района (зависит от типа местоположения)
 		DomstorDistrictConstructor::add($this->_form, $this->_domstor);
-		
+
 		// Число комнат
 		DomstorRoomCountConstructor::add($this->_form);
 
@@ -434,7 +456,7 @@ class DomstorFlatRentuseFilterBuilder extends DomstorCommonBuilder
 			->setName('in_communal')
 			->setLabel('Комнаты в коммуналке')
 		;
-		
+
 		// Тип квартиры
 		$type = new SP_Form_Filter_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
@@ -443,13 +465,13 @@ class DomstorFlatRentuseFilterBuilder extends DomstorCommonBuilder
 			->setOptions($options)
 			->isDropDown(FALSE)
 		;
-		
+
 		// Добавление полей в форму
 		$this->_form
 			->addField($in_communal)
 			->addField($type)
 		;
-		
+
 		return $this->_form;
 	}
 }
@@ -461,10 +483,14 @@ class DomstorFlatExchangeFilterBuilder extends DomstorCommonBuilder
 	{
 		// Добавление полей цены объекта
 		DomstorPriceConstructor::add($this->_form);
-		
+
 		// Добавление поля района (зависит от типа местоположения)
 		DomstorDistrictConstructor::add($this->_form, $this->_domstor);
-		
+
+        if( !$this->_domstor->inRegion() ) {
+            DomstorSuburbanConstructor::add($this->_form, $this->_domstor);
+        }
+
 		// Число комнат
 		DomstorRoomCountConstructor::add($this->_form);
 
@@ -474,7 +500,7 @@ class DomstorFlatExchangeFilterBuilder extends DomstorCommonBuilder
 			->setName('in_communal')
 			->setLabel('Комнаты в коммуналке')
 		;
-		
+
 		// Тип этажа
 		$floor_type = new SP_Form_Filter_Select;
 		$floor_type->setOptions(array(
@@ -486,11 +512,11 @@ class DomstorFlatExchangeFilterBuilder extends DomstorCommonBuilder
 			'not_first_last'=>'кроме первого и последнего'
 		));
 		$floor_type->setName('floor_type')->setLabel('Этаж');
-		
+
 		// Максимальный этаж
 		$max_floor = new SP_Form_Filter_Select;
 		$max_floor->setName('max_floor')->setLabel('Не выше')->setRange(2, 20, array(''=>''));
-		
+
 		// Тип квартиры
 		$type = new SP_Form_Filter_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
@@ -499,7 +525,7 @@ class DomstorFlatExchangeFilterBuilder extends DomstorCommonBuilder
 			->setOptions($options)
 			->isDropDown(FALSE)
 		;
-		
+
 		// Добавление полей в форму
 		$this->_form
 			->addField($in_communal)
@@ -507,7 +533,7 @@ class DomstorFlatExchangeFilterBuilder extends DomstorCommonBuilder
 			->addField($max_floor)
 			->addField($type)
 		;
-		
+
 		return $this->_form;
 	}
 }
@@ -519,13 +545,17 @@ class DomstorFlatNewFilterBuilder extends DomstorCommonBuilder
 	{
 		// Добавление полей цены объекта
 		DomstorPriceConstructor::add($this->_form);
-		
+
 		// Добавление поля района (зависит от типа местоположения)
 		DomstorDistrictConstructor::add($this->_form, $this->_domstor);
-		
+
+        if( !$this->_domstor->inRegion() ) {
+            DomstorSuburbanConstructor::add($this->_form, $this->_domstor);
+        }
+
 		// Число комнат
 		DomstorRoomCountConstructor::add($this->_form);
-		
+
 		// Тип этажа
 		$floor_type = new SP_Form_Filter_Select;
 		$floor_type->setOptions(array(
@@ -537,11 +567,11 @@ class DomstorFlatNewFilterBuilder extends DomstorCommonBuilder
 			'not_first_last'=>'кроме первого и последнего'
 		));
 		$floor_type->setName('floor_type')->setLabel('Этаж');
-		
+
 		// Максимальный этаж
 		$max_floor = new SP_Form_Filter_Select;
 		$max_floor->setName('max_floor')->setLabel('Не выше')->setRange(2, 20, array(''=>''));
-		
+
 		// Тип квартиры
 		$type = new SP_Form_Filter_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
@@ -550,14 +580,14 @@ class DomstorFlatNewFilterBuilder extends DomstorCommonBuilder
 			->setOptions($options)
 			->isDropDown(FALSE)
 		;
-		
+
 		// Добавление полей в форму
 		$this->_form
 			->addField($floor_type)
 			->addField($max_floor)
 			->addField($type)
 		;
-		
+
 		return $this->_form;
 	}
 }
@@ -573,6 +603,10 @@ class DomstorHouseSaleFilterBuilder extends DomstorCommonBuilder
 
         // Добавление поля района (зависит от типа местоположения)
         DomstorDistrictConstructor::add($this->_form, $this->_domstor);
+
+        if( !$this->_domstor->inRegion() ) {
+            DomstorSuburbanConstructor::add($this->_form, $this->_domstor);
+        }
 
         // Площадь помещения
         DomstorSquareHouseConstructor::add($this->_form);
@@ -609,12 +643,12 @@ class DomstorHouseRentFilterBuilder extends DomstorHouseSaleFilterBuilder
 	public function buildFilter()
 	{
 		$filter = parent::buildFilter();
-		
+
 		// Удаление полей не нужных для аренды
 		$filter->deleteField('price');
 		// Добавление полей стоимости аренды объекта
 		DomstorRentLivingConstructor::add($filter);
-		
+
 		return $filter;
 	}
 }
@@ -707,6 +741,10 @@ class DomstorHouseExchangeFilterBuilder extends DomstorCommonBuilder
         // Добавление поля района (зависит от типа местоположения)
         DomstorDistrictConstructor::add($this->_form, $this->_domstor);
 
+        if( !$this->_domstor->inRegion() ) {
+            DomstorSuburbanConstructor::add($this->_form, $this->_domstor);
+        }
+
         // Площадь помещения
         DomstorSquareHouseConstructor::add($this->_form);
 
@@ -748,7 +786,9 @@ class DomstorGarageSaleFilterBuilder extends DomstorCommonBuilder
         // Добавление поля района (зависит от типа местоположения)
         DomstorDistrictConstructor::add($this->_form, $this->_domstor);
 
-        
+        if( !$this->_domstor->inRegion() ) {
+            DomstorSuburbanConstructor::add($this->_form, $this->_domstor);
+        }
 
         // Тип гаража
         $type = new SP_Form_Filter_CheckboxList;
@@ -760,19 +800,19 @@ class DomstorGarageSaleFilterBuilder extends DomstorCommonBuilder
             ->setLabelClass('domstor_filter_trigger')
 				->isDropDown(FALSE)
         ;
-		
+
 		// Ширина
         $x_min = new SP_Form_Filter_InputText;
         $x_min->setName('x_min')->setLabel('от');
         $x_max = new SP_Form_Filter_InputText;
         $x_max->setName('x_max')->setLabel('до');
-		
+
 		// Длина
         $y_min = new SP_Form_Filter_InputText;
         $y_min->setName('y_min')->setLabel('от');
         $y_max = new SP_Form_Filter_InputText;
         $y_max->setName('y_max')->setLabel('до');
-		
+
 		// Высота
         $z_min = new SP_Form_Filter_InputText;
         $z_min->setName('z_min')->setLabel('от');
@@ -800,12 +840,12 @@ class DomstorGarageRentFilterBuilder extends DomstorGarageSaleFilterBuilder
 	public function buildFilter()
 	{
 		$filter = parent::buildFilter();
-		
+
 		// Удаление полей не нужных для аренды
 		$filter->deleteField('price');
 		// Добавление полей стоимости аренды объекта
 		DomstorRentLivingConstructor::add($filter);
-		
+
 		return $filter;
 	}
 }
@@ -831,19 +871,19 @@ class DomstorGaragePurchaseFilterBuilder extends DomstorCommonBuilder
             ->setLabelClass('domstor_filter_trigger')
 				->isDropDown(FALSE)
         ;
-		
+
 		// Ширина
         $x_min = new SP_Form_Filter_InputText;
         $x_min->setName('x_min')->setLabel('от');
         $x_max = new SP_Form_Filter_InputText;
         $x_max->setName('x_max')->setLabel('до');
-		
+
 		// Длина
         $y_min = new SP_Form_Filter_InputText;
         $y_min->setName('y_min')->setLabel('от');
         $y_max = new SP_Form_Filter_InputText;
         $y_max->setName('y_max')->setLabel('до');
-		
+
 		// Высота
         $z_min = new SP_Form_Filter_InputText;
         $z_min->setName('z_min')->setLabel('от');
@@ -886,19 +926,19 @@ class DomstorGarageRentuseFilterBuilder extends DomstorCommonBuilder
             ->setLabelClass('domstor_filter_trigger')
 				->isDropDown(FALSE)
         ;
-		
+
 		// Ширина
         $x_min = new SP_Form_Filter_InputText;
         $x_min->setName('x_min')->setLabel('от');
         $x_max = new SP_Form_Filter_InputText;
         $x_max->setName('x_max')->setLabel('до');
-		
+
 		// Длина
         $y_min = new SP_Form_Filter_InputText;
         $y_min->setName('y_min')->setLabel('от');
         $y_max = new SP_Form_Filter_InputText;
         $y_max->setName('y_max')->setLabel('до');
-		
+
 		// Высота
         $z_min = new SP_Form_Filter_InputText;
         $z_min->setName('z_min')->setLabel('от');
@@ -932,6 +972,9 @@ class DomstorLandSaleFilterBuilder extends DomstorCommonBuilder
         // Добавление поля района (зависит от типа местоположения)
         DomstorDistrictConstructor::add($this->_form, $this->_domstor);
 
+        if( !$this->_domstor->inRegion() ) {
+            DomstorSuburbanConstructor::add($this->_form, $this->_domstor);
+        }
 
         // Тип участка
         $type = new SP_Form_Filter_CheckboxList;
@@ -943,7 +986,7 @@ class DomstorLandSaleFilterBuilder extends DomstorCommonBuilder
             ->setLabelClass('domstor_filter_trigger')
 				->isDropDown(FALSE)
         ;
-		
+
 		 // Площадь участка
         DomstorSquareGroundConstructor::add($this->_form);
 
@@ -962,12 +1005,12 @@ class DomstorLandRentFilterBuilder extends DomstorLandSaleFilterBuilder
 	public function buildFilter()
 	{
 		$filter = parent::buildFilter();
-		
+
 		// Удаление полей не нужных для аренды
 		$filter->deleteField('price');
 		// Добавление полей стоимости аренды объекта
 		DomstorRentLivingConstructor::add($filter);
-		
+
 		return $filter;
 	}
 }
@@ -993,7 +1036,7 @@ class DomstorLandPurchaseFilterBuilder extends DomstorCommonBuilder
             ->setLabelClass('domstor_filter_trigger')
 				->isDropDown(FALSE)
         ;
-		
+
 		 // Площадь участка
         DomstorSquareGroundConstructor::add($this->_form);
 
@@ -1028,7 +1071,7 @@ class DomstorLandRentuseFilterBuilder extends DomstorCommonBuilder
             ->setLabelClass('domstor_filter_trigger')
 				->isDropDown(FALSE)
         ;
-		
+
 		 // Площадь участка
         DomstorSquareGroundConstructor::add($this->_form);
 
@@ -1052,6 +1095,10 @@ class DomstorCommerceSaleFilterBuilder extends DomstorCommonBuilder
         // Добавление поля района (зависит от типа местоположения)
         DomstorDistrictConstructor::add($this->_form, $this->_domstor);
 
+        if( !$this->_domstor->inRegion() ) {
+            DomstorSuburbanConstructor::add($this->_form, $this->_domstor);
+        }
+
 		// Назначение
 		$purpose = new SP_Form_Filter_CheckboxList;
 		$options = array(
@@ -1070,10 +1117,10 @@ class DomstorCommerceSaleFilterBuilder extends DomstorCommonBuilder
 			 ->setLabelClass('domstor_filter_trigger')
 			 ->isDropDown(FALSE)
 		;
-		
+
 		// Площадь участка
         DomstorSquareGroundConstructor::add($this->_form);
-		
+
 		// Площадь помещения
         DomstorSquareHouseConstructor::add($this->_form);
 
@@ -1091,14 +1138,14 @@ class DomstorCommerceRentFilterBuilder extends DomstorCommerceSaleFilterBuilder
 	public function buildFilter()
 	{
 		$filter = parent::buildFilter();
-		
+
 		// Удаление полей не нужных для аренды
 		$filter->deleteField('price_min');
 		$filter->deleteField('price_max');
-		
+
 		// Добавление полей стоимости аренды объекта
 		$filter->addField(new DomstorRentForm);
-		
+
 		return $filter;
 	}
 }

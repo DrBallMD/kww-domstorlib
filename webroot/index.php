@@ -9,8 +9,7 @@ $loader->registerPrefix('Doctrine', $path.'/../domstorlib/lib');
 $loader->register();
 
 $domstor = new Domstor();
-$domstor->setMyId(13);
-//$domstor->setServerName('domstor.ru');
+$domstor->setMyId(1);
 $domstor->setHomeLocation(2004);
 
 $driver = extension_loaded('apc')? new Doctrine_Cache_Apc() : new Doctrine_Cache_Array();

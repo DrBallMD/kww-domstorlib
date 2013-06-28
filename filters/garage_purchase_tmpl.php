@@ -1,14 +1,14 @@
 <div class="domstor_filter">
 	<?php $this->displayOpenTag()?>
 	<?php $this->displayHidden()?>
-	
+
 	<div class="domstor_filter_layout">
 		<div class="domstor_filter_fields">
 			<table>
 				<tr>
 					<td class="nasn"><strong>ֱ‏הזוע:</strong></td>
 					<td>
-						<?php $this->getField('price')->displayLabelField('min')?> 
+						<?php $this->getField('price')->displayLabelField('min')?>
 						<?php $this->getField('price')->displayLabelField('max')?> עûס.נ.
 					</td>
 				</tr>
@@ -49,8 +49,14 @@
 						<strong><?php $this->displayLabel('district')?>:</strong>
 						<?php $this->displayField('district')?>
 					</td>
+                    <?php if( $this->hasField('suburban') ): ?>
+                    <td class="suburban">
+						<strong><?php $this->displayLabel('suburban')?>:</strong>
+						<?php $this->displayField('suburban')?>
+					</td>
+                    <?php endif ?>
 				</tr>
-			</table>		
+			</table>
 		</div>
 	</div>
 

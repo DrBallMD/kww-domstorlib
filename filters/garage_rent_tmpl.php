@@ -1,7 +1,7 @@
 <div class="domstor_filter">
 	<?php $this->displayOpenTag()?>
 	<?php $this->displayHidden()?>
-	
+
 	<div class="domstor_filter_layout">
 		<div class="domstor_filter_fields">
 			<table>
@@ -47,8 +47,14 @@
 						<strong><?php $this->displayLabel('district')?>:</strong>
 						<?php $this->displayField('district')?>
 					</td>
+                    <?php if( $this->hasField('suburban') ): ?>
+                    <td class="suburban">
+						<strong><?php $this->displayLabel('suburban')?>:</strong>
+						<?php $this->displayField('suburban')?>
+					</td>
+                    <?php endif ?>
 				</tr>
-			</table>		
+			</table>
 		</div>
 	</div>
 
@@ -58,4 +64,3 @@
 	<?php $this->displayCloseTag()?>
 	<div class="center"><?php $this->displayField('submit_link')?></div>
 </div>
-	

@@ -124,6 +124,21 @@ class DomstorFilterDataLoader
 		}
 		return $records;
 	}
+
+    public function getLocations()
+	{
+		$domstor = $this->getDomstor();
+		$url = '/gateway/location/location?ref_city='.$domstor->getRealParam('ref_city');
+		$records = $domstor->read($url);
+		return $records;
+	}
+
+    public function getSuburbans()
+	{
+        $domstor = $this->getDomstor();
+		$url = '/gateway/location/suburban?ref_city='.$domstor->getRealParam('ref_city');
+        return $domstor->read($url);
+    }
 }
 
 // Хранит конфигурацию загрузки данных для фильтров
