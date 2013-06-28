@@ -15,8 +15,6 @@ interface iDomstorDataPump
 	public function getData($url);
 }
 
-
-
 class DomstorPump implements iDomstorDataPump
 {
 	protected function _getContent($url)
@@ -38,116 +36,6 @@ class DomstorPump implements iDomstorDataPump
 			}
 		}
 		return $out;
-	}
-}
-
-class DomstorFilterDataLoader
-{
-	protected $_config;
-	protected $_filter;
-
-	public function __construct(DomstorFilterForm $filter)
-	{
-		$this->_filter = $filter;
-		$this->_config = new DomstorFilterDataLoaderConfig;
-		$filter->setDataLoader($this);
-	}
-
-	public function getFilter()
-	{
-		return $this->_filter;
-	}
-
-	public function getBuilder()
-	{
-		return $this->getFilter()->getBuilder();
-	}
-
-	public function getDomstor()
-	{
-		return $this->getBuilder()->getDomstor();
-	}
-
-	public function getConfig()
-	{
-		return $this->_config;
-	}
-
-	public function setConfig($val)
-	{
-		$this->_config = $val;
-	}
-
-	public function getSubregions()
-	{
-		$domstor = $this->getDomstor();
-
-		$url = '/gateway/location/subregion?ref_city='.$domstor->getRealParam('ref_city');
-		//var_dump($this);
-		if( $this->getConfig()->subregionsWithBig() ) $url.= '&with_big=1';
-		if( $this->getConfig()->subregionsWithoutEmpty() )
-		{
-			$url.= '&agency='.$domstor->getMyId();
-			$url.= '&object='.$this->getBuilder()->getObject();
-			$url.= '&action='.$this->getBuilder()->getAction();
-		}
-		$records = $domstor->read($url);
-		if( $exclude = $this->getConfig()->getSubregionOption('exclude') )
-		{
-			$ids = explode(',', $exclude);
-			foreach($ids as $id)
-			{
-				if( isset($records[$id]) ) unset($records[$id]);
-			}
-		}
-		return $records;
-	}
-
-    public function getLocations()
-	{
-		$domstor = $this->getDomstor();
-		$url = '/gateway/location/location?ref_city='.$domstor->getRealParam('ref_city');
-		$records = $domstor->read($url);
-		return $records;
-	}
-
-    public function getSuburbans()
-	{
-        $domstor = $this->getDomstor();
-		$url = '/gateway/location/suburban?ref_city='.$domstor->getRealParam('ref_city');
-        return $domstor->read($url);
-    }
-}
-
-// ’ранит конфигурацию загрузки данных дл€ фильтров
-class DomstorFilterDataLoaderConfig
-{
-	protected $subregions_with_big = false;
-	protected $subregions_with_big_options = array();
-	protected $subregions_without_empty = false;
-
-	// ¬озвращает или устанавливает получать ли список с большими городами
-	public function subregionsWithBig($val = null, array $options = array())
-	{
-		if( is_null($val) ) return $this->subregions_with_big;
-
-		$this->subregions_with_big = (bool) $val;
-		$this->subregions_with_big_options = $options;
-		return $this;
-	}
-
-	public function getSubregionOption($name)
-	{
-		return @$this->subregions_with_big_options[$name];
-	}
-
-	// ¬озвращает или устанавливает получать ли список без городов в которых нет недвижимости
-	public function subregionsWithoutEmpty($val = null)
-	{
-		if( is_null($val) ) return $this->subregions_without_empty;
-
-		$this->subregions_without_empty = (bool) $val;
-		return $this;
 	}
 }
 
@@ -200,7 +88,7 @@ class Domstor
 	{
 		$this->sort_client = new DomstorSortClient;
 		$this->pager = new SP_Helper_Pager;
-		$this->filter_data_loader_config = new DomstorFilterDataLoaderConfig;
+		$this->filter_data_loader_config = new Domstor_Filter_DataLoaderConfig;
 	}
 
     /**

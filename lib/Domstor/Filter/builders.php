@@ -10,7 +10,7 @@ class DomstorCommonBuilder
 	{
 		$this->_form = new DomstorFilterForm;
 		$this->_form->setBuilder($this);
-		$data_loader = new DomstorFilterDataLoader($this->_form);
+		$data_loader = new Domstor_Filter_DataLoader($this->_form);
 
 		// Добавление кнопок отправки формы
 		DomstorSubmitConstructor::add($this->_form);

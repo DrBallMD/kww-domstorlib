@@ -1207,7 +1207,7 @@ class DomstorFilterForm extends SP_Form_Filter_Form
 	// —сылка на загрузчик данных
 	protected $_data_loader;
 
-	public function setDataLoader(DomstorFilterDataLoader $loader)
+	public function setDataLoader(Domstor_Filter_DataLoader $loader)
 	{
 		$this->_data_loader = $loader;
 		return $this;

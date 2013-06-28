@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__).'/builders.php';
 
 /**
  * Description of Factory
@@ -9,7 +10,6 @@ class Domstor_Filter_FilterFactory
 {
 	public function create($object, $action, $params = array())
 	{
-		require_once(dirname(__FILE__).'/builders.php');
 		if( Domstor_Helper::isCommerceType($object) ) $object = 'commerce';
 		$builder_class = 'Domstor'.ucfirst($object).ucfirst($action).'FilterBuilder';
 		if( !class_exists($builder_class) ) return FALSE;//throw new Excepion($builder_class.' not found');
