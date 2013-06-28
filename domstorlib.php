@@ -1,5 +1,6 @@
 <?php
-/* Author: Pavel Stepanets
+/**
+ * Author: Pavel Stepanets
  * Email:  pahhan.ne@gmail.com
  */
 
@@ -16,7 +17,7 @@ interface iDomstorDataPump
 
 class DomstorHelper
 {
-	public static function getCommerceActions()
+	public static function getCommerceTypes()
 	{
 		return array(
 			'trade',
@@ -74,16 +75,6 @@ class DomstorListFactory
 		'other',
 	);
 
-    protected $commerce_objects = array(
-		'commerce',
-		'trade',
-		'office',
-		'product',
-		'storehouse',
-		'landcom',
-		'other',
-	);
-
 	public static function check($object, $action)
 	{
 		if( in_array($object, self::$standart) )
@@ -108,7 +99,7 @@ class DomstorListFactory
 	{
 		if( !$this->check( $object, $action) )
                 throw new Exception('Wrong object/action pair');
-        if(in_array($object, $this->commerce_objects) ) {
+        if(in_array($object, DomstorHelper::getCommerceTypes()) ) {
             $object = 'commerce';
         }
 		$class = sprintf('Domstor_List_%s_%s', ucfirst($object), ucfirst($action));
@@ -154,7 +145,7 @@ class DomstorFilterFactory
 	public function create($object, $action, $params = array())
 	{
 		require_once(dirname(__FILE__).'/filters/builders.php');
-		if( in_array($object, DomstorHelper::getCommerceActions()) ) $object = 'commerce';
+		if( in_array($object, DomstorHelper::getCommerceTypes()) ) $object = 'commerce';
 		$builder_class = 'Domstor'.ucfirst($object).ucfirst($action).'FilterBuilder';
 		if( !class_exists($builder_class) ) return FALSE;//throw new Excepion($builder_class.' not found');
 		$builder = new $builder_class;
@@ -1193,67 +1184,4 @@ class DomstorSiteMapGenerator
         $xml->endElement();
     }
 
-}
-
-class DomstorDataLoader extends Domstor
-{
-	public function getDetailList($object, $action=null, $page=null, $params=array())
-	{
-		if( is_null($action) ) $action = 'sale';
-		return $this->getList($object, $action, $page, $params);
-	}
-
-	public function getObject($id, $action, $object, $params=array())
-	{
-		return parent::getObject($object, $action, $id, $params);
-	}
-
-	public function setObjectHrefTemplate($value, $force_sort = TRUE, $force_filter = TRUE)
-	{
-		if( $force_sort ) $value.='%sort';
-		if( $force_filter ) $value.='%filter';
-		$this->setHrefTemplate('object', $value);
-	}
-
-	public function setPaginationHrefTemplate($value, $force_sort = TRUE, $force_filter = TRUE)
-	{
-		if( $force_sort ) $value.='%sort';
-		if( $force_filter ) $value.='%filter';
-		$this->setHrefTemplate('list', $value);
-	}
-
-	public function setExchangeHrefTemplate($value)
-	{
-		$this->setHrefTemplate('flat_purchase', $value);
-		$this->setHrefTemplate('house_purchase', $value);
-	}
-
-	public function setExchangeFlatHrefTemplate($value)
-	{
-		$this->setHrefTemplate('flat_purchase', $value);
-	}
-
-	public function setExchangeHouseHrefTemplate($value)
-	{
-		$this->setHrefTemplate('house_purchase', $value);
-	}
-
-	public function setCommerceHrefTemplate($value)
-	{
-		$this->setHrefTemplate('commerce_sale', $value);
-	}
-
-	public function usePagination($value)
-	{
-	}
-
-	protected function getPaginationHtml($current_page)
-	{
-		return '';
-	}
-
-	protected function getNavigationHtml($prev, $next, $action)
-	{
-		return '';
-	}
 }
