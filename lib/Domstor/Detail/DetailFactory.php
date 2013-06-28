@@ -12,7 +12,7 @@ class Domstor_Detail_DetailFactory
      * @param string $object
      * @param string $action
      * @param array $params
-     * @return boolean|DomstorCommonObject
+     * @return boolean|Domstor_Detail_Supply
      */
     public function create($object, $action, array $params)
 	{

@@ -405,7 +405,7 @@ class Domstor
      * @param string $action
      * @param string $id
      * @param array $params
-     * @return false|DomstorCommonObject
+     * @return false|Domstor_Detail_Supply
      */
     public function getDetail($object, $action, $id, array $params = array())
 	{
