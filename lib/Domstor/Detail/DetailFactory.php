@@ -18,7 +18,7 @@ class Domstor_Detail_DetailFactory
 	{
 		if( !Domstor_Helper::checkEstateAction( $object, $action) ) return FALSE;
 
-		$demand = ($action=='purchase' or $action=='rentuse')? 'Demand' : '';
+		$offer = ($action=='purchase' or $action=='rentuse')? 'Demand' : 'Supply';
 
 		$commerce = array(
 			'trade',
@@ -30,7 +30,7 @@ class Domstor_Detail_DetailFactory
 		);
 		if( in_array($object, $commerce) ) $object = 'Commerce';
 
-		$class = 'Domstor'.$object.$demand;
+		$class = sprintf('Domstor_Detail_%s_%s', $offer, ucfirst($object));
 
 		$obj = new $class($params);
 		return $obj;

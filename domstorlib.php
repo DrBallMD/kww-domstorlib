@@ -5,7 +5,6 @@
  */
 
 require_once(dirname(__FILE__).'/htmllib.php');
-require_once(dirname(__FILE__).'/html_objects.php');
 
 interface iDomstorDataPump
 {
