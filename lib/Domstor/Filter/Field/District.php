@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Domstor_Filter_Field_District extends SP_Form_Filter_CheckboxList
+class Domstor_Filter_Field_District extends SP_Form_Field_CheckboxList
 {
 	protected $_sublayout_class;
 	protected $_subelement_class;

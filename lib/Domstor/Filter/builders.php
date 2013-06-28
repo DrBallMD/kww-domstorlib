@@ -173,7 +173,7 @@ class DomstorSuburbanConstructor
 {
     public static function add($form, $domstor)
 	{
-        $field = new SP_Form_Filter_CheckboxList;
+        $field = new SP_Form_Field_CheckboxList;
         $options = $form->getDataLoader()->getSuburbans();
         $field->setName('suburban')
 				->setLabel('Пригород')
@@ -202,7 +202,7 @@ class DomstorDistrictConstructor
 		if( $domstor->inRegion() ) // Если объект в регионе
 		{
 			// Районы и мелкие города региона
-			$district = new SP_Form_Filter_CheckboxList;
+			$district = new SP_Form_Field_CheckboxList;
 			$options = $form->getDataLoader()->getSubregions();//$domstor->read($url);
 			$district->setName('subregion')
 				->setLabel('Район / населенный&nbsp;пункт')
@@ -359,7 +359,7 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 		;
 
 		// Тип квартиры
-		$type = new SP_Form_Filter_CheckboxList;
+		$type = new SP_Form_Field_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
 		$type->setName('type')
 			->setLabel('Тип квартиры')
@@ -418,7 +418,7 @@ class DomstorFlatPurchaseFilterBuilder extends DomstorCommonBuilder
 		;
 
 		// Тип квартиры
-		$type = new SP_Form_Filter_CheckboxList;
+		$type = new SP_Form_Field_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
 		$type->setName('type')
 			->setLabel('Тип квартиры')
@@ -458,7 +458,7 @@ class DomstorFlatRentuseFilterBuilder extends DomstorCommonBuilder
 		;
 
 		// Тип квартиры
-		$type = new SP_Form_Filter_CheckboxList;
+		$type = new SP_Form_Field_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
 		$type->setName('type')
 			->setLabel('Тип квартиры')
@@ -518,7 +518,7 @@ class DomstorFlatExchangeFilterBuilder extends DomstorCommonBuilder
 		$max_floor->setName('max_floor')->setLabel('Не выше')->setRange(2, 20, array(''=>''));
 
 		// Тип квартиры
-		$type = new SP_Form_Filter_CheckboxList;
+		$type = new SP_Form_Field_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
 		$type->setName('type')
 			->setLabel('Тип квартиры')
@@ -573,7 +573,7 @@ class DomstorFlatNewFilterBuilder extends DomstorCommonBuilder
 		$max_floor->setName('max_floor')->setLabel('Не выше')->setRange(2, 20, array(''=>''));
 
 		// Тип квартиры
-		$type = new SP_Form_Filter_CheckboxList;
+		$type = new SP_Form_Field_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
 		$type->setName('type')
 			->setLabel('Тип квартиры')
@@ -618,7 +618,7 @@ class DomstorHouseSaleFilterBuilder extends DomstorCommonBuilder
         DomstorRoomCountConstructor::add($this->_form);
 
         // Тип дома
-        $type = new SP_Form_Filter_CheckboxList;
+        $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
             ->setLabel('Тип дома')
@@ -674,7 +674,7 @@ class DomstorHousePurchaseFilterBuilder extends DomstorCommonBuilder
         DomstorRoomCountConstructor::add($this->_form);
 
         // Тип дома
-        $type = new SP_Form_Filter_CheckboxList;
+        $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
             ->setLabel('Тип дома')
@@ -711,7 +711,7 @@ class DomstorHouseRentuseFilterBuilder extends DomstorCommonBuilder
         DomstorRoomCountConstructor::add($this->_form);
 
         // Тип дома
-        $type = new SP_Form_Filter_CheckboxList;
+        $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
             ->setLabel('Тип дома')
@@ -755,7 +755,7 @@ class DomstorHouseExchangeFilterBuilder extends DomstorCommonBuilder
         DomstorRoomCountConstructor::add($this->_form);
 
         // Тип дома
-        $type = new SP_Form_Filter_CheckboxList;
+        $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
             ->setLabel('Тип дома')
@@ -791,7 +791,7 @@ class DomstorGarageSaleFilterBuilder extends DomstorCommonBuilder
         }
 
         // Тип гаража
-        $type = new SP_Form_Filter_CheckboxList;
+        $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
             ->setLabel('Тип гаража')
@@ -862,7 +862,7 @@ class DomstorGaragePurchaseFilterBuilder extends DomstorCommonBuilder
         DomstorDistrictConstructor::add($this->_form, $this->_domstor);
 
         // Тип гаража
-        $type = new SP_Form_Filter_CheckboxList;
+        $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
             ->setLabel('Тип гаража')
@@ -917,7 +917,7 @@ class DomstorGarageRentuseFilterBuilder extends DomstorCommonBuilder
         DomstorDistrictConstructor::add($this->_form, $this->_domstor);
 
         // Тип гаража
-        $type = new SP_Form_Filter_CheckboxList;
+        $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
             ->setLabel('Тип гаража')
@@ -977,7 +977,7 @@ class DomstorLandSaleFilterBuilder extends DomstorCommonBuilder
         }
 
         // Тип участка
-        $type = new SP_Form_Filter_CheckboxList;
+        $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
             ->setLabel('Тип участка')
@@ -1027,7 +1027,7 @@ class DomstorLandPurchaseFilterBuilder extends DomstorCommonBuilder
         DomstorDistrictConstructor::add($this->_form, $this->_domstor);
 
         // Тип участка
-        $type = new SP_Form_Filter_CheckboxList;
+        $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
             ->setLabel('Тип участка')
@@ -1062,7 +1062,7 @@ class DomstorLandRentuseFilterBuilder extends DomstorCommonBuilder
 
 
         // Тип участка
-        $type = new SP_Form_Filter_CheckboxList;
+        $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
             ->setLabel('Тип участка')
@@ -1100,7 +1100,7 @@ class DomstorCommerceSaleFilterBuilder extends DomstorCommonBuilder
         }
 
 		// Назначение
-		$purpose = new SP_Form_Filter_CheckboxList;
+		$purpose = new SP_Form_Field_CheckboxList;
 		$options = array(
 			'1002' => 'Торговое',
 			'1003' => 'Офисное',

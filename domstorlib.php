@@ -6,7 +6,6 @@
 
 require_once(dirname(__FILE__).'/htmllib.php');
 require_once(dirname(__FILE__).'/html_objects.php');
-require_once(dirname(__FILE__).'/sp_form_filter.php');
 require_once(dirname(__FILE__).'/sort_client.php');
 require_once(dirname(__FILE__).'/locations_list.php');
 

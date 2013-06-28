@@ -1,9 +1,11 @@
 <?php
-/* Author: Pavel Stepanets
- * Email:  pahhan.ne@gmail.com
- */
 
-class SP_Form_Filter_CheckboxList extends SP_Form_Field_CheckboxSet
+/**
+ * Description of CheckboxList
+ *
+ * @author pahhan
+ */
+class SP_Form_Field_CheckboxList extends SP_Form_Field_CheckboxSet
 {
 	protected $_layout_class;
 	protected $_element_class;
@@ -107,22 +109,3 @@ class SP_Form_Filter_CheckboxList extends SP_Form_Field_CheckboxSet
 		return '<a'.$this->getLabelClass().' href="#" onClick="el=document.getElementById(\''.$this->getId().'\');el.style.display = (el.style.display == \'none\') ? \'\' : \'none\';return false;">'.$this->_label.'</a>'.PHP_EOL;
 	}
 }
-
-// FORMS
-class SP_Form_Filter_SimpleForm extends SP_Form_Form
-{
-	public function render()
-	{
-		//$out = $this->renderOpenTag();
-		$out = "\r\n";
-		foreach($this->_fields as $field)
-		{
-			$out.= '<div>'.$field->renderLabel().$field->render().'</div>'."\r\n";
-		}
-		//$out.= $this->renderCloseTag();
-		return $out;
-	}
-
-}
-
-// DOMSTOR FIELDS
