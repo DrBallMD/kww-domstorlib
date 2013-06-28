@@ -41,28 +41,6 @@ class DomstorPump implements iDomstorDataPump
 	}
 }
 
-class DomstorFilterFactory
-{
-	public function create($object, $action, $params = array())
-	{
-		require_once(dirname(__FILE__).'/filters/builders.php');
-		if( Domstor_Helper::isCommerceType($object) ) $object = 'commerce';
-		$builder_class = 'Domstor'.ucfirst($object).ucfirst($action).'FilterBuilder';
-		if( !class_exists($builder_class) ) return FALSE;//throw new Excepion($builder_class.' not found');
-		$builder = new $builder_class;
-		$builder->setDomstor($params['domstor'])->setObject($object)->setAction($action);
-		$template = dirname(__FILE__).'/filters/'.$object.'_'.$action.'_tmpl.php';
-		if( isset($params['filter_dir']) and $params['filter_dir'] )
-		{
-			$fd = rtrim($params['filter_dir'], '/\\').'/'.$object.'_'.$action.'_tmpl.php';
-			if( is_file($fd) and is_readable($fd) ) $template = $fd;
-		}
-		$filter = $builder->buildFilter();
-		$filter->setName('f')->setRenderTemplate($template);
-		return $filter;
-	}
-}
-
 class DomstorFilterDataLoader
 {
 	protected $_config;
@@ -464,7 +442,7 @@ class Domstor
 
     public function createFilter($object, $action, array $filter_factory_params = array())
 	{
-		$filter_factory = new DomstorFilterFactory;
+		$filter_factory = new Domstor_Filter_FilterFactory;
 		if( !isset($filter_factory_params['filter_dir']) ) $filter_factory_params['filter_dir'] = $this->filter_tmpl_dir;
 		$filter_factory_params['domstor'] = $this;
 		$this->filter = $filter_factory->create($object, $action, $filter_factory_params);
