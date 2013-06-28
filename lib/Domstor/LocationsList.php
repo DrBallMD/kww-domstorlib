@@ -1,5 +1,5 @@
 <?php
-class DomstorLocationsList
+class Domstor_LocationsList
 {
 	protected $_data = array();
 	protected $_href_tmpl = '';

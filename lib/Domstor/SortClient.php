@@ -1,5 +1,5 @@
 <?php
-class DomstorSortClient
+class Domstor_SortClient
 {
 	const METHOD_GET = 100;
 	const METHOD_POST = 101;

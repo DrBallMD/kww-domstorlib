@@ -6,8 +6,6 @@
 
 require_once(dirname(__FILE__).'/htmllib.php');
 require_once(dirname(__FILE__).'/html_objects.php');
-require_once(dirname(__FILE__).'/sort_client.php');
-require_once(dirname(__FILE__).'/locations_list.php');
 
 interface iDomstorDataPump
 {
@@ -85,7 +83,7 @@ class Domstor
 
     public function __construct()
 	{
-		$this->sort_client = new DomstorSortClient;
+		$this->sort_client = new Domstor_SortClient;
 		$this->pager = new SP_Helper_Pager;
 		$this->filter_data_loader_config = new Domstor_Filter_DataLoaderConfig;
 	}
@@ -500,7 +498,7 @@ class Domstor
 		$current_id = $this->getRealParam('ref_city');
 		unset($data[$current_id]);
 		$tmpl = $this->_processLocationsHref($params);
-		$list = new DomstorLocationsList($data, $tmpl, $this->home_location);
+		$list = new Domstor_LocationsList($data, $tmpl, $this->home_location);
 		return $list;
 	}
 
