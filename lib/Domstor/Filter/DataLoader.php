@@ -10,7 +10,7 @@ class Domstor_Filter_DataLoader
 	protected $_config;
 	protected $_filter;
 
-	public function __construct(DomstorFilterForm $filter)
+	public function __construct(Domstor_Filter_Form $filter)
 	{
 		$this->_filter = $filter;
 		$this->_config = new Domstor_Filter_DataLoaderConfig;

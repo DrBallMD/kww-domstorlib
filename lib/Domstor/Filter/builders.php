@@ -8,13 +8,13 @@ class DomstorCommonBuilder
 
 	public function __construct()
 	{
-		$this->_form = new DomstorFilterForm;
+		$this->_form = new Domstor_Filter_Form;
 		$this->_form->setBuilder($this);
 		$data_loader = new Domstor_Filter_DataLoader($this->_form);
 
 		// Добавление кнопок отправки формы
 		DomstorSubmitConstructor::add($this->_form);
-		$code = new SP_Form_Filter_InputText;
+		$code = new SP_Form_Field_InputText;
 		$code->setName('code')->setLabel('Код объекта');
 		$this->_form->addField($code);
 	}
@@ -77,19 +77,19 @@ class DomstorPriceConstructor
 	}
 }
 
-class DomstorRentForm extends DomstorFilterForm
+class DomstorRentForm extends Domstor_Filter_Form
 {
 	public function __construct()
 	{
 		$this->setName('rent');
 
-		$min = new SP_Form_Filter_InputText;
+		$min = new SP_Form_Field_InputText;
 		$min->setName('min')->setLabel('от');
 
-		$max = new SP_Form_Filter_InputText;
+		$max = new SP_Form_Field_InputText;
 		$max->setName('max')->setLabel('до');
 
-		$period = new SP_Form_Filter_Select;
+		$period = new SP_Form_Field_Select;
 		$period->setName('period')->setOptions(array('1'=>'в месяц', '12'=>'в год'));
 
 		$this->addFields(array(
@@ -111,16 +111,16 @@ class DomstorRentForm extends DomstorFilterForm
 	}
 }
 
-class DomstorPriceForm extends DomstorFilterForm
+class DomstorPriceForm extends Domstor_Filter_Form
 {
 	public function __construct()
 	{
 		$this->setName('price');
 
-		$min = new SP_Form_Filter_InputText;
+		$min = new SP_Form_Field_InputText;
 		$min->setName('min')->setLabel('от');
 
-		$max = new SP_Form_Filter_InputText;
+		$max = new SP_Form_Field_InputText;
 		$max->setName('max')->setLabel('до');
 
 		$this->addFields(array(
@@ -155,7 +155,7 @@ class DomstorSubmitConstructor
 {
 	public static function add($form)
 	{
-		$submit_field = new SP_Form_Filter_Submit;
+		$submit_field = new SP_Form_Field_Submit;
 		$submit_field->setLabel('Найти');
 
 		$submitlink_field = new SP_Form_Filter_SubmitLink;
@@ -245,10 +245,10 @@ class DomstorSquareHouseConstructor
     public static function add($form)
     {
         // Площадь помещения
-        $square_min_field = new SP_Form_Filter_InputText;
+        $square_min_field = new SP_Form_Field_InputText;
         $square_min_field->setName('squareh_min')->setLabel('от');
 
-        $square_max_field = new SP_Form_Filter_InputText;
+        $square_max_field = new SP_Form_Field_InputText;
         $square_max_field->setName('squareh_max')->setLabel('до');
 
         $form->addFields(array(
@@ -259,20 +259,20 @@ class DomstorSquareHouseConstructor
     }
 }
 
-class DomstorSquareGroundForm extends DomstorFilterForm
+class DomstorSquareGroundForm extends Domstor_Filter_Form
 {
 
     public function __construct()
     {
         $this->setName('squareg');
 
-        $min = new SP_Form_Filter_InputText;
+        $min = new SP_Form_Field_InputText;
         $min->setName('min')->setLabel('от');
 
-        $max = new SP_Form_Filter_InputText;
+        $max = new SP_Form_Field_InputText;
         $max->setName('max')->setLabel('до');
 
-        $unit = new SP_Form_Filter_Select;
+        $unit = new SP_Form_Field_Select;
         $unit->setName('unit')->setOptions(array('100'=>'сот.', '10000'=>'Га'));
 
         $this->addFields(array(
@@ -332,7 +332,7 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 		;
 
 		// Тип этажа
-		$floor_type = new SP_Form_Filter_Select;
+		$floor_type = new SP_Form_Field_Select;
 		$floor_type->setOptions(array(
 			''=>'любой',
 			'first'=>'только первый',
@@ -344,7 +344,7 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 		$floor_type->setName('floor_type')->setLabel('Этаж');
 
 		// Максимальный этаж
-		$max_floor = new SP_Form_Filter_Select;
+		$max_floor = new SP_Form_Field_Select;
 		$max_floor->setName('max_floor')->setLabel('Не выше')->setRange(2, 20, array(''=>''));
 
 		// Новостройка или нет
@@ -502,7 +502,7 @@ class DomstorFlatExchangeFilterBuilder extends DomstorCommonBuilder
 		;
 
 		// Тип этажа
-		$floor_type = new SP_Form_Filter_Select;
+		$floor_type = new SP_Form_Field_Select;
 		$floor_type->setOptions(array(
 			''=>'любой',
 			'first'=>'только первый',
@@ -514,7 +514,7 @@ class DomstorFlatExchangeFilterBuilder extends DomstorCommonBuilder
 		$floor_type->setName('floor_type')->setLabel('Этаж');
 
 		// Максимальный этаж
-		$max_floor = new SP_Form_Filter_Select;
+		$max_floor = new SP_Form_Field_Select;
 		$max_floor->setName('max_floor')->setLabel('Не выше')->setRange(2, 20, array(''=>''));
 
 		// Тип квартиры
@@ -557,7 +557,7 @@ class DomstorFlatNewFilterBuilder extends DomstorCommonBuilder
 		DomstorRoomCountConstructor::add($this->_form);
 
 		// Тип этажа
-		$floor_type = new SP_Form_Filter_Select;
+		$floor_type = new SP_Form_Field_Select;
 		$floor_type->setOptions(array(
 			''=>'любой',
 			'first'=>'только первый',
@@ -569,7 +569,7 @@ class DomstorFlatNewFilterBuilder extends DomstorCommonBuilder
 		$floor_type->setName('floor_type')->setLabel('Этаж');
 
 		// Максимальный этаж
-		$max_floor = new SP_Form_Filter_Select;
+		$max_floor = new SP_Form_Field_Select;
 		$max_floor->setName('max_floor')->setLabel('Не выше')->setRange(2, 20, array(''=>''));
 
 		// Тип квартиры
@@ -802,21 +802,21 @@ class DomstorGarageSaleFilterBuilder extends DomstorCommonBuilder
         ;
 
 		// Ширина
-        $x_min = new SP_Form_Filter_InputText;
+        $x_min = new SP_Form_Field_InputText;
         $x_min->setName('x_min')->setLabel('от');
-        $x_max = new SP_Form_Filter_InputText;
+        $x_max = new SP_Form_Field_InputText;
         $x_max->setName('x_max')->setLabel('до');
 
 		// Длина
-        $y_min = new SP_Form_Filter_InputText;
+        $y_min = new SP_Form_Field_InputText;
         $y_min->setName('y_min')->setLabel('от');
-        $y_max = new SP_Form_Filter_InputText;
+        $y_max = new SP_Form_Field_InputText;
         $y_max->setName('y_max')->setLabel('до');
 
 		// Высота
-        $z_min = new SP_Form_Filter_InputText;
+        $z_min = new SP_Form_Field_InputText;
         $z_min->setName('z_min')->setLabel('от');
-        $z_max = new SP_Form_Filter_InputText;
+        $z_max = new SP_Form_Field_InputText;
         $z_max->setName('z_max')->setLabel('до');
 
         // Добавление полей в форму
@@ -873,21 +873,21 @@ class DomstorGaragePurchaseFilterBuilder extends DomstorCommonBuilder
         ;
 
 		// Ширина
-        $x_min = new SP_Form_Filter_InputText;
+        $x_min = new SP_Form_Field_InputText;
         $x_min->setName('x_min')->setLabel('от');
-        $x_max = new SP_Form_Filter_InputText;
+        $x_max = new SP_Form_Field_InputText;
         $x_max->setName('x_max')->setLabel('до');
 
 		// Длина
-        $y_min = new SP_Form_Filter_InputText;
+        $y_min = new SP_Form_Field_InputText;
         $y_min->setName('y_min')->setLabel('от');
-        $y_max = new SP_Form_Filter_InputText;
+        $y_max = new SP_Form_Field_InputText;
         $y_max->setName('y_max')->setLabel('до');
 
 		// Высота
-        $z_min = new SP_Form_Filter_InputText;
+        $z_min = new SP_Form_Field_InputText;
         $z_min->setName('z_min')->setLabel('от');
-        $z_max = new SP_Form_Filter_InputText;
+        $z_max = new SP_Form_Field_InputText;
         $z_max->setName('z_max')->setLabel('до');
 
         // Добавление полей в форму
@@ -928,21 +928,21 @@ class DomstorGarageRentuseFilterBuilder extends DomstorCommonBuilder
         ;
 
 		// Ширина
-        $x_min = new SP_Form_Filter_InputText;
+        $x_min = new SP_Form_Field_InputText;
         $x_min->setName('x_min')->setLabel('от');
-        $x_max = new SP_Form_Filter_InputText;
+        $x_max = new SP_Form_Field_InputText;
         $x_max->setName('x_max')->setLabel('до');
 
 		// Длина
-        $y_min = new SP_Form_Filter_InputText;
+        $y_min = new SP_Form_Field_InputText;
         $y_min->setName('y_min')->setLabel('от');
-        $y_max = new SP_Form_Filter_InputText;
+        $y_max = new SP_Form_Field_InputText;
         $y_max->setName('y_max')->setLabel('до');
 
 		// Высота
-        $z_min = new SP_Form_Filter_InputText;
+        $z_min = new SP_Form_Field_InputText;
         $z_min->setName('z_min')->setLabel('от');
-        $z_max = new SP_Form_Filter_InputText;
+        $z_max = new SP_Form_Field_InputText;
         $z_max->setName('z_max')->setLabel('до');
 
         // Добавление полей в форму
