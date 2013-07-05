@@ -65,10 +65,5 @@ class Domstor_List_Flat_Sale extends Domstor_List_Supply
 			 ->addField($phone_field)
 			 ->addField($balcony_field)
 		;
-
-		if( $this->in_region )
-		{
-			$this->getField('address')->setTitle('Местоположение');
-		}
 	}
 }
