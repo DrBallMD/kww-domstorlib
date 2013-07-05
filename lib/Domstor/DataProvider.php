@@ -20,21 +20,19 @@ class Domstor_DataProvider
         $this->cache_time = $cache_time;
     }
 
-    public function getData($url)
+    public function getData($url, $cache_time = NULL)
     {
-        if( $this->cacheDriver ) {
-            $id = $this->generateCacheId($url);
-            if( $this->cacheDriver->contains($id) ) {
-                $content = $this->cacheDriver->fetch($id);
-            }
-            else {
-                $content = $this->readUrl($url);
-                $this->cacheDriver->save($id, $content);
-            }
+        $id = $this->generateCacheId($url);
+        if( $this->cacheDriver->contains($id) ) {
+            $content = $this->cacheDriver->fetch($id);
         }
         else {
-
+            $content = $this->readUrl($url);
+            $this->cacheDriver->save($id, $content);
         }
+
+        $data = $this->contentToData($content);
+        return $data;
     }
 
     protected function generateCacheId($url, array $params = array())

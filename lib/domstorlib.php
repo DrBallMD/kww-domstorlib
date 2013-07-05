@@ -309,7 +309,7 @@ class Domstor
 
     protected function _getLocationInfo($location_id)
     {
-		$data = $this->read('/gateway/location/info?id='.$location_id);
+		$data = $this->read('/gateway/location/info/'.$location_id);
 		return $data;
     }
 
