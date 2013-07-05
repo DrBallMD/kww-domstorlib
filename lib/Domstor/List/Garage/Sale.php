@@ -50,10 +50,5 @@ class Domstor_List_Garage_Sale extends Domstor_List_Supply
 			 ->addField($size_field)
 			 ->addField($cellar_field)
 		;
-
-		if( $this->in_region )
-		{
-			$this->deleteField('district');
-		}
 	}
 }

@@ -68,7 +68,6 @@ class Domstor_List_Flat_Sale extends Domstor_List_Supply
 
 		if( $this->in_region )
 		{
-			$this->deleteField('district');
 			$this->getField('address')->setTitle('Местоположение');
 		}
 	}
