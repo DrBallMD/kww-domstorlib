@@ -238,7 +238,7 @@ abstract class SP_Form_AbstractField implements SP_Form_FieldInterface
 		return $this;
 	}
 
-	public function &getRequestArray()
+	public function getRequestArray()
 	{
 		if( is_null($this->_form) )
 		{
