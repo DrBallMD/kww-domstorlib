@@ -15,10 +15,13 @@ class Domstor_Transformer_Supply_RegionAddress implements Domstor_Transformer_In
 
     public function get($data)
     {
-        $out = $this->address_transformer->get($data);
-        if( !$out ) $address = $data['address_note'];
+        $address = $this->address_transformer->get($data);
+
         if( empty($data['city_id']) and !empty($data['location_name']) ) {
             $out = $data['location_name'].', '.$address;
+        }
+        else {
+            $out = $data['address_note'];
         }
         return trim($out, ', ');
     }

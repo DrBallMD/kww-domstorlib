@@ -250,8 +250,9 @@ class SP_Form_Form extends SP_Form_AbstractField implements SP_Form_FormInterfac
 		{
 			$array = &$this->_form->getRequestArray();
 		}
-		//var_dump($array[$name]);
-		return $array[$name];
+		if( isset($array[$name]) ) {
+            return $array[$name];
+        }
 	}
 
 	public function addField(SP_Form_FieldInterface $field, $name = NULL)
