@@ -231,7 +231,7 @@ class SP_Form_Form extends SP_Form_AbstractField implements SP_Form_FormInterfac
 		}
 	}
 
-	public function &getRequestArray()
+	public function getRequestArray()
 	{
 		$name = $this->getName();
 		if( is_null($this->_form) )
