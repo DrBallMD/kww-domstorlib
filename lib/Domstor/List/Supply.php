@@ -38,7 +38,7 @@ class Domstor_List_Supply extends Domstor_List_Common
 
         $district_field = new Domstor_List_Field_Common( array(
 				'name'=>'district',
-				'title'=>'Район',
+				'title'=> $this->in_region? 'Город/<br>Район региона' :'Район',
 				'css_class'=>'domstor_district',
 				'position'=>200,
 				'sort_name'=>'sort-district',
