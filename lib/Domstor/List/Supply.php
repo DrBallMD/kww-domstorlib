@@ -53,9 +53,9 @@ class Domstor_List_Supply extends Domstor_List_Common
 				'css_class'=>'domstor_address',
 				'position'=>230,
 				'sort_name'=>'sort-street',
-                'transformer' => $this->in_region?
+                'transformer' => new Domstor_Transformer_LinkToObject($this->in_region?
                     new Domstor_Transformer_Supply_RegionAddress() :
-                    new Domstor_Transformer_Supply_CityAddress(),
+                    new Domstor_Transformer_Supply_CityAddress(), $this->object_href)
 		));
 
 		$this->addField($price_field)
