@@ -64,7 +64,6 @@ class SP_Cache_File extends Doctrine_Cache_Driver
 
     protected function _writeExpireArray(array $array)
     {
-        $out = array();
         $handle = fopen($this->getExpireFile(), 'w');
         foreach($array as $key => $value)
         {

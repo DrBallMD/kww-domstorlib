@@ -72,6 +72,12 @@ class Domstor
 
     protected $cache_time = 0;
 
+    /**
+     *
+     * @var Domstor_DataProvider
+     */
+    protected $data_provider;
+
     public static function checkObjectAction($object, $action)
     {
         return Domstor_Helper::checkEstateAction($object, $action);
@@ -82,6 +88,7 @@ class Domstor
 		$this->sort_client = new Domstor_SortClient;
 		$this->pager = new SP_Helper_Pager;
 		$this->filter_data_loader_config = new Domstor_Filter_DataLoaderConfig;
+        $this->data_provider = new Domstor_DataProvider(new Doctrine_Cache_Array(), 3000);
 	}
 
     /**
@@ -91,7 +98,7 @@ class Domstor
     public function getSiteMapGenerator()
     {
         if( !$this->site_map_generator )
-            $this->site_map_generator = new DomstorSiteMapGenerator();
+            $this->site_map_generator = new DomstorSiteMapGenerator($this->getHrefTemplate('object'));
 
         return $this->site_map_generator;
     }
@@ -155,6 +162,19 @@ class Domstor
         }
 
 		$url = 'http://'.$this->server_name.$this->api_path.'/list/?'.http_build_query($params).$this->sort_client->getRequestString();
+
+		if( $this->filter ) $url.= $this->filter->getServerRequestString();
+
+		return $url;
+	}
+
+    // Формируем url запроса к серверу для списка
+	protected function _getSitemapRequest(array $params)
+	{
+		// Получаем массив параметров запроса
+		$params = $this->_prepareRequestParams($params);
+
+		$url = 'http://'.$this->server_name.$this->api_path.'/site-map/?'.http_build_query($params);
 
 		if( $this->filter ) $url.= $this->filter->getServerRequestString();
 
@@ -450,36 +470,23 @@ class Domstor
        // Упаковываем $object, $action и $page в параметры
 		$params['object'] = $object;
 		$params['action'] = $action;
-        $params['_no_limit_'] = $action;
-		$filter = $this->createFilter($object, $action);
-		if( $filter )
-		{
-			$filter->bindFromRequest();
-		}
+
+//		$filter = $this->createFilter($object, $action);
+//		if( $filter )
+//		{
+//			$filter->bindFromRequest();
+//		}
 
 		// Получаем url запроса на основе параметров
-		$url = $this->_getListRequest($params);
+		$url = $this->_getSitemapRequest($params);
         //echo $url, '<br>';
 
 		// Получаем данные
-		$data = $this->_getData($url);
+		$data = $this->data_provider->getData($url);
 
-		// Последний элемент - общее число объектов
-		$total = array_pop($data);
+        //print_r($data);
 
-		// Создаем фабрику списков
-		$factory = new Domstor_List_ListFactory;
-
-		// Получаем параметры для списка
-		$list_params = $this->_prepareListParams($params);
-		$list_params['data'] = $data;
-
-		// Фабрика создает список
-		$list = $factory->create($object, $action, $list_params);
-
-		if( !$list ) return FALSE;
-
-        $this->getSiteMapGenerator()->setList($list)->setRequestUrl($url);
+        $this->getSiteMapGenerator()->setData($data)->setRequestUrl($url);
         $this->getSiteMapGenerator()->generate();
     }
 
@@ -670,7 +677,7 @@ class Domstor
 		// Получаем данные
 
         $id = md5($url);
-
+        //echo $url,PHP_EOL;
         if( is_null($cache) ) $cache = $this->cache_time;
 
         if( $this->cache_driver and $cache) {
@@ -810,10 +817,10 @@ class DomstorSiteMapGenerator
     protected $_host = '';
 
     /**
-     * List for map generation
-     * @var Domstor_List_Common
+     * Data for map generation
+     * @var array
      */
-    protected $_list;
+    protected $_data;
 
     /**
      * Link priority in sitemap
@@ -833,13 +840,19 @@ class DomstorSiteMapGenerator
      */
     protected $_request_url;
 
+    protected $_object_href;
+
+    function __construct($_object_href) {
+        $this->_object_href = $_object_href;
+    }
+
     /**
      *
-     * @param Domstor_List_Common $list
+     * @param array $data
      */
-    public function setList($list)
+    public function setData(array $data)
     {
-        $this->_list = $list;
+        $this->_data = $data;
         return $this;
     }
 
@@ -904,7 +917,7 @@ class DomstorSiteMapGenerator
      * Creates cache driver
      * @param srting $type
      * @param array $params
-     * @return SP_Cache_Interface
+     * @return Doctrine_Cache_Interface
      * @throws InvalidArgumentException
      */
     public function createCacheDriver($type, array $options)
@@ -923,15 +936,15 @@ class DomstorSiteMapGenerator
 
         if( !$xml_content )
         {
-            $url = $this->_list->getObjectHref();
+            $url = $this->_object_href;
             $xml = $this->getXmlWriter();
             $xml->openMemory();
             $xml->startDocument('1.0', 'UTF-8');
             $xml->startElementNs(null, 'urlset', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
-            foreach($this->_list->getData() as $row)
+            foreach($this->_data as $row)
             {
-                $full_url = $this->_host.str_replace('%id', $row['id'], $url);
+                $full_url = $this->_host.str_replace('%id', $row->id, $url);
 
                 $this->_genereteElement($xml, $row, $full_url);
             }
@@ -952,7 +965,7 @@ class DomstorSiteMapGenerator
     {
         $xml->startElement('url');
         $xml->writeElement('loc', $url);
-        $lastmod = isset($row['edit_dt'])? date('Y-m-d', strtotime($row['edit_dt'])) : date('Y-m-d');
+        $lastmod = isset($row->edit_dt)? date('Y-m-d', strtotime($row->edit_dt)) : date('Y-m-d');
         $xml->writeElement('lastmod', $lastmod);
         $xml->writeElement('changefreq', $this->_period);
         $xml->writeElement('priority', $this->_priority);
