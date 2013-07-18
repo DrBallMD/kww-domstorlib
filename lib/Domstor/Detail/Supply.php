@@ -233,14 +233,24 @@ class Domstor_Detail_Supply extends Domstor_Detail_Common
     protected function getTitleAddress()
     {
         $out = '';
-        if( $this->in_region )
-        {
-            $out = $this->_getRegionAddress();
+
+        if( !$this->in_region ) {
+            if( $city = $this->getVar('city') ) {
+                $out.= ' â '.$city;
+            }
+            else {
+                $out.= ', '.$this->getVar('master_city');
+            }
         }
-        else
-        {
-            $out = $this->_getCityAddress();
+
+        if( $this->in_region ) {
+            $addr = $this->_getRegionAddress();
         }
+        else {
+            $addr = $this->_getCityAddress();
+        }
+
+        if( $addr ) $out.= ', '.$addr;
 
 		return $out;
     }

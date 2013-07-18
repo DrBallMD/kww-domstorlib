@@ -23,10 +23,7 @@ class Domstor_Detail_Supply_Land extends Domstor_Detail_Supply
 
 		$out = $this->getOfferType2().' '.$this->getVar('land_type', 'земельный участок');
 
-        if( $a['city'] and !$this->in_region ) $out.= ' в '.$a['city'];
-
-		$addr = $this->getTitleAddress();
-        if( $addr ) $out.= ', '.$addr;
+        $out.= $this->getTitleAddress();
 
 		return $out;
 	}

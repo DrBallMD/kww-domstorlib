@@ -38,10 +38,7 @@ class Domstor_Detail_Supply_Flat extends Domstor_Detail_Supply
 
 		$out.= ($this->_action=='exchange'? 'квартиру' : 'квартира');
 
-		if( $a['city'] and !$this->in_region ) $out.= ' в '.$a['city'];
-
-		$addr = $this->getTitleAddress();
-        if( $addr ) $out.= ', '.$addr;
+		$out.= $this->getTitleAddress();
 
 		return $out;
 	}

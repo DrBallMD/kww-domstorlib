@@ -27,10 +27,7 @@ class Domstor_Detail_Supply_Garage extends Domstor_Detail_Supply
 		$type = $a['garage_type']? strtolower($a['garage_type']) : 'гараж';
 		$out.= $type.' ';
 
-		if( $a['city'] and !$this->in_region ) $out.= ' в '.$a['city'];
-
-		$addr = $this->getTitleAddress();
-        if( $addr ) $out.= ', '.$addr;
+		$out.= $this->getTitleAddress();
 
 		return $out;
 	}
