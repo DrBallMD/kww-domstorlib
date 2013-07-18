@@ -24,11 +24,10 @@ class Domstor_Detail_Supply_House extends Domstor_Detail_Supply
 
 		$out = $this->getOfferType2().' '.$this->getVar('house_type', 'дом');
 
-		if( $a['city'] ) $out.= 'в '.$a['city'];
+		if( $a['city'] and !$this->in_region ) $out.= ' в '.$a['city'];
 
-		$addr = $this->getStreetBuilding();
-		$district = ($this->getVar('district_parent') == 'Пригород')? ', '.$this->getVar('district') : '';
-		$out.= $district.($addr? ', '.$addr : ($this->getVar('address_note')? ', '.$this->getVar('address_note') : '' ));
+		$addr = $this->getTitleAddress();
+        if( $addr ) $out.= ', '.$addr;
 
 		return $out;
 	}

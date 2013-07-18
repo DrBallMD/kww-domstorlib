@@ -8,7 +8,7 @@ class Domstor_Detail_Supply_Land extends Domstor_Detail_Supply
 {
 	public function getPageTitle()
 	{
-		$a = &$this->object;
+		$a = $this->getData();
 
 		$out = $this->getTitle();
 
@@ -19,20 +19,14 @@ class Domstor_Detail_Supply_Land extends Domstor_Detail_Supply
 
 	public function getTitle()
 	{
-		$a = &$this->object;
+		$a = $this->getData();
 
-		$out = $this->getOfferType2().' ';
+		$out = $this->getOfferType2().' '.$this->getVar('land_type', 'земельный участок');
 
-		$type = $a['land_type']? lcfirst($a['land_type']) : 'земельный участок';
-		$out.= $type.' ';
+        if( $a['city'] and !$this->in_region ) $out.= ' в '.$a['city'];
 
-		if( $a['city'] ) $out.= 'в '.$a['city'];
-
-		$addr = $this->getStreetBuilding();
-		$district = ($a['district_parent'] == 'Пригород' or $a['district'] == 'Пригород' )? ', '.$a['district'] : '';
-		$out.= $district.($addr? ', '.$addr : ($a['address_note']? ', '.$a['address_note'] : '' ));
-
-		if( isset($a['cooperative_name']) and $a['cooperative_name'] ) $out.=', '.$a['cooperative_name'];
+		$addr = $this->getTitleAddress();
+        if( $addr ) $out.= ', '.$addr;
 
 		return $out;
 	}

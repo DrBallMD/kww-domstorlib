@@ -10,7 +10,7 @@ class Domstor_Transformer_Supply_Address implements Domstor_Transformer_Interfac
     public function get($data)
     {
         $out = '';
-        if( $data['street'] and $data['street_id'] ) {
+        if( $data['street'] ) {
             $out = $data['street'];
             if( isset($data['building_num']) and $data['building_num'] ) {
                 $out.= ', '.$data['building_num'];

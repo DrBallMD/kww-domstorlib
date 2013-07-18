@@ -17,8 +17,9 @@ class Domstor_Transformer_Supply_CityAddress implements Domstor_Transformer_Inte
     {
         $out = $this->address_transformer->get($data);
         if( !$out ) {
-            $out.= $data['address_note'];
+            //$out.= $data['address_note'];
         }
+
         return $out;
     }
 }

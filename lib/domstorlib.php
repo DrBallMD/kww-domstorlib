@@ -447,11 +447,11 @@ class Domstor
 
 		// Получаем параметры для списка
 		$object_params = $this->_prepareObjectParams($params);
-		$object_params['object'] = $data;
+		//$object_params['object'] = $data;
 
 		// Фабрика создает объект
 		$obj = $factory->create($object, $action, $object_params);
-
+        $obj->setData($data);
 		return $obj;
 	}
 

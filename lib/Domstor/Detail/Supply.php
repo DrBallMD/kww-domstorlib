@@ -230,9 +230,8 @@ class Domstor_Detail_Supply extends Domstor_Detail_Common
 		return $out;
 	}
 
-	public function getAddress()
-	{
-
+    protected function getTitleAddress()
+    {
         $out = '';
         if( $this->in_region )
         {
@@ -243,35 +242,57 @@ class Domstor_Detail_Supply extends Domstor_Detail_Common
             $out = $this->_getCityAddress();
         }
 
-		if( !empty($a['cooperative_name']) ) $out.=', '.$a['cooperative_name'];
+		return $out;
+    }
+
+	public function getAddress()
+	{
+
+        $out = '';
+        if( $this->in_region )
+        {
+            $out = $this->getData('region');
+            $addr = $this->_getRegionAddress();
+            if( $addr ) $out.= ', '.$addr;
+        }
+        else
+        {
+            $out = $this->getData('master_city');
+            $addr = $this->_getCityAddress();
+            if( $addr ) $out.= ', '.$addr;
+        }
+
+        if( $note = $this->getVar('address_note') ) $out.= ', '.$note;
+		if( $coop = $this->getVar('cooperative_name') ) $out.= ', '.$coop;
 
 		return $out;
 	}
 
     protected function _getRegionAddress()
     {
-        $out = $this->getData('region');
+        $out = '';
         $district_t = new Domstor_Transformer_Supply_RegionDistrict();
         $address_t = new Domstor_Transformer_Supply_RegionAddress();
         $district = $district_t->get($this->getData());
         $address = $address_t->get($this->getData());
 
-        if( $district ) $out.= ', '.$district;
-        if( $address ) $out.= ', '.$address;
-        return $out;
+        if( $district ) $out.= $district.', ';
+        if( $address ) $out.= $address.', ';
+        return trim($out, ', ');
     }
 
     protected function _getCityAddress()
     {
-        $out = $this->getData('location_name');
+        $out = '';
         $district_t = new Domstor_Transformer_Supply_CityDistrict();
         $address_t = new Domstor_Transformer_Supply_CityAddress();
         $district = $district_t->get($this->getData());
         $address = $address_t->get($this->getData());
 
-        if( $district ) $out.= ', ð-í '.$district;
-        if( $address ) $out.= ', '.$address;
-        return $out;
+        if( $district ) $out.= $district.', ';
+        if( $address ) $out.= $address.', ';
+
+        return trim($out, ', ');
     }
 
     public function getFormatedPrice($price, $price_currency, $period = NULL)

@@ -30,7 +30,30 @@ abstract class Domstor_Detail_Common
         return $this->object[$key];
     }
 
-    	//реализована в domstorlib, но оказалось что может понадобиться и тут
+    protected function _escapeData($data)
+    {
+         $escaped = array();
+         foreach ($data as $key => $value){
+             if( is_array($value) ) {
+                 $escaped[$key] = $this->_escapeData($value);
+             }
+             elseif (is_string($value)) {
+                 $escaped[$key] = htmlspecialchars($value, ENT_COMPAT, 'WINDOWS-1251');
+            }
+            else {
+                $escaped[$key] = $value;
+            }
+         }
+
+         return $escaped;
+    }
+
+    public function setData($data)
+    {
+        $this->object = $this->_escapeData($data);
+    }
+
+    //реализована в domstorlib, но оказалось что может понадобиться и тут
 	public function getNavigationHtml()
 	{
 		$prev = $this->getVar('prev_id');

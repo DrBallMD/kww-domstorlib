@@ -36,17 +36,17 @@ class Domstor_Detail_Supply_Flat extends Domstor_Detail_Supply
 
 		if( isset($rooms[$a['room_count']]) ) $out.= $rooms[$a['room_count']].($this->_action=='exchange'? 'комнатную ' : 'комнатная ');
 
-		$out.= ($this->_action=='exchange'? 'квартиру ' : 'квартира ');
+		$out.= ($this->_action=='exchange'? 'квартиру' : 'квартира');
 
-		if( $a['city'] ) $out.= 'в '.$a['city'];
+		if( $a['city'] and !$this->in_region ) $out.= ' в '.$a['city'];
 
-		$addr = $this->getStreetBuilding();
+		$addr = $this->getTitleAddress();
         if( $addr ) $out.= ', '.$addr;
 
 		return $out;
 	}
 
-	public function getAnnotation()
+    public function getAnnotation()
 	{
 		$a=&$this->object;
 		$annotation=$this->getOfferType($this->action);
@@ -233,7 +233,7 @@ class Domstor_Detail_Supply_Flat extends Domstor_Detail_Supply
 
         $doors = '';
 		if( $this->getVar('door_room') ) $doors.=$this->getElement($this->nbsp(4).'Двери межкомнатные:', $a['door_room']);
-		if( $this->getVar('door_front_material') ) $door_front_material=', '.$a['door_front_material'];
+		$door_front_material = $this->getVar('door_front_material')? ', '.$this->getVar('door_front_material') : '';
 		if( $this->getVar('door_front') ) $doors.=$this->getElement($this->nbsp(4).'Входная дверь:', $a['door_front'].$door_front_material);
 		if( $this->getVar('door_pocket_material') ) $doors.=$this->getElement($this->nbsp(4).'Дверь в карман:', $a['door_pocket_material']);
 		if( $doors )

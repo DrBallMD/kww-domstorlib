@@ -27,13 +27,10 @@ class Domstor_Detail_Supply_Garage extends Domstor_Detail_Supply
 		$type = $a['garage_type']? strtolower($a['garage_type']) : 'гараж';
 		$out.= $type.' ';
 
-		if( $a['city'] ) $out.= 'в '.$a['city'];
+		if( $a['city'] and !$this->in_region ) $out.= ' в '.$a['city'];
 
-		$addr = $this->getStreetBuilding();
-		$district = ($a['district_parent'] == 'Пригород' or $a['district'] == 'Пригород' )? ', '.$a['district'] : '';
-		$out.= $district.($addr? ', '.$addr : ($a['address_note']? ', '.$a['address_note'] : '' ));
-
-		if( isset($a['cooperative_name']) and $a['cooperative_name'] ) $out.= ' кооператив '.$a['cooperative_name'];
+		$addr = $this->getTitleAddress();
+        if( $addr ) $out.= ', '.$addr;
 
 		return $out;
 	}
