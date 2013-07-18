@@ -22,10 +22,7 @@ class Domstor_Detail_Supply_House extends Domstor_Detail_Supply
 	{
 		$a = &$this->object;
 
-		$out = $this->getOfferType2().' ';
-
-		$type = $this->getVar('house_type', 'дом');
-		$out.= $type.' ';
+		$out = $this->getOfferType2().' '.$this->getVar('house_type', 'дом');
 
 		if( $a['city'] ) $out.= 'в '.$a['city'];
 

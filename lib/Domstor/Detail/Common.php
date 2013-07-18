@@ -21,9 +21,16 @@ abstract class Domstor_Detail_Common
     protected $show_second_head = false;
 	var $prev_next_html;
 
+    public function getData($key = NULL)
+    {
+        if( is_null($key) ) {
+            return $this->object;
+        }
 
+        return $this->object[$key];
+    }
 
-	//реализована в domstorlib, но оказалось что может понадобиться и тут
+    	//реализована в domstorlib, но оказалось что может понадобиться и тут
 	public function getNavigationHtml()
 	{
 		$prev = $this->getVar('prev_id');

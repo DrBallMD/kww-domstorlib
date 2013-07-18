@@ -232,47 +232,49 @@ class Domstor_Detail_Supply extends Domstor_Detail_Common
 
 	public function getAddress()
 	{
-		$a = &$this->object;
+
         $out = '';
-        $space2 = '';
-        $space = '';
-        $district_type = isset($a['district_type'])? $a['district_type'] : '';
-		if( $this->in_region or $a['district'] == 'Пригород' or $district_type == 7 )
-		{
-			if( $this->in_region ) $out.=$this->getIf($a['city'], '', ', ');
-			$out.=$this->getIf($a['district'], '', ', ');
-			$out.=$this->getIf($a['address_note'], '', ', ');
-			$out=substr($out, 0, -2);
-		}
-		else
-		{
-			if( $a['street'] and $a['street_id'] )
-			{
-				$out = $this->getStreetBuilding();
-				$space=', ';
-			}
+        if( $this->in_region )
+        {
+            $out = $this->_getRegionAddress();
+        }
+        else
+        {
+            $out = $this->_getCityAddress();
+        }
 
-			if( $a['district'] )
-			{
-				if( substr($a['district'], -1)=='й' )
-				{
-					$out.=$space.$a['district'].'&nbsp;р-н';
-				}
-				else
-				{
-					$out.=$space.'р-н&nbsp;'.$a['district'];
-				}
-			}
-			if( $out ) $space2=', ';
-			$out.=$space2.$a['city'];
-		}
-
-		if( isset($a['cooperative_name']) and $a['cooperative_name'] ) $out.=', '.$a['cooperative_name'];
+		if( !empty($a['cooperative_name']) ) $out.=', '.$a['cooperative_name'];
 
 		return $out;
 	}
 
-	public function getFormatedPrice($price, $price_currency, $period = NULL)
+    protected function _getRegionAddress()
+    {
+        $out = $this->getData('region');
+        $district_t = new Domstor_Transformer_Supply_RegionDistrict();
+        $address_t = new Domstor_Transformer_Supply_RegionAddress();
+        $district = $district_t->get($this->getData());
+        $address = $address_t->get($this->getData());
+
+        if( $district ) $out.= ', '.$district;
+        if( $address ) $out.= ', '.$address;
+        return $out;
+    }
+
+    protected function _getCityAddress()
+    {
+        $out = $this->getData('location_name');
+        $district_t = new Domstor_Transformer_Supply_CityDistrict();
+        $address_t = new Domstor_Transformer_Supply_CityAddress();
+        $district = $district_t->get($this->getData());
+        $address = $address_t->get($this->getData());
+
+        if( $district ) $out.= ', р-н '.$district;
+        if( $address ) $out.= ', '.$address;
+        return $out;
+    }
+
+    public function getFormatedPrice($price, $price_currency, $period = NULL)
 	{
 		if( (float) $price )
 		{
@@ -300,11 +302,10 @@ class Domstor_Detail_Supply extends Domstor_Detail_Common
 
 	public function getLocationBlock()
 	{
-		$a=&$this->object;
-		$location=$this->getAddress();
+		$a = $this->getData();
+		$location = $this->getAddress();
 		if( $location )
 		{
-			if( isset($a['address_note']) and $a['address_note'] and !$this->in_region ) $location.=', '.$a['address_note'];
 			$location='<p>'.$location.'</p>';
 			if( isset($a['first_line']) and $a['first_line'] ) $location.='<p>Первая линия</p>';
 			if( isset($a['metro']) and $a['metro'] ) $location.='<p>'.$a['metro'].'</p>';
