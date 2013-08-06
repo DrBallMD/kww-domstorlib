@@ -223,7 +223,7 @@ class Domstor_Detail_Supply_Commerce extends Domstor_Detail_Supply
 			$purp=array();
 			for($i=1013; $i<1022; $i++)
 			{
-				if( $a['Purposes'][$i] ) $purp[]=$a['Purposes'][$i];
+				if( !empty($a['Purposes'][$i]) ) $purp[]=$a['Purposes'][$i];
 			}
 			$out=implode(', ', $purp);
 			$out=$this->getElementIf('Земельный участок:', $out);

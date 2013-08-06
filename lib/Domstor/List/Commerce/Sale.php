@@ -40,8 +40,6 @@ class Domstor_List_Commerce_Sale extends Domstor_List_Supply
 	{
 		parent::__construct($attr);
 
-		$this->getField('address')->setTitle('Местоположение');
-		$this->deleteField('district');
 		$type_field = new Domstor_List_Field_Commerce_Purpose( array(
 			'name'=>'type',
 			'title'=>'Назначение',
@@ -49,16 +47,6 @@ class Domstor_List_Commerce_Sale extends Domstor_List_Supply
 			'sort_name'=>'sort-purpose',
 			'position'=>100,
 		) );
-
-		$address_field = new Domstor_List_Field_Commerce_Address( array(
-			'name'=>'address',
-			'title'=>'Местоположение',
-			'css_class'=>'domstor_address',
-			'in_region'=>$this->in_region,
-			'object_href'=>$this->object_href,
-			'sort_name'=>'sort-location',
-			'position'=>230,
-		));
 
 		$floor_field = new Domstor_List_Field_Commerce_Floor( array(
 			'name'=>'floor',
@@ -96,7 +84,6 @@ class Domstor_List_Commerce_Sale extends Domstor_List_Supply
 		$this->addField($type_field)
 			 ->addField($floor_field)
 			 ->addField($price_field)
-			 ->addField($address_field)
 		;
 		if( $this->show_square_house ) $this->addField($square_field);
 		if( $this->show_square_ground ) $this->addField($square_ground_field);

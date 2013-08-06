@@ -361,7 +361,7 @@ class Domstor_Detail_Supply extends Domstor_Detail_Common
 	{
 		$a = &$this->object;
         $out = '';
-		if( $a['realization_way'] )
+		if( !empty($a['realization_way']) )
 		{
 			if( $a['realization_way_id']==1183 or $a['realization_way_id']==1184 or $a['realization_way_id']==1185 )
 			{
