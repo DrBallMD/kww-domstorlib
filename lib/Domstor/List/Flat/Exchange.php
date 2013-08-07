@@ -24,10 +24,15 @@ class Domstor_List_Flat_Exchange extends Domstor_List_Flat_Sale
 
     protected function getRowHtml()
     {
-        $parent = parent::getRowHtml('with_demand');
-        $parent.= sprintf('<tr class="exchange_demand"><td></td><td class="zayav" colspan="%d">%s</td></tr>', count($this->fields)-1, $this->makeDemands());
-
-        return $parent;
+        $class = NULL;
+        $demand_tr = '';
+        $demands = $this->makeDemands();
+        if( $demands ) {
+            $class = 'with_demand';
+            $demand_tr = sprintf('<tr class="exchange_demand"><td></td><td class="zayav" colspan="%d">%s</td></tr>', count($this->fields)-1, $demands);
+        }
+        $parent = parent::getRowHtml($class);
+        return $parent.$demand_tr;
     }
 
     protected function makeDemands()
