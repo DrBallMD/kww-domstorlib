@@ -155,9 +155,9 @@ class HtmlTable
 		return $this->data;
 	}
 
-	protected function getRowHtml()
+	protected function getRowHtml($classes = NULL)
 	{
-		$out = '<tr>';
+		$out = $classes? '<tr class="'.$classes.'">' : '<tr>';
 		foreach($this->fields as $name => $field)
 		{
 			if( isset($this->row[$name]) ) $field->setValue( $this->row[$name] );
@@ -177,12 +177,12 @@ class HtmlTable
 			$out.="<table$css>";
 			if( $this->show_head )
 			{
-				$out.='<thead>';
+				$out.='<thead><tr>';
 				foreach($this->fields as $name => $field)
 				{
 					$out.=$field->getHeadHtml();
 				}
-				$out.='</thead>';
+				$out.='</tr></thead>';
 			}
 			$out.='<tbody>';
 			foreach($this->data as $row)

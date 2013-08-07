@@ -230,6 +230,8 @@ class Domstor
 			'uri_part'=>'&%name%=%desc%',
 			'input'=>$_GET,
 		);
+        $list_params['exchange_flat_href'] = $this->getHrefTEmplate('flat_purchase');
+		$list_params['exchange_house_href'] = $this->getHrefTEmplate('house_purchase');
 		return $list_params;
 	}
 

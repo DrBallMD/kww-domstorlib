@@ -117,7 +117,7 @@ class Domstor_Detail_Supply extends Domstor_Detail_Common
 	{
 		$obj = &$this->object;
         $out = '';
-		if( $obj['Demands'] and $this->action=='exchange')
+		if( $obj['Demands'] and $this->_action=='exchange')
 		{
 			$type=array(4=>'Квартира', 6=>'Дом');
 			foreach( $obj['Demands'] as $a )
@@ -132,7 +132,7 @@ class Domstor_Detail_Supply extends Domstor_Detail_Common
 					$href=$this->getExchangeHouseUrl($a['id']);
 				}
 				$annotation='<a href="'.$href.'" class="domstor_link">'.$a['code'].'</a> '.$type[$a['data_class']];
-				unset($rooms);
+				$rooms = '';
 				if( $a['new_building'] ) $annotation.=', Новостройка';
 				for($room=1; $room<6; $room++)
 				{
