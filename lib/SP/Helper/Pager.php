@@ -11,8 +11,9 @@ class SP_Helper_Pager
 	protected $layout_tmpl; 		// <div class="pager">%text</div>
 	protected $first_page_text;
 	protected $last_page_text;
+    protected $current;
 
-	protected $data;
+    protected $data;
 
 	public function __construct($params = array())
 	{
@@ -36,7 +37,7 @@ class SP_Helper_Pager
 		$on_page = $this->on_page;
 		$pager_count = $this->pager_count;
 		$plus = 0;
-        
+
 		if( $total <= $on_page ) return false;
 
 		if( $total%$on_page ) $plus=1;
@@ -171,7 +172,12 @@ class SP_Helper_Pager
 		if( isset($this->$name) ) return $this->$name;
 	}
 
-	public function display($current, $replaces=array(), $return=false)
+    public function render()
+    {
+        return $this->display($this->current, array(), TRUE);
+    }
+
+    public function display($current, $replaces=array(), $return=false)
 	{
 		if( !$this->process($current) ) return '';
 		$content='';

@@ -403,10 +403,12 @@ class Domstor
 			'link_tmpl' => '<a class="domstor_pagination_link" href="%href">%text</a> ',
 			'layout_tmpl'=>'<div class="domstor_pagination"><p>%info%text</p></div>',
 			'current_page_tmpl' => '<span class="domstor_pagination_selected">%text</span> ',
+            'current' => $page,
 		));
 
 		// Добавляем html-код pagera в список
-		$list->setPagination($this->getPager()->display($params['page'], array(), TRUE));
+		//$list->setPagination($this->getPager()->display($params['page'], array(), TRUE));
+        $list->setPager($this->pager);
 		$list->setFilter($filter);
 
 		return $list;

@@ -16,8 +16,13 @@ class Domstor_List_Common extends HtmlTable
 	protected $_show_filter = FALSE;
 	protected $empty_list_message = 'Список пуст';
 	protected $city_id;
+    /**
+     *
+     * @var SP_Helper_Pager
+     */
+    protected $pager;
 
-	public function cityId($val = NULL)
+    public function cityId($val = NULL)
 	{
 		if( is_null($val) ) return $this->city_id;
 
@@ -55,11 +60,15 @@ class Domstor_List_Common extends HtmlTable
 		return $this->pagination;
 	}
 
-	public function setPager($pager)
+	public function setPager(SP_Helper_Pager $pager)
 	{
 		$this->pager = $pager;
 	}
 
+    /**
+     *
+     * @return SP_Helper_Pager
+     */
 	public function getPager()
 	{
 		return $this->pager;
@@ -98,7 +107,7 @@ class Domstor_List_Common extends HtmlTable
 		if( count($this->data) )
 		{
 			$out.= parent::getHtml();
-			$out.= $this->getPagination();
+			$out.= $this->pager->render();
 		}
 		else
 		{
@@ -107,7 +116,12 @@ class Domstor_List_Common extends HtmlTable
 		return $out;
 	}
 
-	public function __construct($attr)
+    public function render()
+    {
+        return parent::getHtml();
+    }
+
+    public function __construct($attr)
 	{
 		parent::__construct($attr);
 		//print_r($this->data);
