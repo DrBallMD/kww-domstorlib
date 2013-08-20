@@ -39,6 +39,10 @@ class Domstor
 	protected $server_name = 'domstor.ru';
 	protected $api_path = '/gateway';
 	protected $sort_client;
+    /**
+     *
+     * @var SP_Helper_Pager
+     */
 	protected $pager;
 	protected $filter;
 	protected $filter_tmpl_dir;
@@ -705,6 +709,10 @@ class Domstor
 		return $this->sort_client;
 	}
 
+    /**
+     * 
+     * @return SP_Helper_Pager
+     */
 	public function getPager()
 	{
 		return $this->pager;
