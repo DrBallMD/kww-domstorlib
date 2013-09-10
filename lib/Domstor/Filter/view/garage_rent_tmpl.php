@@ -29,7 +29,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="nasn"><strong><?php $this->displayLabel('code')?>:</strong></td>
+					<td class="nasn"><strong><?php $this->displayLabel('code')?></strong></td>
 					<td>
 						<?php $this->displayField('code')?>
 					</td>
@@ -40,16 +40,16 @@
 			<table>
 				<tr>
 					<td class="type">
-						<strong><?php $this->displayLabel('type')?>:</strong>
+						<strong><?php $this->displayLabel('type')?></strong>
 						<?php $this->displayField('type')?>
 					</td>
 					<td class="district">
-						<strong><?php $this->displayLabel('district')?>:</strong>
+						<strong><?php $this->displayLabel('district')?></strong>
 						<?php $this->displayField('district')?>
 					</td>
                     <?php if( $this->hasField('suburban') ): ?>
                     <td class="suburban">
-						<strong><?php $this->displayLabel('suburban')?>:</strong>
+						<strong><?php $this->displayLabel('suburban')?></strong>
 						<?php $this->displayField('suburban')?>
 					</td>
                     <?php endif ?>

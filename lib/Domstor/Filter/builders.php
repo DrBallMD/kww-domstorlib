@@ -15,7 +15,7 @@ class DomstorCommonBuilder
 		// Добавление кнопок отправки формы
 		DomstorSubmitConstructor::add($this->_form);
 		$code = new SP_Form_Field_InputText;
-		$code->setName('code')->setLabel('Код объекта');
+		$code->setName('code')->setLabel('Код объекта:');
 		$this->_form->addField($code);
 	}
 
@@ -176,7 +176,7 @@ class DomstorSuburbanConstructor
         $field = new SP_Form_Field_CheckboxList;
         $options = $form->getDataLoader()->getSuburbans();
         $field->setName('suburban')
-				->setLabel('Пригород')
+				->setLabel('Пригород:')
 				->setOptions($options)
 				->isDropDown(FALSE)
 			;
@@ -216,7 +216,7 @@ class DomstorDistrictConstructor
 			$district = new Domstor_Filter_Field_District;
 			$options = $domstor->read('/gateway/location/district?ref_city='.$domstor->getRealParam('ref_city'));
 			$district->setName('district')
-				->setLabel('Район')
+				->setLabel('Район:')
 				->setOptions($options)
 				->isDropDown(FALSE)
 			;
@@ -362,7 +362,7 @@ class DomstorFlatSaleFilterBuilder extends DomstorCommonBuilder
 		$type = new SP_Form_Field_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
 		$type->setName('type')
-			->setLabel('Тип квартиры')
+			->setLabel('Тип квартиры:')
 			->setOptions($options)
 			->isDropDown(FALSE)
 		;
@@ -421,7 +421,7 @@ class DomstorFlatPurchaseFilterBuilder extends DomstorCommonBuilder
 		$type = new SP_Form_Field_CheckboxList;
 		$options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
 		$type->setName('type')
-			->setLabel('Тип квартиры')
+			->setLabel('Тип квартиры:')
 			->setOptions($options)
 			->isDropDown(FALSE)
 		;
@@ -621,7 +621,7 @@ class DomstorHouseSaleFilterBuilder extends DomstorCommonBuilder
         $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
-            ->setLabel('Тип дома')
+            ->setLabel('Тип дома:')
             ->setOptions($options)
             ->setLayoutClass('domstor_filter_dropdown')
             ->setLabelClass('domstor_filter_trigger')
@@ -677,7 +677,7 @@ class DomstorHousePurchaseFilterBuilder extends DomstorCommonBuilder
         $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
-            ->setLabel('Тип дома')
+            ->setLabel('Тип дома:')
             ->setOptions($options)
             ->setLayoutClass('domstor_filter_dropdown')
             ->setLabelClass('domstor_filter_trigger')
@@ -794,7 +794,7 @@ class DomstorGarageSaleFilterBuilder extends DomstorCommonBuilder
         $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
-            ->setLabel('Тип гаража')
+            ->setLabel('Тип гаража:')
             ->setOptions($options)
             ->setLayoutClass('domstor_filter_dropdown')
             ->setLabelClass('domstor_filter_trigger')
@@ -865,7 +865,7 @@ class DomstorGaragePurchaseFilterBuilder extends DomstorCommonBuilder
         $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
-            ->setLabel('Тип гаража')
+            ->setLabel('Тип гаража:')
             ->setOptions($options)
             ->setLayoutClass('domstor_filter_dropdown')
             ->setLabelClass('domstor_filter_trigger')
@@ -980,7 +980,7 @@ class DomstorLandSaleFilterBuilder extends DomstorCommonBuilder
         $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
-            ->setLabel('Тип участка')
+            ->setLabel('Тип участка:')
             ->setOptions($options)
             ->setLayoutClass('domstor_filter_dropdown')
             ->setLabelClass('domstor_filter_trigger')
@@ -1030,7 +1030,7 @@ class DomstorLandPurchaseFilterBuilder extends DomstorCommonBuilder
         $type = new SP_Form_Field_CheckboxList;
         $options = $this->_domstor->read('/gateway/type?object='.$this->_object.'&ref_city='.$this->_domstor->getRealParam('ref_city'));
         $type->setName('type')
-            ->setLabel('Тип участка')
+            ->setLabel('Тип участка:')
             ->setOptions($options)
             ->setLayoutClass('domstor_filter_dropdown')
             ->setLabelClass('domstor_filter_trigger')
@@ -1111,7 +1111,7 @@ class DomstorCommerceSaleFilterBuilder extends DomstorCommonBuilder
 			'1007' => 'Прочие',
 		);
 		$purpose->setName('purpose')
-			 ->setLabel('Назначение')
+			 ->setLabel('Назначение:')
 			 ->setOptions($options)
 			 ->setLayoutClass('domstor_filter_dropdown')
 			 ->setLabelClass('domstor_filter_trigger')
