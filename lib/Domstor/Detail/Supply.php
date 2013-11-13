@@ -361,33 +361,36 @@ class Domstor_Detail_Supply extends Domstor_Detail_Common
 	{
 		$a = &$this->object;
         $out = '';
-		if( !empty($a['realization_way']) )
-		{
-			if( $a['realization_way_id']==1183 or $a['realization_way_id']==1184 or $a['realization_way_id']==1185 )
-			{
-				$out.=$this->getElement('Способ реализации:', $a['realization_way']);
-				$out.=$this->getElementIf('Начальная цена:', $this->getFormatedPrice($a['auction_initial_price'], $a['auction_currency']));
-				$out.=$this->getElementIf('Сумма задатка:', $this->getFormatedPrice($a['auction_advance'], $a['auction_currency']));
-				$out.=$this->getElementIf('Шаг аукциона:', $this->getFormatedPrice($a['auction_step'], $a['auction_currency']));
-				$out.=$this->getElementIf('Тип аукциона:', $a['auction_type']);
-				$date=strtotime($a['auction_dttm']);
-				if( $date ) $out.=$this->getElement('Дата проведения:', date('d.m.Y', $date));
-				if( $date ) $out.=$this->getElement('Время проведения:', date('H:i', $date));
-				$out.=$this->getElementIf('Место проведения:', $a['auction_location']);
-				$date=strtotime($a['auction_filing_start']);
-				if( $date ) $out.=$this->getElement('Дата начал подачи заявок:', date('d.m.Y', $date));
-				$date=strtotime($a['auction_filing_finish']);
-				if( $date ) $out.=$this->getElement('Дата окончания подачи заявок:', date('d.m.Y', $date));
-			}
-			else
-			{
-				$out.=$this->getElement('', $a['realization_way']);
-			}
-			$out = '<div class="domstor_object_realization">
-					<h3>Способ реализации:</h3>
-					<table>'.$out.'</table>
-				</div>';
-		}
+        
+		if( empty($a['realization_way']) or $this->blockIsDisabled('realization')) {
+            return $out;
+        }
+
+        if( $a['realization_way_id']==1183 or $a['realization_way_id']==1184 or $a['realization_way_id']==1185 )
+        {
+            $out.=$this->getElement('Способ реализации:', $a['realization_way']);
+            $out.=$this->getElementIf('Начальная цена:', $this->getFormatedPrice($a['auction_initial_price'], $a['auction_currency']));
+            $out.=$this->getElementIf('Сумма задатка:', $this->getFormatedPrice($a['auction_advance'], $a['auction_currency']));
+            $out.=$this->getElementIf('Шаг аукциона:', $this->getFormatedPrice($a['auction_step'], $a['auction_currency']));
+            $out.=$this->getElementIf('Тип аукциона:', $a['auction_type']);
+            $date=strtotime($a['auction_dttm']);
+            if( $date ) $out.=$this->getElement('Дата проведения:', date('d.m.Y', $date));
+            if( $date ) $out.=$this->getElement('Время проведения:', date('H:i', $date));
+            $out.=$this->getElementIf('Место проведения:', $a['auction_location']);
+            $date=strtotime($a['auction_filing_start']);
+            if( $date ) $out.=$this->getElement('Дата начал подачи заявок:', date('d.m.Y', $date));
+            $date=strtotime($a['auction_filing_finish']);
+            if( $date ) $out.=$this->getElement('Дата окончания подачи заявок:', date('d.m.Y', $date));
+        }
+        else
+        {
+            $out.=$this->getElement('', $a['realization_way']);
+        }
+
+        $out = '<div class="domstor_object_realization">
+                <h3>Способ реализации:</h3>
+                <table>'.$out.'</table>
+            </div>';
 		return $out;
 	}
 

@@ -20,6 +20,7 @@ abstract class Domstor_Detail_Common
 	protected $in_region;
     protected $show_second_head = false;
 	var $prev_next_html;
+    protected $block_disables = array();
 
     public function getData($key = NULL)
     {
@@ -148,6 +149,27 @@ abstract class Domstor_Detail_Common
 	{
 		return $this->prev_next_html;
 	}
+
+    protected function blockIsDisabled($name)
+    {
+        $key = array_search($name, $this->block_disables);
+        return $key !== FALSE;
+    }
+
+    public function enableBlock($name)
+    {
+        $key = array_search($name, $this->block_disables);
+        if( $key !== FALSE ) {
+            unset($this->block_disables[$key]);
+        }
+    }
+
+    public function disableBlock($name)
+    {
+        if( !$this->blockIsDisabled($name) ) {
+            $this->block_disables[] = $name;
+        }
+    }
 
 	public function render()
     {
@@ -300,7 +322,7 @@ abstract class Domstor_Detail_Common
 
 	public function getContactBlock()
 	{
-		if( !$this->show_contact ) return '';
+		if( !$this->show_contact or $this->blockIsDisabled('contact')) return '';
 		$a = &$this->object;
         $out = '';
 		if( $a['Agent']['tel_work'] and $a['Agent']['tel_sot'] )
