@@ -46,6 +46,7 @@ class Domstor
 	protected $pager;
 	protected $filter;
 	protected $filter_tmpl_dir;
+    protected $detail_tmpl_dir;
 	protected $params = array(); // Параметры списка (фильтры, сортировка  и т.д.)
 	protected $my_id = 1; // Идентификатор организации
 	protected $pagination_count = 15; // Количество ссылок на страницы
@@ -250,7 +251,10 @@ class Domstor
 		$object_params['action'] = ($params['action']=='rent' or $params['action']=='rentuse')? 'rent' : 'sale';
 		$object_params['exchange_flat_href'] = $this->getHrefTEmplate('flat_purchase');
 		$object_params['exchange_house_href'] = $this->getHrefTEmplate('house_purchase');
-		$object_params['commerce_href'] = $this->getHrefTEmplate('commerce_sale');
+		$object_params['commerce_href'] = $this->getHrefTemplate('commerce_sale');
+        if( $this->detail_tmpl_dir ) {
+            $object_params['tmpl_dir'] = $this->getDetailTmplDir();
+        }
 		return $object_params;
 	}
 
@@ -560,6 +564,16 @@ class Domstor
 		return $this->filter_tmpl_dir;
 	}
 
+    public function getDetailTmplDir()
+    {
+        return $this->detail_tmpl_dir;
+    }
+
+    public function setDetailTmplDir($detail_tmpl_dir)
+    {
+        $this->detail_tmpl_dir = $detail_tmpl_dir;
+    }
+
 	public function setHomeLocation($value)
 	{
 		if( is_null($value) )
@@ -710,7 +724,7 @@ class Domstor
 	}
 
     /**
-     * 
+     *
      * @return SP_Helper_Pager
      */
 	public function getPager()

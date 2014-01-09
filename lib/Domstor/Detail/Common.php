@@ -21,6 +21,7 @@ abstract class Domstor_Detail_Common
     protected $show_second_head = false;
 	var $prev_next_html;
     protected $block_disables = array();
+    protected $tmpl_dir;
 
     public function getData($key = NULL)
     {
@@ -59,37 +60,43 @@ abstract class Domstor_Detail_Common
 	{
 		$prev = $this->getVar('prev_id');
 		$next = $this->getVar('next_id');
-        $out = '';
 
-		if($this->_action=='rentuse' or $this->_action=='purchase')
-		{
+		if($this->_action=='rentuse' or $this->_action=='purchase') {
 			$name='заявка';
-			$end='ая';
+			$text_end='ая';
 		}
-		else
-		{
+		else {
 			$name='объект';
-			$end='ий';
+			$text_end='ий';
 		}
 
-		if( $prev )
-		{
-			$href = str_replace('%id', $prev, $this->object_href);
-			$out.='<a class="domstor_link" href="'.$href.'">&larr;Предыдущ'.$end.' '.$name.'</a> ';
+        $prev_href = ''; $prev_text = '';
+        $next_href = ''; $next_text = '';
+
+		if( $prev ) {
+			$prev_href = str_replace('%id', $prev, $this->object_href);
+            $prev_text = 'Предыдущ'.$text_end.' '.$name;
 		}
 
-		if( $next )
-		{
-			$href = str_replace('%id', $next, $this->object_href);
-			$out.='<a class="domstor_link" href="'.$href.'">Следующ'.$end.' '.$name.'&rarr;</a> ';
+		if( $next ) {
+            $next_href = str_replace('%id', $next, $this->object_href);
+            $next_text = 'Следующ'.$text_end.' '.$name;
 		}
-		$out='<p class="prnxt">'.$out.'</p>';
+
+        ob_start();
+        include $this->tmpl_dir.'/navigation.html.php';
+        $out = ob_get_contents();
+        ob_end_clean();
+
 		return $out;
 	}
 
 	public function __construct($attr=null)
 	{
 		$this->setVars($attr);
+        if( !$this->tmpl_dir ) {
+            $this->tmpl_dir = dirname(__FILE__).'/views';
+        }
 	}
 
     public function getVar($name, $default = null)

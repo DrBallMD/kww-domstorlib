@@ -16,7 +16,7 @@ class Domstor_Filter_FilterFactory
 		$builder = new $builder_class;
 		$builder->setDomstor($params['domstor'])->setObject($object)->setAction($action);
 		$template = dirname(__FILE__).'/view/'.$object.'_'.$action.'_tmpl.php';
-		if( isset($params['filter_dir']) and $params['filter_dir'] )
+		if( !empty($params['filter_dir']) )
 		{
 			$fd = rtrim($params['filter_dir'], '/\\').'/'.$object.'_'.$action.'_tmpl.php';
 			if( is_file($fd) and is_readable($fd) ) $template = $fd;
