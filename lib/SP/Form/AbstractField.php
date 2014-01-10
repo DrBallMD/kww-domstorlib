@@ -245,16 +245,16 @@ abstract class SP_Form_AbstractField implements SP_Form_FieldInterface
 			$method = $this->getMethod();
 			if( $method == self::METHOD_GET )
 			{
-				$array = &$_GET;
+				$array = $_GET;
 			}
 			if( $method == self::METHOD_POST )
 			{
-				$array = &$_POST;
+				$array = $_POST;
 			}
 		}
 		else
 		{
-			$array = &$this->_form->getRequestArray();
+			$array = $this->_form->getRequestArray();
 			//var_dump($array);
 		}
 		if( is_null($array) ) $array = array();
@@ -263,7 +263,7 @@ abstract class SP_Form_AbstractField implements SP_Form_FieldInterface
 
 	public function bindFromRequest()
 	{
-		$array = &$this->getRequestArray();
+		$array = $this->getRequestArray();
 		if( !is_array($array) ) $array = array();
 		$this->bind($array);
 		return $this;

@@ -239,16 +239,16 @@ class SP_Form_Form extends SP_Form_AbstractField implements SP_Form_FormInterfac
 			$method = $this->getMethod();
 			if( $method == self::METHOD_GET )
 			{
-				$array = &$_GET;
+				$array = $_GET;
 			}
 			elseif( $method == self::METHOD_POST )
 			{
-				$array = &$_POST;
+				$array = $_POST;
 			}
 		}
 		else
 		{
-			$array = &$this->_form->getRequestArray();
+			$array = $this->_form->getRequestArray();
 		}
 		if( isset($array[$name]) ) {
             return $array[$name];

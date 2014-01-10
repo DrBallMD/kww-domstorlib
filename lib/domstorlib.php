@@ -356,7 +356,7 @@ class Domstor
 		$filter_factory = new Domstor_Filter_FilterFactory;
 		if( !isset($filter_factory_params['filter_dir']) ) $filter_factory_params['filter_dir'] = $this->filter_tmpl_dir;
 		$filter_factory_params['domstor'] = $this;
-		$this->filter = $filter_factory->create($object, $action, $filter_factory_params);
+        $this->filter = $filter_factory->create($object, $action, $filter_factory_params);
 		return $this->filter;
 	}
 
