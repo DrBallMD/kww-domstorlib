@@ -87,10 +87,6 @@ class Domstor_List_Commerce_Sale extends Domstor_List_Supply
 		;
 		if( $this->show_square_house ) $this->addField($square_field);
 		if( $this->show_square_ground ) $this->addField($square_ground_field);
-		if( $this->in_region )
-		{
-			$this->deleteField('district');
-		}
 		if( $this->action=='rent' )$this->getField('price')->setSortName('sort-rent');
 	}
 }

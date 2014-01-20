@@ -27,6 +27,7 @@ class Domstor_Detail_DetailFactory
 			'storehouse',
 			'landcom',
 			'other',
+            'complex',
 		);
 		if( in_array($object, $commerce) ) $object = 'Commerce';
 
