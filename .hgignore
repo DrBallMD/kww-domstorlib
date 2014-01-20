@@ -3,3 +3,4 @@ nbproject/*
 
 syntax: regexp
 ^cache
+.zip$
