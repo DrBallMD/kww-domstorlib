@@ -79,6 +79,10 @@ class Domstor_List_Common extends HtmlTable
 		$this->filter=$value;
 	}
 
+    /**
+     *
+     * @return Domstor_Filter_Form
+     */
 	public function getFilter()
 	{
 		return $this->filter;

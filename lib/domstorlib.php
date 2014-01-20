@@ -810,6 +810,10 @@ class Domstor
 		return $page;
 	}
 
+    /**
+     *
+     * @return Domstor_Filter_DataLoaderConfig
+     */
 	public function getFilterDataLoaderConfig()
 	{
 		return $this->filter_data_loader_config;
