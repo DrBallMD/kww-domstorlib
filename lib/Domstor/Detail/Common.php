@@ -331,7 +331,7 @@ abstract class Domstor_Detail_Common
 	{
 		if( !$this->show_contact or $this->blockIsDisabled('contact')) return '';
 		$a = &$this->object;
-        $out = '';
+        $out = $space = '';
 		if( $a['Agent']['tel_work'] and $a['Agent']['tel_sot'] )
 		{
 			$space = ', ';
