@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Domstor_Detail_Supply extends Domstor_Detail_Common
+abstract class Domstor_Detail_Supply extends Domstor_Detail_Common
 {
 	protected function getImageLink($src, $type)
 	{
@@ -361,7 +361,7 @@ class Domstor_Detail_Supply extends Domstor_Detail_Common
 	{
 		$a = &$this->object;
         $out = '';
-        
+
 		if( empty($a['realization_way']) or $this->blockIsDisabled('realization')) {
             return $out;
         }

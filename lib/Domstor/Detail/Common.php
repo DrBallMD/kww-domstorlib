@@ -19,7 +19,6 @@ abstract class Domstor_Detail_Common
 	protected $_show_agency = TRUE;
 	protected $in_region;
     protected $show_second_head = false;
-	var $prev_next_html;
     protected $block_disables = array();
     protected $tmpl_dir;
 
@@ -55,7 +54,9 @@ abstract class Domstor_Detail_Common
         $this->object = $this->_escapeData($data);
     }
 
-    //реализована в domstorlib, но оказалось что может понадобиться и тут
+    abstract public function getHtml();
+
+        //реализована в domstorlib, но оказалось что может понадобиться и тут
 	public function getNavigationHtml()
 	{
 		$prev = $this->getVar('prev_id');
@@ -152,11 +153,6 @@ abstract class Domstor_Detail_Common
 		return $out;
 	}
 
-	public function prevNextHtml()
-	{
-		return $this->prev_next_html;
-	}
-
     protected function blockIsDisabled($name)
     {
         $key = array_search($name, $this->block_disables);
@@ -180,7 +176,7 @@ abstract class Domstor_Detail_Common
 
 	public function render()
     {
-        return $this->getHtml().$this->prevNextHtml();
+        return $this->getHtml();
     }
 
     public function display()

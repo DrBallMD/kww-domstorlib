@@ -5,7 +5,7 @@
  *
  * @author pahhan
  */
-class Domstor_Detail_Demand extends Domstor_Detail_Common
+abstract class Domstor_Detail_Demand extends Domstor_Detail_Common
 {
 	public function getObjectCode()
 	{
