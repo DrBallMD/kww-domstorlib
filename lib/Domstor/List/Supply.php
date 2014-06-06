@@ -47,15 +47,15 @@ class Domstor_List_Supply extends Domstor_List_Common
                     new Domstor_Transformer_Supply_CityDistrict(),
 		));
 
+        $adress_transformer = $this->in_region? new Domstor_Transformer_Supply_RegionAddress() : new Domstor_Transformer_Supply_CityAddress();
+
         $address_field = new Domstor_List_Field_Common( array(
 				'name'=>'address',
 				'title'=>'Адрес',
 				'css_class'=>'domstor_address',
 				'position'=>230,
 				'sort_name'=>'sort-street',
-                'transformer' => new Domstor_Transformer_LinkToObject($this->in_region?
-                    new Domstor_Transformer_Supply_RegionAddress() :
-                    new Domstor_Transformer_Supply_CityAddress(), $this->object_href)
+                'transformer' => new Domstor_Transformer_LinkToObject($adress_transformer, $this->object_href)
 		));
 
 		$this->addField($price_field)
