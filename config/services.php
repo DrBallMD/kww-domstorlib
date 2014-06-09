@@ -58,7 +58,7 @@ return array(
         // Use calls to call any object methods after creation
         'calls' => array(
             'key' => array('value'=>'e84403a3-66d6-47f7-83df-19017a558c52', 'method' => 'setKey'),
-            'server'=>array('value'=>'http://domstor.test', 'method' => 'setServer'),
+            'server'=>array('value'=>'http://domstor.ru', 'method' => 'setServer'),
         ),
     ),
     'definer.page' => array(

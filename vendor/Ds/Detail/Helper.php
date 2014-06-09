@@ -78,12 +78,12 @@ class Ds_Detail_Helper
             $street = $data['street_name'];
         }
         else {
-            if( !($data->isSetAndArray('Street') or $data->Street->name) ) return;
-            $street = $data->Street->name;
+            if( !($data->isSetAndArray('Street') && $data->Street->name) ) return;
+            $street = $data->Street->abbr.' '.$data->Street->name;
         }
 
 
-        $out.= ($data->Street->isSetAnd('abbr')? $data->Street->abbr.' ' : '').$street;
+        $out.= $street;
         if( $data->isSetAnd('building_num') ) $out.= ', '.$data->building_num;
         if( $data->isSetAnd('corpus') ) $out.= (is_numeric($data->corpus)? '/' : '').$data->corpus;
 
