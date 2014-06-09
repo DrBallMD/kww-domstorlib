@@ -44,9 +44,7 @@ class Ds_Detail_Block_House_Technicalblock extends Ds_Detail_Block_AbstractBlock
                 $this->water()         ||
                 $this->sewerage()      ||
                 $this->materialActive()||
-                $this->balconyActive() ||
                 $this->windowsActive() ||
-                $this->doorsActive()   ||
                 $this->finishActive()  ||
                 $this->stateActive();
     }

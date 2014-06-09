@@ -11,7 +11,7 @@ abstract class Ds_Detail_Block_House_SupplyAnnotationBlock extends Ds_Detail_Blo
     {
         $data = $this->getData();
         $out = '';
-        if( !($data->isSetAndArray('Street') or $data->Street->name) ) return;
+        if( !($data->isSetAndArray('Street') && $data->Street->name) ) return;
 
         $out.= ($data->Street->isSetAnd('abbr')? $data->Street->abbr.' ' : '').$data->Street->name;
         if( $data->isSetAnd('building_num') ) $out.= ', '.$data->building_num;
