@@ -160,7 +160,9 @@ class HtmlTable
 		$out = $classes? '<tr class="'.$classes.'">' : '<tr>';
 		foreach($this->fields as $name => $field)
 		{
-			if( isset($this->row[$name]) ) $field->setValue( $this->row[$name] );
+			if(array_key_exists($name, $this->row) ) {
+                $field->setValue( $this->row[$name] );
+            }
 			$out.=$field->getHtml();
 		}
 		$out.='</tr>';
