@@ -7,7 +7,7 @@
 				<tr>
 					<td class="nasn"><strong>Арендная ставка:</strong></td>
 					<td><?php $this->getField('rent')->displayLabelField('min')?>
-		<?php $this->getField('rent')->displayLabelField('max')?> р./кв.м.
+		<?php $this->getField('rent')->displayLabelField('max')?> р.
 		<?php $this->getField('rent')->displayLabelField('period')?></td>
 				</tr>
 				<tr>

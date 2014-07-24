@@ -363,9 +363,9 @@ class Domstor_Detail_Supply_Commerce extends Domstor_Detail_Supply
 		$lifts.=$this->getElementIf($this->nbsp(8).'Тельфер:', $this->getVar('telpher'), $this->getIf($this->getVar('telpher_weight'),', до ', ' кг'));
 		$lifts.=$this->getElementIf($this->nbsp(8).'Кран-балка:', $this->getVar('crane_beam'), $this->getIf($this->getVar('crane_beam_weight'),', до ', ' т'));
 		$lifts.=$this->getElementIf($this->nbsp(8).'Козловой кран:', $this->getVar('crane_trestle'), $this->getIf($this->getVar('crane_trestle_weight'),', до ', ' т'));
-		if( $lifts ) $infra.=$this->getElement($this->nbsp(4).'Грузоподъемные устройства:', '').$lifts;
 
-		$infra = '';
+        $infra = '';
+        if( $lifts ) $infra.=$this->getElement($this->nbsp(4).'Грузоподъемные устройства:', '').$lifts;
         $infra.=$this->getElementIf($this->nbsp(4).'Охрана:', $this->getVar('security'));
 		$infra.=$this->getElementIf($this->nbsp(4).'Сигнализация:', $this->getVar('signalizing'));
 		$infra.=$this->getElementIf($this->nbsp(4).'Система пожаротушения:', $this->getVar('fire_prevention'));
