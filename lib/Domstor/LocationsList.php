@@ -26,28 +26,43 @@ class Domstor_LocationsList
 		return $out;
 	}
 
-	public function render($prefix = NULL)
-	{
-		if( !$prefix ) $prefix = $this->_prefix;
-		$out = '';
+    public function getLinks($prefix = NULL)
+    {
+        $links = array();
 
-		foreach($this->_data as $data)
+        if( !$prefix ) {
+            $prefix = $this->_prefix;
+        }
+
+        foreach($this->_data as $data)
 		{
 			if( $data['id'] == $this->_home_id )
 			{
-				$href = str_replace('&ref_city=%id', '', $this->_href_tmpl);
+				$uri = str_replace('&ref_city=%id', '', $this->_href_tmpl);
 			}
 			else
 			{
-				$href = str_replace('%id', $data['id'], $this->_href_tmpl);
+				$uri = str_replace('%id', $data['id'], $this->_href_tmpl);
 			}
-			if( $data['type']==2 ) $href.= '&inreg';
-			$out.= '<p><a href="'.$href.'">'.$prefix.' '.$data['name'].'</a></p>'.PHP_EOL;
+			array_push($links, array(
+                'url' => $uri,
+                'text' => $prefix.' '.$data['name'],
+            ));
 		}
 
-		if( $out ) $out = '<div class="domstor_locations_list">'.PHP_EOL.$out.'</div>';
+        return $links;
+    }
 
-		return $out;
+    public function render($prefix = NULL)
+	{
+		$links = $this->getLinks($prefix);
+        $html = '';
+
+        foreach ($links as $link ) {
+            $html .= sprintf('<p><a href="%s">%s</a></p>', $link['url'], $link['text']);
+        }
+
+        return $html;
 	}
 
 	public function display($prefix = NULL)
