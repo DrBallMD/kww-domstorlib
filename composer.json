@@ -14,7 +14,8 @@
             "SP_": "lib/",
             "Doctrine_": "lib/",
             "Domstor_": "lib/"
-        ,
-        "files": ["lib/domstorlib.php", "lib/htmllib.php"]
+            ,
+            "files": ["lib/domstorlib.php", "lib/htmllib.php"]
+        }
     }
 }
