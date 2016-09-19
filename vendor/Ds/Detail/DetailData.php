@@ -5,9 +5,10 @@
  *
  * @author pahhan
  */
-class Ds_Detail_DetailData implements ArrayAccess, Countable, Iterator
+class Ds_Detail_DetailData implements ArrayAccess, Countable, IteratorAggregate
 {
     private $__data_;
+    private $__pos_ = 0;
 
     public function __construct( array $data = array() )
     {
@@ -74,7 +75,7 @@ class Ds_Detail_DetailData implements ArrayAccess, Countable, Iterator
     }
 
     public function offsetSet($offset, $value) {
-
+        $this->__data_ = $value;
     }
 
     public function offsetUnset($offset) {
@@ -85,26 +86,8 @@ class Ds_Detail_DetailData implements ArrayAccess, Countable, Iterator
         return count($this->__data_);
     }
 
-    public function current() {
-        return current($this->__data_);
-    }
-
-    public function key() {
-        return key($this->__data_);
-    }
-
-    public function next() {
-        return next($this->__data_);
-    }
-
-    public function rewind() {
-        reset($this->__data_);
-    }
-
-    public function valid() {
-        $r = (bool) next($this->__data_);
-        prev($this->__data_);
-        return $r;
+    public function getIterator() {
+        return new ArrayIterator($this->__data_);
     }
 }
 

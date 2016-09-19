@@ -1,18 +1,9 @@
 <?php
 
-class Custom_FlatSaleFactory extends Ds_Factory_AbstractFactory
+class Custom_FlatFactory extends Custom_AbstractFactory
 {
-    protected $ref_city = 2004;
+    protected $location = 2004;
     protected $in_region = false;
-    protected $action = 'sale';
-
-    /**
-     * @return Ds_DataLoader_DataLoaderInterface
-     */
-    public function getDataLoader()
-    {
-        return $this->getContainer()->get('data_loader');
-    }
 
     /**
      *
@@ -22,7 +13,7 @@ class Custom_FlatSaleFactory extends Ds_Factory_AbstractFactory
     {
         $builder = $this->getContainer()->get('form.builder.flat');
         $builder->init(array(
-            'ref_city' => $this->ref_city,
+            'ref_city' => $this->location,
             'in_region' => $this->in_region,
             'action' => $this->action,
         ));
@@ -39,21 +30,21 @@ class Custom_FlatSaleFactory extends Ds_Factory_AbstractFactory
      *
      * @return Ds_List_ListInterface
      */
-    public function createList(array $params)
+    public function createList($detail_url, array $params)
     {
         $list_builder = $this->getContainer()->get('list.builder.flat');
         $list_builder->init(array(
             'action' => $this->action,
             'in_region' => $this->in_region,
-            'detail_sale_url' => '/detail.php?id=:id',
+            'detail_url' => $detail_url,
         ));
         $list = $list_builder->build();
         $data_loader = $this->getDataLoader();
 
         $params = array_merge($params, array(
             'entity' => 'flat',
-            'ref_city' => $this->ref_city,
-            'sale' => true,
+            'master_city' => $this->location,
+            $this->action => true,
         ));
 
         $list_client = new Ds_List_DataLoaderClient($params);
@@ -72,12 +63,12 @@ class Custom_FlatSaleFactory extends Ds_Factory_AbstractFactory
     {
         $params = array_merge($params, array(
             'entity' => 'flat',
-            'ref_city' => $this->ref_city,
-            'sale' => true,
+            'master_city' => $this->location,
+            $this->action => true,
         ));
 
         /* @var $detail Ds_Detail_AbstractDetail */
-        $detail = $this->getContainer()->get('detail.flat.sale');
+        $detail = $this->getContainer()->get('detail.flat.'.$this->action);
         $chain = new Spv_Transformer_TransformerChain();
         $chain->addTransformer('owner', new Ds_Transformer_OwnerTransformer());
         $detail->setTransformerChain($chain);
@@ -88,6 +79,11 @@ class Custom_FlatSaleFactory extends Ds_Factory_AbstractFactory
         $data_loader->registerClient($client);
 
         return $detail;
+    }
+
+    public function getAdditionalApiParams()
+    {
+        return array('room_no_empty' => 1);
     }
 
     public function getDefaultSort()
@@ -103,53 +99,10 @@ class Custom_FlatSaleFactory extends Ds_Factory_AbstractFactory
         $counter = $this->getContainer()->get('counter');
         $counter->setParams(array(
             'entity' => 'flat',
-            'ref_city' => $this->ref_city,
+            'ref_city' => $this->location,
+            $this->action => true,
         ));
 
         return $counter;
-    }
-
-    /**
-     *
-     * @return Ds_Pagination_Pagination
-     */
-    public function createPagination()
-    {
-        return $this->getContainer()->get('pagination');
-    }
-
-    /**
-     *
-     * @return Ds_Definer_SortDefiner
-     */
-    public function getSortDefiner()
-    {
-        return $this->getContainer()->get('definer.sort');
-    }
-
-    /**
-     *
-     * @return Ds_Definer_PageDefiner
-     */
-    public function getPageDefiner()
-    {
-        return $this->getContainer()->get('definer.page');
-    }
-
-    /**
-     *
-     * @return Ds_Definer_OnPageDefiner
-     */
-    public function getOnPageDefiner()
-    {
-        return $this->getContainer()->get('definer.onpage');
-    }
-
-    /**
-     * @return Ds_UrlGenerator_UrlGeneratorInterface
-     */
-    public function getUrlGenerator()
-    {
-        return $this->getContainer()->get('url_generator');
     }
 }

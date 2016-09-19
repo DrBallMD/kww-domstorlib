@@ -107,6 +107,9 @@ return array(
     'list.builder.flat' => array(
         'class' => 'Ds_List_Builder_FlatListBuilder',
     ),
+    'list.builder.house' => array(
+        'class' => 'Ds_List_Builder_HouseListBuilder',
+    ),
     'list.column' => array(
         'class' => 'Ds_List_Column_TableColumn',
         /*
@@ -125,6 +128,27 @@ return array(
     ),
     'detail.flat.sale' => array(
         'class' => 'Ds_Detail_Flat_FlatSale',
+        'arguments' => array(
+            'templating' => array('value' => '@templating'),
+            'block_factory' => array('value' => '@detail.block.factory'),
+        ),
+    ),
+    'detail.flat.rent' => array(
+        'class' => 'Ds_Detail_Flat_FlatRent',
+        'arguments' => array(
+            'templating' => array('value' => '@templating'),
+            'block_factory' => array('value' => '@detail.block.factory'),
+        ),
+    ),
+    'detail.house.sale' => array(
+        'class' => 'Ds_Detail_House_HouseSale',
+        'arguments' => array(
+            'templating' => array('value' => '@templating'),
+            'block_factory' => array('value' => '@detail.block.factory'),
+        ),
+    ),
+    'detail.house.rent' => array(
+        'class' => 'Ds_Detail_House_HouseRent',
         'arguments' => array(
             'templating' => array('value' => '@templating'),
             'block_factory' => array('value' => '@detail.block.factory'),

@@ -11,7 +11,8 @@ $loader->registerPrefix('Custom', $dir.'/src');
 $loader->register();
 
 $container = Ds_IoC_Container::instance();
-$ioc_config_loader = new Ds_IoC_ConfigLoader_PhpConfigLoader(include($dir.'/config/services.php'));
+$services = include($dir.'/config/services.php');
+$ioc_config_loader = new Ds_IoC_ConfigLoader_PhpConfigLoader($services);
 $container->setConfigLoader($ioc_config_loader);
 
 $block_factory = $container->get('detail.block.factory');

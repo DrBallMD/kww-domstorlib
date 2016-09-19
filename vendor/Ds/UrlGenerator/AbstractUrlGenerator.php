@@ -34,6 +34,17 @@ abstract class Ds_UrlGenerator_AbstractUrlGenerator implements Ds_UrlGenerator_U
         $this->url_pattern = $pattern;
     }
 
+    protected function solveUrl($url)
+    {
+        if( parse_url($url, PHP_URL_QUERY) and substr($url, 0, -1) !== '&' ) {
+            return $url.'&';
+        }
+        elseif( substr($url, 0, -1) !== '?' ) {
+            return $url.'?';
+        }
+
+        return $url;
+    }
 
 }
 

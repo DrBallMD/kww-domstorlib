@@ -55,7 +55,7 @@ class Spv_Form_Form extends Spv_Widget_HtmlWidget
 
     /**
      * Object for transforming source value (e.g. from database) to form value
-     * @var SPV_Transformer_TwoWayTransformerInterface
+     * @var Spv_Transformer_TwoWayTransformerInterface
      */
     protected $source_transformer;
 
@@ -369,7 +369,7 @@ class Spv_Form_Form extends Spv_Widget_HtmlWidget
 
     /**
      * Returns form value transformed by source transfomer
-     * @return SPV_Transformer_TwoWayTransformerInterface
+     * @return Spv_Transformer_TwoWayTransformerInterface
      */
     public function getSourceValue()
     {
@@ -401,7 +401,7 @@ class Spv_Form_Form extends Spv_Widget_HtmlWidget
         return $this->source_transformer;
     }
 
-    public function setSourceTransformer(SPV_Transformer_TwoWayTransformerInterface $source_transformer)
+    public function setSourceTransformer(Spv_Transformer_TwoWayTransformerInterface $source_transformer)
     {
         $this->source_transformer = $source_transformer;
         $source_transformer->setForm($this);

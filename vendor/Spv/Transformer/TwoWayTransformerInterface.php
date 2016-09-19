@@ -4,7 +4,7 @@
  *
  * @author pahhan
  */
-interface SPV_Transformer_TwoWayTransformerInterface
+interface Spv_Transformer_TwoWayTransformerInterface
 {
     /**
      * Forward transformation ( $object1->value = forwardTransform($object2->value); )

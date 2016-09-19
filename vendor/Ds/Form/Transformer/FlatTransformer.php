@@ -35,7 +35,7 @@ class Ds_Form_Transformer_FlatTransformer extends Spv_Form_SourceTransformer
             $form_value['rent_min'] = $rent['min'];
             $form_value['rent_max'] = $rent['max'];
             $form_value['rent_period'] = $rent['period'];
-            unset($form_value['price']);
+            unset($form_value['rent']);
         }
 
         foreach( array('square', 'squarel', 'squarek') as $square_name )

@@ -9,7 +9,7 @@ abstract class Ds_List_Builder_AbstractListBuilder implements Ds_List_Builder_Li
 {
     protected $action;
     protected $in_region;
-    protected $detail_sale_url;
+    protected $detail_url;
 
     abstract protected function buildSale();
     abstract protected function buildRent();
@@ -24,8 +24,14 @@ abstract class Ds_List_Builder_AbstractListBuilder implements Ds_List_Builder_Li
     {
         $this->in_region = $params['in_region'];
         $this->action = $params['action'];
-        if( isset($params['detail_sale_url']) ) $this->detail_sale_url = $params['detail_sale_url'];
+        if( isset($params['detail_url']) ) $this->detail_url = $params['detail_url'];
     }
+
+    public function setDetailUrl($detail_url)
+    {
+        $this->detail_url = $detail_url;
+    }
+
 
     /**
      * @return Ds_IoC_Container

@@ -18,7 +18,7 @@ class Ds_UrlGenerator_SimpleUrlGenerator extends Ds_UrlGenerator_AbstractUrlGene
 
         if( count($this->form_value) or count($this->sort_value) )
         {
-            $url.= '?';
+            $url = $this->solveUrl($url);
 
             if( count($this->form_value) )
                 $url.= http_build_query($this->form_value).'&';
@@ -41,7 +41,7 @@ class Ds_UrlGenerator_SimpleUrlGenerator extends Ds_UrlGenerator_AbstractUrlGene
 
         if( count($this->form_value) or count($this->sort_value) )
         {
-            $url.= '?';
+            $url = $this->solveUrl($url);
 
             if( count($this->form_value) )
                 $url.= http_build_query($this->form_value).'&';
@@ -61,7 +61,7 @@ class Ds_UrlGenerator_SimpleUrlGenerator extends Ds_UrlGenerator_AbstractUrlGene
 
     public function generateSort($sort_values)
     {
-        $url = $this->url_pattern.'?';
+        $url = $this->solveUrl($this->url_pattern);
 
         if( count($this->form_value) )
             $url.= http_build_query($this->form_value).'&';

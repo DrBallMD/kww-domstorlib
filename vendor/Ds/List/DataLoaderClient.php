@@ -30,8 +30,12 @@ class Ds_List_DataLoaderClient implements Ds_DataLoader_DataLoaderClientInterfac
 
     public function onDataReceived(array $data)
     {
-        if( isset($data['list']) )
+        if( isset($data['list']) ) {
+            if( isset($data['list']['error']) ) {
+                throw new Ds_DataLoader_DataLoaderException(sprintf('Server returns error "%s"', $data['list']['error']));
+            }
             $this->list->setData($data['list']);
+        }
     }
 
     public function __construct(array $params = array())

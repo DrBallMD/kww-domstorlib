@@ -63,6 +63,9 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
             $info['data']['districts']['params'] = array(
                 'location' => $this->ref_city,
             );
+            $info['data']['suburbans']['params'] = array(
+                'location' => $this->ref_city,
+            );
         }
 
         return $info;
@@ -98,6 +101,11 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
             $this->form_instance->getForm('district')->setOptions($data['districts']);
         }
 
+        if( isset( $data['suburbans'] ) and is_array($data['suburbans']) )
+        {
+            $this->form_instance->getForm('suburban')->setOptions($data['suburbans']);
+        }
+
         if( isset( $data['cities'] ) and is_array($data['cities']) )
         {
             $options = array();
@@ -131,8 +139,8 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
         $form = $this->createForm($this->action);
         $this->form_instance = $form;
 
-        /* Add district/city field */
-        $form->addForm($this->createLocationField($this->in_region));
+        /* Add locations field */
+        $this->addLocationsField($form, $this->in_region, $this->ref_city);
 
         /* Add exposition and code field */
         $this->addCodeExpositionFields($form, $this->action);
@@ -163,19 +171,23 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
     }
 
     /**
-     * Creates district or city field depends on $in_region value
-     * @param integer $ref_city_id
+     *
+     * @param Spv_Form_Form $form
      * @param boolean $in_region
-     * @return \Spv_Form_Form
+     * @param integer $ref_city_id
      */
-    protected function createLocationField($in_region)
+    protected function addLocationsField(Spv_Form_Form $form, $in_region, $ref_city_id)
     {
-        if( $in_region )
-            $field = new Ds_Form_Field_CityField();
-        else
-            $field = new Ds_Form_Field_DistrictField();
+        if( $in_region ) {
 
-        return $field;
+        }
+        else {
+            $suburban = new Ds_Form_Field_SuburbanField();
+            $form->addForm($suburban);
+
+            $district = new Ds_Form_Field_DistrictField();
+            $form->addForm($district);
+        }
     }
 
     /**
