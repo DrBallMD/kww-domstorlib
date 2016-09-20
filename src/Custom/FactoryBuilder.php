@@ -26,6 +26,9 @@ class Custom_FactoryBuilder
             case 'house':
                 return new Custom_HouseFactory($action);
                 break;
+            case 'newflat':
+                return new Custom_NewFlatFactory($action);
+                break;
 
             default:
                 throw new Exception(sprintf('Undefined estate type "%s"', $estate));

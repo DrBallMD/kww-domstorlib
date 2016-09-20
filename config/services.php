@@ -26,6 +26,9 @@ return array(
     'form.builder.flat' => array(
         'class' => 'Ds_Form_Builder_FlatFormBuilder',
     ),
+    'form.builder.newflat' => array(
+        'class' => 'Ds_Form_Builder_NewFlatFormBuilder',
+    ),
     'form.builder.house' => array(
         'class' => 'Ds_Form_Builder_HouseFormBuilder',
     ),
@@ -58,7 +61,7 @@ return array(
         // Use calls to call any object methods after creation
         'calls' => array(
             'key' => array('value'=>'e84403a3-66d6-47f7-83df-19017a558c52', 'method' => 'setKey'),
-            'server'=>array('value'=>'http://domstor.ru', 'method' => 'setServer'),
+            'server'=>array('value'=>'http://domstor.dev', 'method' => 'setServer'),
         ),
     ),
     'definer.page' => array(
@@ -107,6 +110,9 @@ return array(
     'list.builder.flat' => array(
         'class' => 'Ds_List_Builder_FlatListBuilder',
     ),
+    'list.builder.newflat' => array(
+        'class' => 'Ds_List_Builder_NewFlatListBuilder',
+    ),
     'list.builder.house' => array(
         'class' => 'Ds_List_Builder_HouseListBuilder',
     ),
@@ -128,6 +134,13 @@ return array(
     ),
     'detail.flat.sale' => array(
         'class' => 'Ds_Detail_Flat_FlatSale',
+        'arguments' => array(
+            'templating' => array('value' => '@templating'),
+            'block_factory' => array('value' => '@detail.block.factory'),
+        ),
+    ),
+    'detail.newflat.sale' => array(
+        'class' => 'Ds_Detail_NewFlat_NewFlatSale',
         'arguments' => array(
             'templating' => array('value' => '@templating'),
             'block_factory' => array('value' => '@detail.block.factory'),
