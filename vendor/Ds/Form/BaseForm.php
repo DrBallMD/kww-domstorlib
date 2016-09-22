@@ -7,6 +7,7 @@
  */
 class Ds_Form_BaseForm extends Spv_Form_Form
 {
+
     protected $templating;
 
     public function setProperties(array $properties)
@@ -26,4 +27,5 @@ class Ds_Form_BaseForm extends Spv_Form_Form
     {
         return $this->templating;
     }
+
 }

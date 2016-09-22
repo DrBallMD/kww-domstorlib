@@ -30,14 +30,15 @@ class Ds_Form_FormHiddenFields extends Spv_Widget_Widget
     protected function valuesToNames(array $values, $key = NULL)
     {
         $out = array();
-
-        foreach( $values as $name => $value)
+        foreach ($values as $name => $value)
         {
-            if( is_array($value) )
-                $out += $this->valuesToNames($value, $name);
-            elseif( !is_null($value) )
+            if (is_array($value))
             {
-                if( $key )
+                $out += $this->valuesToNames($value, $name);
+            }
+            elseif (!is_null($value))
+            {
+                if ($key)
                 {
                     $out[sprintf('%s[%s]', $key, $name)] = $value;
                 }
@@ -46,9 +47,7 @@ class Ds_Form_FormHiddenFields extends Spv_Widget_Widget
                     $out[$name] = $value;
                 }
             }
-
         }
-
         return $out;
     }
 
@@ -59,4 +58,3 @@ class Ds_Form_FormHiddenFields extends Spv_Widget_Widget
     }
 
 }
-

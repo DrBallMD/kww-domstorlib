@@ -140,6 +140,8 @@ class Ds_DataLoader_BaseDataLoader extends Ds_DataLoader_AbstractDataLoader
                 return $this->server.'/api/state';
             case 'districts':
                 return $this->server.'/api/location/districts';
+            case 'building_materials':
+                return $this->server.'/api/reference/material';
             case 'cities':
                 return $this->server.'/api/location/districts';
             case 'list':

@@ -85,10 +85,8 @@ class Custom_NewFlatFactory extends Custom_AbstractFactory
         $detail->setTransformerChain($chain);
         $client = new Ds_Detail_DataLoaderClient($params);
         $client->setDetail($detail);
-
         $data_loader = $this->getDataLoader();
         $data_loader->registerClient($client);
-
         return $detail;
     }
 
@@ -113,7 +111,6 @@ class Custom_NewFlatFactory extends Custom_AbstractFactory
             'ref_city' => $this->location,
             $this->action => true,
         ));
-
         return $counter;
     }
 }

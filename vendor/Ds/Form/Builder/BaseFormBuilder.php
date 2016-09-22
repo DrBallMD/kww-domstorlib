@@ -7,8 +7,11 @@
  *
  * @author pahhan
  */
-abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBuilderInterface, Ds_DataLoader_DataLoaderClientInterface, Ds_IoC_ContainerAwareInterface
+abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBuilderInterface, 
+                                                          Ds_DataLoader_DataLoaderClientInterface, 
+                                                          Ds_IoC_ContainerAwareInterface
 {
+
     /**
      * id of city reference
      * @var integer
@@ -34,13 +37,16 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
     protected $form_instance;
 
     abstract protected function buildSale();
+
     abstract protected function buildRent();
+
     abstract protected function buildPurchase();
+
     abstract protected function buildRentuse();
 
     public function getLoaderInfo()
     {
-        $info =  array(
+        $info = array(
             'key' => 'form.builder.flat',
             'data' => array(
                 'states' => array(
@@ -51,7 +57,7 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
             )
         );
 
-        if( $this->in_region )
+        if ($this->in_region)
         {
             $info['data']['cities']['params'] = array(
                 'location' => $this->ref_city,
@@ -73,43 +79,43 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
 
     public function onDataReceived(array $data)
     {
-        if( !$this->form_instance )
+        if (!$this->form_instance)
             $this->build();
 
-        if( $this->form_instance->hasForm('type') and isset( $data['types'] ) and is_array($data['types']) )
+        if ($this->form_instance->hasForm('type') and isset($data['types']) and is_array($data['types']))
         {
             $options = array();
-            foreach( $data['types'] as $type )
+            foreach ($data['types'] as $type)
             {
                 $options[$type['id']] = $type['name'];
             }
             $this->form_instance->getForm('type')->setOptions($options);
         }
 
-        if( $this->form_instance->hasForm('state') and isset( $data['states'] ) and is_array($data['states']) )
+        if ($this->form_instance->hasForm('state') and isset($data['states']) and is_array($data['states']))
         {
             $options = array();
-            foreach( $data['states'] as $state )
+            foreach ($data['states'] as $state)
             {
                 $options[$state['id']] = $state['name'];
             }
             $this->form_instance->getForm('state')->setOptions($options);
         }
 
-        if( isset( $data['districts'] ) and is_array($data['districts']) )
+        if (isset($data['districts']) and is_array($data['districts']))
         {
             $this->form_instance->getForm('district')->setOptions($data['districts']);
         }
 
-        if( isset( $data['suburbans'] ) and is_array($data['suburbans']) )
+        if (isset($data['suburbans']) and is_array($data['suburbans']))
         {
             $this->form_instance->getForm('suburban')->setOptions($data['suburbans']);
         }
 
-        if( isset( $data['cities'] ) and is_array($data['cities']) )
+        if (isset($data['cities']) and is_array($data['cities']))
         {
             $options = array();
-            foreach( $data['cities'] as $city )
+            foreach ($data['cities'] as $city)
             {
                 $options[$city['id']] = $city['name'];
             }
@@ -156,13 +162,13 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
      */
     protected function createForm($action)
     {
-        if( $action === 'sale' )
+        if ($action === 'sale')
             $form = $this->buildSale();
-        elseif( $action === 'rent' )
+        elseif ($action === 'rent')
             $form = $this->buildRent();
-        elseif( $action === 'purchase' )
+        elseif ($action === 'purchase')
             $form = $this->buildPurchase();
-        elseif( $action === 'rentuse' )
+        elseif ($action === 'rentuse')
             $form = $this->buildRentuse();
         else
             throw new Exception(sprintf('Unknown action "%s"', $action));
@@ -178,13 +184,14 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
      */
     protected function addLocationsField(Spv_Form_Form $form, $in_region, $ref_city_id)
     {
-        if( $in_region ) {
-
+        if ($in_region)
+        {
+            
         }
-        else {
+        else
+        {
             $suburban = new Ds_Form_Field_SuburbanField();
             $form->addForm($suburban);
-
             $district = new Ds_Form_Field_DistrictField();
             $form->addForm($district);
         }
@@ -200,7 +207,7 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
         $form->addForm(new Spv_Form_Field_InputText('code', array(
             'templating_key' => 'ds_twig',
             'template' => '@spv/input_text.html.twig',
-            'label' => ( $action == 'purchase' or $action == 'rentuse' )? 'Код заявки:' : 'Код объекта:',
+            'label' => ( $action == 'purchase' or $action == 'rentuse' ) ? 'Код заявки:' : 'Код объекта:',
         )));
 
         $form->addForm(new Spv_Form_Field_InputText('expo', array(
@@ -209,5 +216,5 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
             'label' => 'Обновления за',
         )));
     }
-}
 
+}
