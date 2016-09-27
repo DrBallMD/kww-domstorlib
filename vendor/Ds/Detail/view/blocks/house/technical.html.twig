@@ -1,0 +1,60 @@
+{% import '@detail/macro/table.html.twig' as table %}
+
+{% if block.active %}
+<div class="domstor_object_technic">
+    <h3>Технические характеристики</h3>
+    <table>
+    {% if block.communication %}
+        {{ table.row('Коммуникации:', block.communication) }}
+    {% endif %}
+    {{ table.row('Количество санузлов в доме:', block.santechToiletCount) }}
+
+    {% if block.electroActive %}
+        {{ table.emptyRow('Электроснабжение:') }}
+        {{ table.row('Напряжение:', block.electroVoltage, 1) }}
+        {{ table.row('Мощность:', block.electroPower, 1) }}
+        {{ table.row('Резервная автономная подстанция:', block.electroReserve, 1) }}
+        {{ table.row('Нет электричества:', block.electroNot, 1) }}
+    {% endif %}
+
+    {{ table.row('Теплоснабжение:', block.heat) }}
+    {{ table.row('Водоснабжение:', block.water) }}
+    {{ table.row('Канализация:', block.sewerage) }}
+
+    {% if block.materialActive %}
+        {{ table.emptyRow('Конструкции строения:') }}
+        {{ table.row('Материал наружных стен:', block.materialWall, 1) }}
+        {{ table.row('Материал перекрытий:', block.materialCeiling, 1) }}
+        {{ table.row('Материал несущих конструкций:', block.materialCarrying, 1) }}
+        {{ table.row('Материал кровли:', block.roofMaterial, 1) }}
+        {{ table.row('Тип кровли:', block.roofType, 1) }}
+        {{ table.row('Фундамент:', block.foundation, 1) }}
+    {% endif %}
+
+    {% if block.windowsActive %}
+        {{ table.emptyRow('Окна:') }}
+        {{ table.row('Материал рам:', block.windowsMaterial, 1) }}
+        {{ table.row('Тип остекления:', block.windowsGlasing, 1) }}
+        {{ table.row('Тип открывания окон:', block.windowsOpening, 1) }}
+    {% endif %}
+
+    {% if block.finishActive %}
+        {{ table.emptyRow('Отделка:') }}
+        {{ table.row('Потолки:', block.finishCeiling, 1) }}
+        {{ table.row('Полы:', block.finishFloor, 1) }}
+        {{ table.row('Перегородки:', block.finishPartition, 1) }}
+        {{ table.row('Фасад:', block.facade, 1) }}
+    {% endif %}
+
+    {% if block.stateActive %}
+        {{ table.emptyRow('Состояние объекта:') }}
+        {{ table.row('Год постройки:', block.stateBuildYear, 1) }}
+        {{ table.row('Процент износа:', block.stateWearout, 1) }}
+        {{ table.row('Состояние:', block.stateState, 1) }}
+    {% endif %}
+
+
+    </table>
+</div>
+
+{% endif %}

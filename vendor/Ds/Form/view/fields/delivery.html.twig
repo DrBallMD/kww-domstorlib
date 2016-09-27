@@ -1,0 +1,13 @@
+<div class="row-fluid">
+    <div class="span2 label-heads">
+        {% block label %}{{ form.getLabel() }}{% endblock %}
+    </div>
+    <div class="span10">
+        {% block fields %}
+            {{ form.getForm('quarter').renderLabel() }}
+            {{ form.getForm('quarter').addClass('input-small').render() }}
+            {{ form.getForm('year').renderLabel() }}
+            {{ form.getForm('year').addClass('input-small').render() }}
+        {% endblock %}
+    </div>
+</div>

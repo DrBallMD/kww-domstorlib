@@ -1,0 +1,23 @@
+<div class="domstor_object_place">
+    <h3>Местоположение</h3>
+    {% set a = block.location %}{% if a %}<p>{{ a }}</p>{% endif %}
+    {% set a = block.metro %}{% if a %}<p>{{ a }}</p>{% endif %}
+    {% set a = block.availableBus %}{% if a %}<p>От остановки {{ a }} мин.</p>{% endif %}
+    {% set a = block.availableMetro %}{% if a %}<p>От метро {{ a }} мин.</p>{% endif %}
+    {% set a = block.availableBusToMetro %}{% if a %}<p>Транспортом до метро {{ a }} мин.</p>{% endif %}
+    {% set a = block.mapWebLink %}{% if a %}<p><a href="{{ a }}">Посмотреть на карте</a></p>{% endif %}
+
+    {% set a = block.yandexMapLink %}
+    {% set b = block.fourGeoMapLink %}
+    {% if a or b %}<p>
+        Посмотреть на карте
+        {% if a %}<a href="{{ a }}" target="_blank" id="yandex-map">Яндекс</a> {% endif %}
+        {% if b %}<a href="{{ b }}" target="_blank" id="4geo-map">4geo</a> {% endif %}
+    </p>{% endif %}
+
+
+
+    {% for map in block.mapImages %}
+    <div class="domstor_map"><a href="http://domstor.ru{{ map }}" class="modal" rel="3"><img src="http://domstor.ru{{ map }}" alt="карта" /></a></div>
+    {% endfor %}
+</div>

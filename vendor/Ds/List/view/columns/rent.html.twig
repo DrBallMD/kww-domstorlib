@@ -1,0 +1,3 @@
+{% if row_data.rent_full|default %}
+{{ row_data.rent_full|number_format(0, '.', ' ')|replace({' ': '&nbsp;'}) }}&nbsp;{{ row_data.rent_currency|default }} {{ row_data.rent_period }}
+{% endif %}

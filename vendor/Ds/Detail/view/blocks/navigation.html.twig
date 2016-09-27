@@ -1,0 +1,8 @@
+{% if block.prev or block.next %}
+<div class="navobject">
+    <p class="prnxt">
+        {% if block.prev %}<a class="domstor_link" href="{{ block.prev }}">←Предыдущий объект</a>{% endif %}
+        <span>Объект {{ block.code }}</span>{% if block.next %} <a class="domstor_link" href="{{ block.next }}">Следующий объект→</a>{% endif %}
+    </p>
+</div>
+{% endif %}
