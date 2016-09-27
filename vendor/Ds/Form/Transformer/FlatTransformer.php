@@ -37,6 +37,22 @@ class Ds_Form_Transformer_FlatTransformer extends Spv_Form_SourceTransformer
             $form_value['rent_period'] = $rent['period'];
             unset($form_value['rent']);
         }
+        
+        if( isset( $form_value['delivery_from'] ) )
+        {
+            $deliveryFrom = $form_value['delivery_from'];
+            $form_value['delivery_from_quarter'] = (int)$deliveryFrom['quarter'] ?: null;
+            $form_value['delivery_from_year'] = (int)$deliveryFrom['year'] ?: null;
+            unset($form_value['delivery_from']);
+        }
+        
+        if( isset( $form_value['delivery_to'] ) )
+        {
+            $deliveryFrom = $form_value['delivery_to'];
+            $form_value['delivery_to_quarter'] = (int)$deliveryFrom['quarter'] ?: null;
+            $form_value['delivery_to_year'] = (int)$deliveryFrom['year'] ?: null;
+            unset($form_value['delivery_to']);
+        }
 
         foreach( array('square', 'squarel', 'squarek') as $square_name )
         {
@@ -48,7 +64,6 @@ class Ds_Form_Transformer_FlatTransformer extends Spv_Form_SourceTransformer
                 unset($form_value[$square_name]);
             }
         }
-
         return $form_value;
     }
 }
