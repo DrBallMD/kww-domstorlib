@@ -13,7 +13,7 @@
  */
 class Custom_NewFlatFactory extends Custom_AbstractFactory
 {
-    protected $location = 2004;
+    protected $location = 2236;
     protected $in_region = false;
     
     /**

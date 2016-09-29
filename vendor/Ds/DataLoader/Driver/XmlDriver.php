@@ -38,6 +38,8 @@ class Ds_DataLoader_Driver_XmlDriver implements Ds_DataLoader_Driver_DriverInter
                 $out[$key] = (string) $value;
         }
 
+        
+        print_r($out);
         return $out;
     }
 
