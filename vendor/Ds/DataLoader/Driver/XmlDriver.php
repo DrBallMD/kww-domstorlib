@@ -29,17 +29,20 @@ class Ds_DataLoader_Driver_XmlDriver implements Ds_DataLoader_Driver_DriverInter
         foreach ($element as $key => $value)
         {
             if (strstr($key, 'node_'))
+            {
                 $key = str_replace('node_', '', $key);
+            }
 
 
             if ($value->count() >= 1)
+            {
                 $out[$key] = $this->toArray($value);
+            }
             else
+            {
                 $out[$key] = (string) $value;
+            }
         }
-
-        
-        print_r($out);
         return $out;
     }
 
