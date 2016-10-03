@@ -1,0 +1,16 @@
+{% import '@detail/macro/table.html.twig' as table %}
+
+{% if block.active %}
+<div class="domstor_object_finance">
+    <h3>Финансовые условия</h3>
+    <table>
+        {% if block.price %}
+            {{ table.row('Цена:', block.price ~ ' ' ~ block.currency) }}
+        {% endif %}
+
+        {% if block.priceM2 %}
+            {{ table.row('Цена за кв.м:', block.priceM2 ~ ' ' ~ block.currency) }}
+        {% endif %}
+    </table>
+</div>
+{% endif %}

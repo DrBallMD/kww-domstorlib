@@ -140,7 +140,7 @@ return array(
         ),
     ),
     'detail.newflat.sale' => array(
-        'class' => 'Ds_Detail_NewFlat_NewFlatSale',
+        'class' => 'Ds_Detail_Flat_NewFlatSale',
         'arguments' => array(
             'templating' => array('value' => '@templating'),
             'block_factory' => array('value' => '@detail.block.factory'),

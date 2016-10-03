@@ -1,0 +1,5 @@
+{% if not row_data.delivered %}
+    {{ row_data.delivery_quarter }} - {{ row_data.delivery_year }}
+{% else %}
+    Объект сдан
+{% endif %}

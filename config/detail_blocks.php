@@ -14,6 +14,8 @@ return array(
     'flat.sizes' =>  array('class' => 'Ds_Detail_Block_Flat_SizesBlock', 'template' => '@detail/blocks/flat/sizes.html.twig'),
     'flat.technical' =>  array('class' => 'Ds_Detail_Block_Flat_TechnicalBlock', 'template' => '@detail/blocks/flat/technical.html.twig'),
     'flat.placing' =>  array('class' => 'Ds_Detail_Block_Flat_PlacingBlock', 'template' => '@detail/blocks/flat/placing.html.twig'),
+    'newflat.developer' =>  array('class' => 'Ds_Detail_Block_NewFlat_DeveloperBlock', 'template' => '@detail/blocks/newflat/developer.html.twig'),
+    'newflat.delivery' =>  array('class' => 'Ds_Detail_Block_NewFlat_DeliveryBlock', 'template' => '@detail/blocks/newflat/delivery.html.twig'),
 
     'flat.sale.annotation' =>  array('class' => 'Ds_Detail_Block_Flat_SaleAnnotationBlock'),
     'flat.sale.finance' =>  array('class' => 'Ds_Detail_Block_Flat_SaleFinanceBlock', 'template' => '@detail/blocks/flat/sale/finance.html.twig'),

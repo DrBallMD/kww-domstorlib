@@ -1,0 +1,9 @@
+{% set a = block.floor %}{% set o = block.options %}
+
+{% if a or o %}
+<div class="domstor_object_floor">
+<h3>Этаж</h3><p>
+{% if a %}<p>{{ a }} эт.</p>{% endif %}
+{% if o %}<p>{{ o }}</p>{% endif %}
+</div>
+{% endif %}

@@ -1,0 +1,19 @@
+{% import '@detail/macro/table.html.twig' as table %}
+
+{% if block.active %}
+<div class="domstor_object_type">
+    <h3>Обстановка, расположение</h3>
+    <table>
+        {{ table.row('Мебель:', block.furniture) }}
+        {{ table.row('Бытовая техника:', block.householdTech) }}
+        {{ table.conditionRow('Расположение:', 'Угловая квартира', block.inCorner) }}
+        {{ table.row('Расположение окон:', block.windowsDirection) }}
+        {{ table.row('Количество лифтов:', block.liftCount) }}
+        {{ table.row('Грузовой лифт:', block.liftCargo) }}
+        {{ table.row('Мусоропровод:', block.garbageChute) }}
+        {{ table.row('Охрана:', block.security) }}
+        {{ table.row('Парковка:', block.parking) }}
+
+    </table>
+</div>
+{% endif %}

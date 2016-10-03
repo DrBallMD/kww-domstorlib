@@ -7,12 +7,15 @@
  */
 class Ds_DataLoader_Driver_XmlDriver implements Ds_DataLoader_Driver_DriverInterface
 {
+
     public function read($source)
     {
-        try {
+        try
+        {
             $data = new SimpleXMLElement($source);
         }
-        catch(Exception $e) {
+        catch (Exception $e)
+        {
             throw new Ds_DataLoader_Driver_DriverException($e->getMessage());
         }
 
@@ -25,17 +28,22 @@ class Ds_DataLoader_Driver_XmlDriver implements Ds_DataLoader_Driver_DriverInter
         $out = array();
         foreach ($element as $key => $value)
         {
-            if( strstr($key, 'node_') )
+            if (strstr($key, 'node_'))
+            {
                 $key = str_replace('node_', '', $key);
+            }
 
 
-            if( $value->count() >= 1 )
+            if ($value->count() >= 1)
+            {
                 $out[$key] = $this->toArray($value);
+            }
             else
+            {
                 $out[$key] = (string) $value;
+            }
         }
-
         return $out;
     }
-}
 
+}

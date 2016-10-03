@@ -1,0 +1,10 @@
+{% import '@detail/macro/table.html.twig' as table %}
+
+<div class="domstor_object_type">
+    <h3>Тип квартиры (здания)</h3>
+    <table>
+        {{ table.row('Тип квартиры:', block.type) }}
+        {{ table.row('Планировка:', block.planning) }}
+        {{ table.row('Материал строения:', block.buildingMaterial) }}
+    </table>
+</div>

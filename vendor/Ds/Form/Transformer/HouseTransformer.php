@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Description of FlatTransformer
+ * Description of HouseRowTransformer
  *
  * @author pahhan
  */
-class Ds_Form_Transformer_FlatTransformer extends Spv_Form_SourceTransformer
+class Ds_Form_Transformer_HouseTransformer extends Spv_Form_SourceTransformer
 {
     public function sourceToForm($source_value)
     {
@@ -37,33 +37,22 @@ class Ds_Form_Transformer_FlatTransformer extends Spv_Form_SourceTransformer
             $form_value['rent_period'] = $rent['period'];
             unset($form_value['rent']);
         }
-        
-        if( isset( $form_value['delivery_from'] ) )
-        {
-            $deliveryFrom = $form_value['delivery_from'];
-            $form_value['delivery_from_quarter'] = (int)$deliveryFrom['quarter'] ?: null;
-            $form_value['delivery_from_year'] = (int)$deliveryFrom['year'] ?: null;
-            unset($form_value['delivery_from']);
-        }
-        
-        if( isset( $form_value['delivery_to'] ) )
-        {
-            $deliveryFrom = $form_value['delivery_to'];
-            $form_value['delivery_to_quarter'] = (int)$deliveryFrom['quarter'] ?: null;
-            $form_value['delivery_to_year'] = (int)$deliveryFrom['year'] ?: null;
-            unset($form_value['delivery_to']);
-        }
 
-        foreach( array('square', 'squarel', 'squarek') as $square_name )
+        foreach( array('square', 'squareg') as $square_name )
         {
             if( isset( $form_value[$square_name] ) )
             {
                 $square = $form_value[$square_name];
-                $form_value[$square_name.'_min'] = $square['min'];
-                $form_value[$square_name.'_max'] = $square['max'];
+                if( floatval($square['min']) >= 1 ) {
+                    $form_value[$square_name.'_min'] = $square['min'];
+                }
+                if( floatval($square['max']) >= 1 ) {
+                    $form_value[$square_name.'_max'] = $square['max'];
+                }
                 unset($form_value[$square_name]);
             }
         }
+
         return $form_value;
     }
 }

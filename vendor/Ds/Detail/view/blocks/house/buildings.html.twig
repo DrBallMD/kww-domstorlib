@@ -1,0 +1,12 @@
+{% import '@detail/macro/table.html.twig' as table %}
+
+<div class="domstor_object_building">
+    <h3>Постройки</h3>
+    <table>
+        {{ table.row('Баня:', block.data.bath_house) }}
+        {{ table.row('Бассейн:', block.data.swimming_pool) }}
+        {{ table.row('Гараж:', block.data.garage) }}
+        {{ table.row('Количество мест под автомобили:', block.data.car_park_count) }}
+        {{ table.row('Прочие постройки:', block.data.other_building) }}
+    </table>
+</div>
