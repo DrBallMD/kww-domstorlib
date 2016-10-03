@@ -37,6 +37,9 @@ return array(
     ),
     'form.builder.land' => array(
         'class' => 'Ds_Form_Builder_LandFormBuilder',
+    ),    
+    'form.builder.commerce' => array(
+        'class' => 'Ds_Form_Builder_CommerceFormBuilder',
     ),
     'form.hidden_fields' => array(
         'class' => 'Ds_Form_FormHiddenFields',
@@ -116,6 +119,10 @@ return array(
     'list.builder.house' => array(
         'class' => 'Ds_List_Builder_HouseListBuilder',
     ),
+        
+    'list.builder.commerce' => array(
+        'class' => 'Ds_List_Builder_CommerceListBuilder',
+    ),
     'list.column' => array(
         'class' => 'Ds_List_Column_TableColumn',
         /*
@@ -166,5 +173,12 @@ return array(
             'templating' => array('value' => '@templating'),
             'block_factory' => array('value' => '@detail.block.factory'),
         ),
-    ),
+    ),        
+    'detail.commerce.sale' => array(
+        'class' => 'Ds_Detail_Commerce_CommerceSale',
+        'arguments' => array(
+            'templating' => array('value' => '@templating'),
+            'block_factory' => array('value' => '@detail.block.factory'),
+        ),
+    )
 );

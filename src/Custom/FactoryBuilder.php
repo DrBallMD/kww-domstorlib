@@ -22,13 +22,12 @@ class Custom_FactoryBuilder
         switch ($estate) {
             case 'flat':
                 return new Custom_FlatFactory($action);
-                break;
             case 'house':
                 return new Custom_HouseFactory($action);
-                break;
             case 'newflat':
                 return new Custom_NewFlatFactory($action);
-                break;
+            case 'commerce':
+                return new Custom_CommerceFactory($action);
 
             default:
                 throw new Exception(sprintf('Undefined estate type "%s"', $estate));

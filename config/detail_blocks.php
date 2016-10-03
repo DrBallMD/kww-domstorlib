@@ -8,20 +8,17 @@ return array(
     'finance_rent' =>  array('class' => 'Ds_Detail_Block_FinanceRentBlock', 'template' => '@detail/blocks/finance_rent.html.twig'),
     'comment' =>  array('class' => 'Ds_Detail_Block_CommentBlock', 'template' => '@detail/blocks/comment.html.twig'),
     'contacts' =>  array('class' => 'Ds_Detail_Block_ContactsBlock', 'template' => '@detail/blocks/contacts.html.twig'),
-
     'flat.floors' =>  array('class' => 'Ds_Detail_Block_Flat_FloorsBlock', 'template' => '@detail/blocks/flat/floors.html.twig'),
     'flat.types' =>  array('class' => 'Ds_Detail_Block_Flat_TypesBlock', 'template' => '@detail/blocks/flat/types.html.twig'),
     'flat.sizes' =>  array('class' => 'Ds_Detail_Block_Flat_SizesBlock', 'template' => '@detail/blocks/flat/sizes.html.twig'),
     'flat.technical' =>  array('class' => 'Ds_Detail_Block_Flat_TechnicalBlock', 'template' => '@detail/blocks/flat/technical.html.twig'),
     'flat.placing' =>  array('class' => 'Ds_Detail_Block_Flat_PlacingBlock', 'template' => '@detail/blocks/flat/placing.html.twig'),
-    'newflat.developer' =>  array('class' => 'Ds_Detail_Block_NewFlat_DeveloperBlock', 'template' => '@detail/blocks/newflat/developer.html.twig'),
-    'newflat.delivery' =>  array('class' => 'Ds_Detail_Block_NewFlat_DeliveryBlock', 'template' => '@detail/blocks/newflat/delivery.html.twig'),
-
     'flat.sale.annotation' =>  array('class' => 'Ds_Detail_Block_Flat_SaleAnnotationBlock'),
     'flat.sale.finance' =>  array('class' => 'Ds_Detail_Block_Flat_SaleFinanceBlock', 'template' => '@detail/blocks/flat/sale/finance.html.twig'),
     'flat.rent.annotation' =>  array('class' => 'Ds_Detail_Block_Flat_RentAnnotationBlock'),
     'flat.rent.finance' =>  array('class' => 'Ds_Detail_Block_Flat_RentFinanceBlock', 'template' => '@detail/blocks/flat/rent/finance.html.twig'),
-
+    'newflat.developer' =>  array('class' => 'Ds_Detail_Block_NewFlat_DeveloperBlock', 'template' => '@detail/blocks/newflat/developer.html.twig'),
+    'newflat.delivery' =>  array('class' => 'Ds_Detail_Block_NewFlat_DeliveryBlock', 'template' => '@detail/blocks/newflat/delivery.html.twig'),
     'house.sale.annotation' =>  array('class' => 'Ds_Detail_Block_House_SaleAnnotationBlock'),
     'house.rent.annotation' =>  array('class' => 'Ds_Detail_Block_House_RentAnnotationBlock'),
     'house.floors' =>  array('class' => 'Ds_Detail_Block_House_FloorsBlock', 'template' => '@detail/blocks/house/floors.html.twig'),
