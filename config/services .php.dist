@@ -1,5 +1,5 @@
 <?php
-$dir = realpath(dirname(__FILE__).'/../../crm/runtime/cache');
+$dir = realpath(dirname(__FILE__).'/..');
 
 return array(
     'templating' => array(
@@ -7,7 +7,7 @@ return array(
         // Arguments will be passed to class constructor
         'arguments' => array(
             'twig_params' => array('value' => array(
-                'cache' =>  $dir.'/twig',
+                'cache' =>  $dir.'/cache/twig',
                 'autoescape' => false,
                 'charset' => 'utf-8',
                 'debug' => true,
@@ -60,7 +60,7 @@ return array(
         ),
         // Use calls to call any object methods after creation
         'calls' => array(
-            'key' => array('value'=>'278600f5-c966-40f5-a3e3-bf91042339b0', 'method' => 'setKey'),
+            'key' => array('value'=>'your-token-insert-here', 'method' => 'setKey'),
             'server'=>array('value'=>'http://domstor.ru', 'method' => 'setServer'),
         ),
     ),

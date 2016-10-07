@@ -1,2 +1,4 @@
 cache/*
 nbproject/*
+config/services.php
+config/detail_blocks.php
