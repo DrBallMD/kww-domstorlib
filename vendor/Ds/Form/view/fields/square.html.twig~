@@ -1,2 +1,0 @@
-{% extends 'fields/slider.html.twig' %}
-{% block after_fields %}кв.м.{% endblock %}
