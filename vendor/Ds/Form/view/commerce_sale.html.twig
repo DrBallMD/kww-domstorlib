@@ -1,0 +1,13 @@
+{% extends '@form/base_form.html.twig' %}
+
+{% block regular_fields %}
+    {% include '@form/blocks/district_city.html.twig' %}
+    {#{ form.getForm('price').render() }}#}
+{% endblock %}
+
+{% block option_fields %}
+    <div class="row-fluid form-row">
+        
+        <div class="span5 purpose">{{ form.getForm('purpose').render() }}</div>
+    </div>
+{% endblock %}

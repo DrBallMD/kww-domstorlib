@@ -1,0 +1,14 @@
+<div class="domstor_delivery">
+    <h3>Сдача</h3>
+    {% if block.delivered %}
+        Объект сдан
+    {% else %}
+        {% if block.deliveryQuarter and block.deliveryYear %}
+            {{ block.deliveryQuarter }} - {{ block.deliveryYear }}
+        {% elseif block.deliveryQuarter %}
+            {{ block.deliveryQuarter }}
+        {% elseif block.deliveryYear %}
+            {{ block.deliveryYear }}
+        {% endif %}            
+    {% endif %}
+</div>
