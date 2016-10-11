@@ -2,3 +2,11 @@ cache/*
 nbproject/*
 config/services.php
 config/detail_blocks.php
+src/Custom/AbstractFactory.php
+src/Custom/FactoryBuilder.php
+src/Custom/FlatFactory.php
+src/Custom/HouseFactory.php
+src/Custom/NewFlatFactory.php
+src/Custom/CommerceFactory.php
+src/Custom/GarageFactory.php
+src/Custom/LandFactory.php
