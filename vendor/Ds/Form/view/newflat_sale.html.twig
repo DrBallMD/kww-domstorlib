@@ -26,9 +26,14 @@
     <div class="row-fluid form-row">
         <div class="span5 type_flat">{{ form.getForm('type').renderLabel('Тип квартиры:', {class: 'label-heads'}) }} {{ form.getForm('type').render() }}</div>
         <div class="span5 status">{{ form.getForm('state').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('state').render() }}</div>
-        <div class="span5 building_material">{{ form.getForm('building_material').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('building_material').render() }}</div>
-        <div class="span5 delivered">{{ form.getForm('delivered').render() }}</div>
-        <div class="span5 delivery_from">{{ form.getForm('delivery_from').render() }}</div>
-        <div class="span5 delivery_to">{{ form.getForm('delivery_to').render() }}</div>
+    </div>
+    <div class="row-fluid form-row">
+        <div class="span5 building_material">{{ form.getForm('building_material').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('building_material').render() }}
+            <div class="span5 delivered">{{ form.getForm('delivered').render() }}</div>
+        </div>
+        <div class="span5 delivery">
+            <div class="span5 delivery_from">{{ form.getForm('delivery_from').render() }}</div>
+            <div class="span5 delivery_to">{{ form.getForm('delivery_to').render() }}</div>
+        </div>
     </div>
 {% endblock %}

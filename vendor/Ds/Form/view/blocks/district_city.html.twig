@@ -1,6 +1,10 @@
 {% if form.hasForm('district') %}
-    {{ form.getForm('district').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('district').render() }}
-    {{ form.getForm('suburban').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('suburban').render() }}
+    <div class="span5 district">
+        {{ form.getForm('district').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('district').render() }}
+    </div>
+    <div class="span5 suburban">
+        {{ form.getForm('suburban').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('suburban').render() }}
+    </div>   
 {% endif %}
 
 {% if form.hasForm('city') %}

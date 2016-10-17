@@ -2,5 +2,42 @@
     <div class="domstor_object_head">{% block object_head %}<p>{% block annotation %}{% endblock %}</p>{% endblock %}</div>
     {% block images %}{% endblock %}
     <div class="domstor_object_common">{% block inline_blocks %}{% endblock %}</div>
-    {% block content %}{% endblock %}
+    <div class="object_tables_map">
+        <div id="map_layout"></div>
+            <div id="output"></div>
+            <script>
+            window.onload =  function() {
+                ymaps.ready(function() {
+                    new SupplyMap({
+                        map: 'map',
+                        output: 'output',
+                        beforeInit: function(e){
+                            var map = document.createElement('div');
+                            map.id = 'map';
+                            document.getElementById('map_layout').appendChild(map);
+                            switch(e.meta.kind) {
+                                case 'house':
+                                  this.options.zoom = 16;
+                                  break;
+                                case 'street':
+                                  this.options.zoom = 14;
+                                  break;
+                                default:
+                                  this.options.zoom = 15;
+                            }
+                        },
+                        onInit: function(e){
+                            $('#detail-container').toggleClass('object_map_display');
+                        },
+                        coords: [55.058007, 82.982099],
+                        location: '',
+                        kinds: ['house', 'street', 'locality']
+                    });
+                });
+            };
+            </script>
+        <div class="object_tables">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
 </div>

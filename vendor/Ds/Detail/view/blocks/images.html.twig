@@ -20,4 +20,25 @@
         <a href="{{ block.flash }}" title="Посмотреть ролик" class="domstor_flash_link"><img src="http://domstor.ru/img/play.png" alt="Play" width="80" /></a>
     </div>
     {% endif %}
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("a.modal").fancybox({
+                padding : 10,
+                imageScale : false,
+                zoomOpacity : false,
+                zoomSpeedIn : 1000,
+                zoomSpeedOut : 1000,
+                zoomSpeedChange : 1000,
+                frameWidth : 800,
+                frameHeight : 600,
+                overlayShow : true,
+                overlayOpacity : 0.7,
+                overlayColor : "#000",
+                hideOnContentClick :false,
+                centerOnScroll : true,
+                type : "image"
+            });
+        });
+    </script>
 </div>
