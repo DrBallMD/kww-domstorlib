@@ -1,42 +1,42 @@
 {% block form %}
-<form method="get" id="{{ form.getAttrId() }}">
-    <div class="container">
-    {% block in_container %}
-        {% block regular_fields %}{% endblock %}
+    <form method="get" id="{{ form.getAttrId() }}">
+        <div class="container">
+            {% block in_container %}
+            {% block regular_fields %}{% endblock %}
 
-        {% block optional %}
-        <div id="{{ form.getId() }}_optional">
-            {% block option_fields %}{% endblock %}
-        </div>
-        <script>
-
-
-            jQuery(document).ready(function(){
-                jQuery("#{{ form.getId() }}_optional").search_extended_area({
-                    visible: $.cookie('extended'),
-                    complete: function(visible){
-                        if( visible ) {
-                            $.cookie('extended', 1, { path: '/' });
+            {% block optional %}
+                <div id="{{ form.getId() }}_optional">
+                {% block option_fields %}{% endblock %}
+            </div>
+            <script>
+                jQuery(document).ready(function () {
+                    jQuery("#{{ form.getId() }}_optional").search_extended_area({
+                        visible: $.cookie('extended'),
+                        simple_text: 'Простой поиск',
+                        extended_text: 'Расширенный поиск',
+                        complete: function (visible) {
+                            if (visible) {
+                                $.cookie('extended', 1, {path: '/'});
+                            } else {
+                                $.cookie('extended', '', {path: '/'});
+                            }
                         }
-                        else {
-                            $.cookie('extended', '', { path: '/' });
-                        }
-                    }
+                    });
                 });
-            });
-        </script>
+            </script>
         {% endblock %}
 
         <div class="row-fluid form-row">
-            <div class="span3 code">{{ form.getForm('code').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('code').addClass('input-small').render() }}</div>            <div class="span4 update">{{ form.getForm('expo').renderLabel('Обновления за ') }} {{ form.getForm('expo').addClass('input-mini').render() }} дней</div>
-            <div class="span2 poisk">{% block optional_trigger %}<a href="#" id="optional_trigger">Простой поиск</a>{% endblock %}</div>
+            <div class="span3 code">{{ form.getForm('code').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('code').addClass('input-small').render() }}</div>            
+            <div class="span4 update">{{ form.getForm('expo').renderLabel('Обновления за ') }} {{ form.getForm('expo').addClass('input-mini').render() }} дней</div>
+            <div class="span2 poisk">{% block optional_trigger %}<a href="#" id="optional_trigger"></a>{% endblock %}</div>
             <div class="span3 find">{% block submit_button %}<input type="submit" value="Найти" class="btn btn-small btn-primary">{% endblock %}</div>
         </div>
     {% endblock %}
-    </div>
-    {% if hidden_fields is defined %}
-        {{ hidden_fields }}
-    {% endif %}
+</div>
+{% if hidden_fields is defined %}
+    {{ hidden_fields }}
+{% endif %}
 </form>
 {% endblock %}
 {% block script %}{% endblock %}
