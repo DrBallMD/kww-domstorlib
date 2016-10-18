@@ -112,7 +112,37 @@ $onpage_form->setValue($onpage_value);
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <script src="http://domstor.ru/js/jquery.js"></script>
+        <link href="http://domstor.ru/assets/jquery-ui/css/domstor/jquery-ui-1.9.1.custom.min.css" rel="stylesheet">
+        <link href="http://domstor.ru/assets/jquery-ui/widgets/multiselect/jquery.multiselect.css" rel="stylesheet">
+        <link href="http://domstor.ru/assets/jquery-ui/widgets/multiselect/jquery.multiselect.filter.css" rel="stylesheet">
+        <link href="http://domstor.ru/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://domstor.ru/assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="http://domstor.ru/css/search/catalog.css" rel="stylesheet">
+
+        <script type="text/javascript" src="http://domstor.ru/assets/jquery/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/jquery/plugins/jquery.utils.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/jquery-ui/js/jquery-ui-1.9.1.custom.min.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/js/jquery_plugins/jquery.cookie.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/js/jquery_plugins/jquery.uuid.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/jquery-ui/js/jquery.ui.touch-punch.min.js"></script>
+        <script async="async" type="text/javascript" src="http://domstor.ru/js/wt_link.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/js/knockout-3.4.0.js"></script>
+        <script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/yandex/js/util.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/yandex/js/draw_rectangle_behavior.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/yandex/js/draw_point_behavior.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/yandex/js/map_model.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/yandex/js/supply_map.js"></script>
+
+
+
+        <script type="text/javascript" src="http://domstor.ru/assets/globalize/lib/globalize.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/globalize/lib/cultures/globalize.culture.ru-RU.cp1251.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/globalize/lib/cultures/globalize.culture.en-US.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/jquery-ui/widgets/multiselect/jquery.multiselect.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/jquery-ui/widgets/multiselect/jquery.district.multiselect.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/jquery-ui/widgets/multiselect/jquery.multiselect.filter.min.js"></script>
+        <script type="text/javascript" src="http://domstor.ru/assets/jquery-ui/widgets/domstor/search_extended_area.js"></script>
     </head>
     <body>
         <?php
