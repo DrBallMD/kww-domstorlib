@@ -1,8 +1,9 @@
+{% set img_domain = "http://static.domstor.ru" %}
 <div class="domstor_images">
     {% if block.photos is not empty %}
     <div class="domstor_photo">
         {% for photo in block.photos %}
-            <a href="{{ photo }}" class="modal" rel="1"><img src="{{ photo }}" alt="Фото{{ loop.index }}"/></a>
+            <a href="{{img_domain}}{{ photo }}" class="modal" rel="1"><img src="{{img_domain}}{{ photo }}" alt="Фото{{ loop.index }}"/></a>
         {% endfor %}
     </div>
     {% endif %}
@@ -10,7 +11,7 @@
     {% if block.plans is not empty %}
     <div class="domstor_plan">
         {% for plan in block.plans %}
-            <a href="{{ plan }}" class="modal" rel="2"><img src="{{ plan }}" alt="План{{ loop.index }}"/></a>
+            <a href="{{img_domain}}{{ plan }}" class="modal" rel="2"><img src="{{img_domain}}{{ plan }}" alt="План{{ loop.index }}"/></a>
         {% endfor %}
     </div>
     {% endif %}
