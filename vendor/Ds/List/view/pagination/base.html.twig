@@ -1,13 +1,14 @@
 <div class="next"><div class="nextleft">
-<p class="headstr"><strong>Страница:</strong></p>
+<!-- <p class="headstr"><strong>Страница:</strong></p> -->
+
+{% if prev %}<p class="prev"><a href="{{ pagination.getHref(prev) }}">Предыдущая</a></p>{% endif %}
+
 <p class="str">
 {% for page in pages %}
 {% if page == current %}<span>{{ page }}</span>{% else %}<a href="{{ pagination.getHref(page) }}">{{ page }}</a>{% endif %}
  {% endfor %}
 {% if last_page > pagination.pagerCount %} ({{ current }} из {{ last_page }}){% endif %}
 </p>
-<p class="prevnext">
-{% if prev %}<a href="{{ pagination.getHref(prev) }}">&larr;Предыдущая</a>{% endif %}&nbsp;
-{% if next %}<a href="{{ pagination.getHref(next) }}">Следующая&rarr;</a>{% endif %}
-</p>
+
+{% if next %}<p class="next"><a href="{{ pagination.getHref(next) }}">Следующая</a></p>{% endif %}
 </div></div>

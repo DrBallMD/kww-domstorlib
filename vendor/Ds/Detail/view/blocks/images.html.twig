@@ -1,8 +1,9 @@
+{% set img_domain = "http://static.domstor.ru" %}
 <div class="domstor_images">
     {% if block.photos is not empty %}
     <div class="domstor_photo">
         {% for photo in block.photos %}
-            <a href="{{ photo }}" class="modal" rel="1"><img src="{{ photo }}" alt="Фото{{ loop.index }}"/></a>
+            <a href="{{img_domain}}{{ photo }}" class="modal" rel="1"><img src="{{img_domain}}{{ photo }}" alt="Фото{{ loop.index }}"/></a>
         {% endfor %}
     </div>
     {% endif %}
@@ -10,7 +11,7 @@
     {% if block.plans is not empty %}
     <div class="domstor_plan">
         {% for plan in block.plans %}
-            <a href="{{ plan }}" class="modal" rel="2"><img src="{{ plan }}" alt="План{{ loop.index }}"/></a>
+            <a href="{{img_domain}}{{ plan }}" class="modal" rel="2"><img src="{{img_domain}}{{ plan }}" alt="План{{ loop.index }}"/></a>
         {% endfor %}
     </div>
     {% endif %}
@@ -20,4 +21,25 @@
         <a href="{{ block.flash }}" title="Посмотреть ролик" class="domstor_flash_link"><img src="http://domstor.ru/img/play.png" alt="Play" width="80" /></a>
     </div>
     {% endif %}
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("a.modal").fancybox({
+                padding : 10,
+                imageScale : false,
+                zoomOpacity : false,
+                zoomSpeedIn : 1000,
+                zoomSpeedOut : 1000,
+                zoomSpeedChange : 1000,
+                frameWidth : 800,
+                frameHeight : 600,
+                overlayShow : true,
+                overlayOpacity : 0.7,
+                overlayColor : "#000",
+                hideOnContentClick :false,
+                centerOnScroll : true,
+                type : "image"
+            });
+        });
+    </script>
 </div>

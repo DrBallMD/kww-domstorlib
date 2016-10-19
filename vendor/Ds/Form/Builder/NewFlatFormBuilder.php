@@ -136,13 +136,13 @@ class Ds_Form_Builder_NewFlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
             'templating_key' => 'ds_twig',
             'required' => FALSE,
             'template' => '@form/fields/delivery.html.twig',
-            'label'=>'Срок сдачи с'
+            'label'=>'Срок сдачи с:'
         )));
         $form->addForm(new Ds_Form_Field_DeliveryField('delivery_to', array(
             'templating_key' => 'ds_twig',
             'required' => FALSE,
             'template' => '@form/fields/delivery.html.twig',
-            'label'=>'Срок сдачи по'
+            'label'=>'Срок сдачи по:'
         )));
         return $form;
     }
