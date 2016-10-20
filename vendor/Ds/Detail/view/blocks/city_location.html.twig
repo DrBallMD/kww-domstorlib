@@ -24,7 +24,7 @@
                         onInit: function(e){
                             $('#detail-container').toggleClass('object_map_display');
                         },
-                        coords: [{{block.latitude|default(0)|number_format(6, '.', ',')}},{{block.longitude|default(0)|number_format(6, '.', ',')}}],
+                        coords: [{{block.latitude|default(0)|number_format(6)}},{{block.longitude|default(0)|number_format(6)}}],
                         location: '',
                         kinds: ['house', 'street', 'locality']
                     });
