@@ -1,6 +1,36 @@
 <div class="domstor_object_place">
     <h3>Местоположение</h3>
-    {% set a = block.location %}{% if a %}<p>{{ a }}</p>{% endif %}
+    {% set a = block.location %}{% if a %}<p>{{ a }}<script>
+            window.onload =  function() {
+                ymaps.ready(function() {
+                    new SupplyMap({
+                        map: 'map',
+                        output: 'output',
+                        beforeInit: function(e){
+                            var map = document.createElement('div');
+                            map.id = 'map';
+                            document.getElementById('map_layout').appendChild(map);
+                            switch(e.meta.kind) {
+                                case 'house':
+                                  this.options.zoom = 16;
+                                  break;
+                                case 'street':
+                                  this.options.zoom = 14;
+                                  break;
+                                default:
+                                  this.options.zoom = 15;
+                            }
+                        },
+                        onInit: function(e){
+                            $('#detail-container').toggleClass('object_map_display');
+                        },
+                        coords: [{{block.latitude|default(0)|number_format(6)}},{{block.longitude|default(0)|number_format(6)}}],
+                        location: '',
+                        kinds: ['house', 'street', 'locality']
+                    });
+                });
+            };
+            </script></p>{% endif %}
     {% set a = block.metro %}{% if a %}<p>{{ a }}</p>{% endif %}
     {% set a = block.availableBus %}{% if a %}<p>От остановки {{ a }} мин.</p>{% endif %}
     {% set a = block.availableMetro %}{% if a %}<p>От метро {{ a }} мин.</p>{% endif %}
@@ -14,8 +44,6 @@
         {% if a %}<a href="{{ a }}" target="_blank" id="yandex-map">Яндекс</a> {% endif %}
         {% if b %}<a href="{{ b }}" target="_blank" id="4geo-map">4geo</a> {% endif %}
     </p>{% endif %}
-
-
 
     {% for map in block.mapImages %}
     <div class="domstor_map"><a href="http://domstor.ru{{ map }}" class="modal" rel="3"><img src="http://domstor.ru{{ map }}" alt="карта" /></a></div>

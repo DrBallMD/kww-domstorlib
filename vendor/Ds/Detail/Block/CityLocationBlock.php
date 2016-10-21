@@ -91,6 +91,16 @@ class Ds_Detail_Block_CityLocationBlock extends Ds_Detail_Block_AbstractBlock
     {
         return (int) $this->getData()->get('available_car_sea');
     }
+    
+    public function latitude()
+    {
+        return (float) $this->getData()->get('latitude');
+    }
+    
+    public function longitude()
+    {
+        return (float) $this->getData()->get('longitude');
+    }
 
     public function availableCarAirport()
     {
