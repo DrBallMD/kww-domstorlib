@@ -28,7 +28,7 @@
 
         <div class="row-fluid form-row">
             <div class="span3 code">{{ form.getForm('code').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('code').addClass('input-small').render() }}</div>            
-            <div class="span4 update">{{ form.getForm('expo').renderLabel('Обновления за ') }} {{ form.getForm('expo').addClass('input-mini').render() }} дней</div>
+            {# <div class="span4 update">{{ form.getForm('expo').renderLabel('Обновления за ') }} {{ form.getForm('expo').addClass('input-mini').render() }} дней</div> #}
             <div class="span2 poisk">{% block optional_trigger %}<a href="#" id="optional_trigger"></a>{% endblock %}</div>
             <div class="span3 find">{% block submit_button %}<input type="submit" value="Найти" class="btn btn-small btn-primary">{% endblock %}</div>
         </div>
