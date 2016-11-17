@@ -20,13 +20,20 @@ class Ds_UrlGenerator_SimpleUrlGenerator extends Ds_UrlGenerator_AbstractUrlGene
         {
             $url = $this->solveUrl($url);
 
-            if( count($this->form_value) )
-                $url.= http_build_query($this->form_value).'&';
+            if (count($this->form_value))
+            {
+                $url .= http_build_query($this->form_value) . '&';
+            }
 
-            if( count($this->sort_value) )
-                $url.= http_build_query($this->sort_value).'&';
+            if (count($this->sort_value))
+            {
+                $url .= http_build_query($this->sort_value) . '&';
+            }
 
-            if( $this->page_value ) $url.= 'page='.$this->page_value.'&';
+            if ($this->page_value)
+            {
+                $url .= 'page=' . $this->page_value . '&';
+            }
             $url.= 'onpage='.$onpage.'&';
 
             $url = substr($url, 0, -1);
@@ -39,18 +46,25 @@ class Ds_UrlGenerator_SimpleUrlGenerator extends Ds_UrlGenerator_AbstractUrlGene
     {
         $url = $this->url_pattern;
 
-        if( count($this->form_value) or count($this->sort_value) )
+        if(count($this->form_value) or count($this->sort_value))
         {
             $url = $this->solveUrl($url);
 
-            if( count($this->form_value) )
-                $url.= http_build_query($this->form_value).'&';
+            if (count($this->form_value))
+            {
+                $url .= http_build_query($this->form_value) . '&';
+            }
 
-            if( count($this->sort_value) )
-                $url.= http_build_query($this->sort_value).'&';
+            if (count($this->sort_value))
+            {
+                $url .= http_build_query($this->sort_value) . '&';
+            }
 
             $url.= 'page='.$page.'&';
-            if( $this->onpage_value ) $url.= 'onpage='.$this->onpage_value.'&';
+            if ($this->onpage_value)
+            {
+                $url .= 'onpage=' . $this->onpage_value . '&';
+            }
 
             $url = substr($url, 0, -1);
         }
@@ -63,13 +77,21 @@ class Ds_UrlGenerator_SimpleUrlGenerator extends Ds_UrlGenerator_AbstractUrlGene
     {
         $url = $this->solveUrl($this->url_pattern);
 
-        if( count($this->form_value) )
-            $url.= http_build_query($this->form_value).'&';
+        if (count($this->form_value))
+        {
+            $url .= http_build_query($this->form_value) . '&';
+        }
 
         $url.= http_build_query(array('s' => $sort_values)).'&';
 
-        if( $this->page_value ) $url.= 'page='.$this->page_value.'&';
-        if( $this->onpage_value ) $url.= 'onpage='.$this->onpage_value.'&';
+        if ($this->page_value)
+        {
+            $url .= 'page=' . $this->page_value . '&';
+        }
+        if ($this->onpage_value)
+        {
+            $url .= 'onpage=' . $this->onpage_value . '&';
+        }
 
         $url = substr($url, 0, -1);
 

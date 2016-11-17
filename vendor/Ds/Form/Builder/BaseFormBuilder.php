@@ -72,6 +72,9 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
             $info['data']['suburbans']['params'] = array(
                 'location' => $this->ref_city,
             );
+            $info['data']['streets']['params'] = array(
+                'location' => $this->ref_city,
+            );
         }
 
         return $info;
@@ -120,6 +123,10 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
                 $options[$city['id']] = $city['name'];
             }
             $this->form_instance->getForm('city')->setOptions($options);
+        }
+        if (isset($data['streets']) and is_array($data['streets']))
+        {
+            $this->form_instance->getForm('street')->setOptions($data['streets']);
         }
     }
 
@@ -194,6 +201,7 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
             $form->addForm($suburban);
             $district = new Ds_Form_Field_DistrictField();
             $form->addForm($district);
+            $form->addForm(new Ds_Form_Field_StreetField());
         }
     }
 

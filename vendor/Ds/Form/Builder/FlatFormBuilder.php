@@ -106,7 +106,7 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
             'template' => '@form/flat_sale.html.twig',
             'source_transformer' => new Ds_Form_Transformer_FlatTransformer(),
         ));
-
+        
         $form->addForm(new Ds_Form_Field_RoomsField());
 
         $form->addForm(new Ds_Form_Field_PriceField());
