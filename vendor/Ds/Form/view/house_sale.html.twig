@@ -24,4 +24,10 @@
     <div class="span5 status house">{{ form.getForm('state').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('state').render() }}</div>
     <div class="span5 wall_material">{{ form.getForm('mat_wall').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('mat_wall').render() }}</div>
 </div>
+<div class="row-fluid form-row">
+    <div class="span5 internet house">{{ form.getForm('internet').render() }}</div>
+    <div class="span5 electro house">{{ form.getForm('electro').render() }}</div>
+    <div class="span5 gas house">{{ form.getForm('gas').render() }}</div>
+    <div class="span5 tv house">{{ form.getForm('tv').render() }}</div>
+</div>
 {% endblock %}

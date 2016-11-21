@@ -164,6 +164,30 @@ class Ds_Form_Builder_HouseFormBuilder extends Ds_Form_Builder_BaseFormBuilder
         $form->addForm(new Ds_Form_Field_StateField());
         
         $form->addForm(new Ds_Form_Field_WallMaterialField());
+        
+        $form->addForm(new Spv_Form_Field_Checkbox('internet', array(
+            'templating_key' => 'ds_twig',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Интернет',
+        )));
+        
+        $form->addForm(new Spv_Form_Field_Checkbox('electro', array(
+            'templating_key' => 'ds_twig',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Электричество',
+        )));
+        
+        $form->addForm(new Spv_Form_Field_Checkbox('gas', array(
+            'templating_key' => 'ds_twig',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Газ',
+        )));
+        
+        $form->addForm(new Spv_Form_Field_Checkbox('tv', array(
+            'templating_key' => 'ds_twig',
+            'template' => '@spv/checkbox.html.twig',
+            'label' => 'Телевидение',
+        )));
 
         return $form;
     }
