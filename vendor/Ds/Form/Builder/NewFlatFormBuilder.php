@@ -77,6 +77,11 @@ class Ds_Form_Builder_NewFlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
             'template' => '@form/newflat_sale.html.twig',
             'source_transformer' => new Ds_Form_Transformer_FlatTransformer(),
         ));
+        $form->addForm(new Spv_Form_Field_InputText('building_num', array(
+            'templating_key' => 'ds_twig',
+            'template' => '@spv/input_text.html.twig',
+            'label' => 'Номер дома:',
+        )));
         $form->addForm(new Ds_Form_Field_RoomsField());
         $form->addForm(new Ds_Form_Field_PriceField());
         $form->addForm(new Spv_Form_Field_Select('floor_type', array(

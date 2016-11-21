@@ -2,10 +2,11 @@
 {% block regular_fields %}
 
 <div class="row-fluid form-row">
-    <div class="span5 rooms">{{ form.getForm('rooms').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('rooms').render() }}</div>
     <div class="span4 district">
       {% include '@form/blocks/district_city.html.twig' %}
     </div>
+    <div class="span5 rooms">{{ form.getForm('rooms').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('rooms').render() }}</div>
+    <div class="span5 building_num">{{ form.getForm('building_num').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('building_num').render() }}</div>
 </div>
 
 <div class="row-fluid form-row">
@@ -40,5 +41,6 @@
 <div class="row-fluid form-row">
     <div class="span5 type_flat">{{ form.getForm('type').renderLabel('Тип квартиры:', {class: 'label-heads'}) }} {{ form.getForm('type').render() }}</div>
     <div class="span5 status">{{ form.getForm('state').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('state').render() }}</div>
+    <div class="span5 building_material">{{ form.getForm('building_material').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('building_material').render() }}</div>
 </div>
 {% endblock %}

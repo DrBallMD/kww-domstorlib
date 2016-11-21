@@ -17,6 +17,12 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
                 'ref_city' => $this->ref_city,
             )
         );
+        $info['data']['building_materials'] = array(
+            'params' => array(
+                'ref_city' => $this->ref_city,
+                'parent_id'=>43
+            )
+        );
 
         return $info;
     }
@@ -39,6 +45,17 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
                         $this->form_instance->getForm('district')->getOptions()
                         );
             }
+        }
+        if ($this->form_instance->hasForm('building_material') 
+            and isset($data['building_materials']) 
+            and is_array($data['building_materials']))
+        {
+            $options = array();
+            foreach ($data['building_materials'] as $type)
+            {
+                $options[$type['id']] = $type['name'];
+            }
+            $this->form_instance->getForm('building_material')->setOptions($options);
         }
     }
 
@@ -106,6 +123,12 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
             'template' => '@form/flat_sale.html.twig',
             'source_transformer' => new Ds_Form_Transformer_FlatTransformer(),
         ));
+        
+        $form->addForm(new Spv_Form_Field_InputText('building_num', array(
+            'templating_key' => 'ds_twig',
+            'template' => '@spv/input_text.html.twig',
+            'label' => 'Номер дома:',
+        )));
         
         $form->addForm(new Ds_Form_Field_RoomsField());
 
@@ -183,6 +206,8 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
         $form->addForm(new Ds_Form_Field_TypeField());
 
         $form->addForm(new Ds_Form_Field_StateField());
+        
+        $form->addForm(new Ds_Form_Field_BuildingMaterialField());
 
         return $form;
     }
