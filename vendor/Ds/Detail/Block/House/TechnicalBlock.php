@@ -67,7 +67,7 @@ class Ds_Detail_Block_House_Technicalblock extends Ds_Detail_Block_AbstractBlock
         return (float) $this->getData()->electro_power;
     }
 
-    public function electroResrve()
+    public function electroReserve()
     {
         return (bool) $this->getData()->electro_reserve;
     }
