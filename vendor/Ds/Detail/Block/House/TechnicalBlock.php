@@ -81,7 +81,7 @@ class Ds_Detail_Block_House_Technicalblock extends Ds_Detail_Block_AbstractBlock
     {
         return  $this->electroVoltage() or
                 $this->electroPower()  or
-                $this->electroResrve() or
+                $this->electroReserve() or
                 $this->electroNot();
     }
 
