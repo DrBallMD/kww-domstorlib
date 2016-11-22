@@ -7,8 +7,8 @@
  *
  * @author pahhan
  */
-abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBuilderInterface, 
-                                                          Ds_DataLoader_DataLoaderClientInterface, 
+abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBuilderInterface,
+                                                          Ds_DataLoader_DataLoaderClientInterface,
                                                           Ds_IoC_ContainerAwareInterface
 {
 
@@ -170,15 +170,25 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
     protected function createForm($action)
     {
         if ($action === 'sale')
+        {
             $form = $this->buildSale();
+        }
         elseif ($action === 'rent')
+        {
             $form = $this->buildRent();
+        }
         elseif ($action === 'purchase')
+        {
             $form = $this->buildPurchase();
+        }
         elseif ($action === 'rentuse')
+        {
             $form = $this->buildRentuse();
+        }
         else
+        {
             throw new Exception(sprintf('Unknown action "%s"', $action));
+        }
 
         return $form;
     }
@@ -193,7 +203,7 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
     {
         if ($in_region)
         {
-            
+
         }
         else
         {

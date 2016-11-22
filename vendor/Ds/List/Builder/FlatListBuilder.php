@@ -19,11 +19,15 @@ class Ds_List_Builder_FlatListBuilder extends Ds_List_Builder_AbstractListBuilde
 
     public function build()
     {
-        if( $this->action == 'new' )
+        if ($this->action == 'new')
+        {
             return $this->buildNew();
+        }
 
-        if( $this->action == 'exchange' )
+        if ($this->action == 'exchange')
+        {
             return $this->buildExchange();
+        }
 
         return parent::build();
     }

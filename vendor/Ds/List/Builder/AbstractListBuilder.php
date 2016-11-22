@@ -24,7 +24,10 @@ abstract class Ds_List_Builder_AbstractListBuilder implements Ds_List_Builder_Li
     {
         $this->in_region = $params['in_region'];
         $this->action = $params['action'];
-        if( isset($params['detail_url']) ) $this->detail_url = $params['detail_url'];
+        if (isset($params['detail_url']))
+        {
+            $this->detail_url = $params['detail_url'];
+        }
     }
 
     public function setDetailUrl($detail_url)
@@ -70,14 +73,22 @@ abstract class Ds_List_Builder_AbstractListBuilder implements Ds_List_Builder_Li
 
     public function build()
     {
-        if( $this->action == 'sale' )
+        if ($this->action == 'sale')
+        {
             return $this->buildSale();
-        if( $this->action == 'rent' )
+        }
+        if ($this->action == 'rent')
+        {
             return $this->buildRent();
-        if( $this->action == 'purchase' )
+        }
+        if ($this->action == 'purchase')
+        {
             return $this->buildPurchase();
-        if( $this->action == 'renuse' )
+        }
+        if ($this->action == 'renuse')
+        {
             return $this->buildRentuse();
+        }
 
         throw  new Ds_List_Builder_ListBuilderException(sprintf('Unknown action "%s"', $this->action));
     }
