@@ -1,5 +1,5 @@
 {% block row %}
-<tr>
+<tr class="table-row">
     {% block row_content %}
         {% for column in list.getColumns() %}<td {{ column.renderAttrs() }}>{{ column.render() }}</td>{% endfor %}
     {% endblock %}
