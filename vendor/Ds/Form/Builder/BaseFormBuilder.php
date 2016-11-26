@@ -57,15 +57,14 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
             )
         );
 
-        if ($this->in_region)
-        {
+//        if ($this->in_region)
+//        {
             $info['data']['cities']['params'] = array(
-                'location' => $this->ref_city,
-                'in_region' => 1,
+                'location' => $this->ref_city
             );
-        }
-        else
-        {
+//        }
+//        else
+//        {
             $info['data']['districts']['params'] = array(
                 'location' => $this->ref_city,
             );
@@ -75,7 +74,7 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
             $info['data']['streets']['params'] = array(
                 'location' => $this->ref_city,
             );
-        }
+//      }
 
         return $info;
     }
@@ -83,7 +82,9 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
     public function onDataReceived(array $data)
     {
         if (!$this->form_instance)
+        {
             $this->build();
+        }
 
         if ($this->form_instance->hasForm('type') and isset($data['types']) and is_array($data['types']))
         {
@@ -105,17 +106,17 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
             $this->form_instance->getForm('state')->setOptions($options);
         }
 
-        if (isset($data['districts']) and is_array($data['districts']))
+        if (isset($data['districts']) and is_array($data['districts']) and $this->form_instance->hasForm('district'))
         {
             $this->form_instance->getForm('district')->setOptions($data['districts']);
         }
 
-        if (isset($data['suburbans']) and is_array($data['suburbans']))
+        if (isset($data['suburbans']) and is_array($data['suburbans']) and $this->form_instance->hasForm('suburban'))
         {
             $this->form_instance->getForm('suburban')->setOptions($data['suburbans']);
         }
 
-        if (isset($data['cities']) and is_array($data['cities']))
+        if (isset($data['cities']) and is_array($data['cities']) and $this->form_instance->hasForm('city'))
         {
             $options = array();
             foreach ($data['cities'] as $city)
@@ -124,7 +125,7 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
             }
             $this->form_instance->getForm('city')->setOptions($options);
         }
-        if (isset($data['streets']) and is_array($data['streets']))
+        if (isset($data['streets']) and is_array($data['streets']) and $this->form_instance->hasForm('street'))
         {
             $this->form_instance->getForm('street')->setOptions($data['streets']);
         }
@@ -201,18 +202,18 @@ abstract class Ds_Form_Builder_BaseFormBuilder implements Ds_Form_Builder_FormBu
      */
     protected function addLocationsField(Spv_Form_Form $form, $in_region, $ref_city_id)
     {
-        if ($in_region)
-        {
-
-        }
-        else
-        {
+//        if ($in_region)
+//        {
+            $form->addForm(new Ds_Form_Field_CityField());
+//        }
+//        else
+//        {
             $suburban = new Ds_Form_Field_SuburbanField();
             $form->addForm($suburban);
             $district = new Ds_Form_Field_DistrictField();
             $form->addForm($district);
             $form->addForm(new Ds_Form_Field_StreetField());
-        }
+//        }
     }
 
     /**

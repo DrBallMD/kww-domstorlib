@@ -14,7 +14,7 @@ class Ds_Form_Field_CityField extends Spv_Form_Field_Select
             'template' => '@form/fields/city.html.twig',
             'multiple' => TRUE,
             'required' => FALSE,
-            'label' => 'Район:',
+            'label' => 'Населенный<br>пункт:',
         ));
     }
 }

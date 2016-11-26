@@ -17,12 +17,12 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
                 'ref_city' => $this->ref_city,
             )
         );
-        $info['data']['building_materials'] = array(
-            'params' => array(
-                'ref_city' => $this->ref_city,
-                'parent_id'=>43
-            )
-        );
+            $info['data']['building_materials'] = array(
+                'params' => array(
+                    'ref_city' => $this->ref_city,
+                    'parent_id' => 43
+                )
+            );
 
         return $info;
     }
@@ -31,24 +31,24 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
     {
         parent::onDataReceived($data);
 
-        if( $this->action == 'exchange' )
+        if ($this->action == 'exchange')
         {
-            if( $this->in_region )
+            if ($this->in_region)
             {
                 $this->form_instance->getForm('exch_city')->setOptions(
                         $this->form_instance->getForm('city')->getOptions()
-                        );
-            }
+                );
+            } 
             else
             {
                 $this->form_instance->getForm('exch_dist')->setOptions(
                         $this->form_instance->getForm('district')->getOptions()
-                        );
+                );
             }
         }
-        if ($this->form_instance->hasForm('building_material') 
-            and isset($data['building_materials']) 
-            and is_array($data['building_materials']))
+        if ($this->form_instance->hasForm('building_material')
+                and isset($data['building_materials'])
+                and is_array($data['building_materials']))
         {
             $options = array();
             foreach ($data['building_materials'] as $type)
@@ -64,8 +64,10 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
         $form = parent::build();
 
         /* Add location field for exchange if action is exchage */
-        if( $this->action == 'exchange' )
+        if ($this->action == 'exchange')
+        {
             $form->addForm($this->createExchangeLocationField($this->in_region));
+        }
 
         return $form;
     }
@@ -78,10 +80,10 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
      */
     private function createExchangeLocationField($in_region)
     {
-        if( $in_region )
+        if ($in_region)
         {
             $field = new Ds_Form_Field_CityField('exch_city');
-        }
+        } 
         else
         {
             $field = new Ds_Form_Field_DistrictField('exch_dist');
@@ -97,20 +99,34 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
      */
     protected function createForm($action)
     {
-        if( $action === 'sale' )
+        if ($action === 'sale')
+        {
             $form = $this->buildSale();
-        elseif( $action === 'new' )
+        } 
+        elseif ($action === 'new')
+        {
             $form = $this->buildNew();
-        elseif( $action === 'rent' )
+        } 
+        elseif ($action === 'rent')
+        {
             $form = $this->buildRent();
-        elseif( $action === 'purchase' )
+        } 
+        elseif ($action === 'purchase')
+        {
             $form = $this->buildPurchase();
-        elseif( $action === 'rentuse' )
+        } 
+        elseif ($action === 'rentuse')
+        {
             $form = $this->buildRentuse();
-        elseif( $action === 'exchange' )
+        } 
+        elseif ($action === 'exchange')
+        {
             $form = $this->buildExchange();
+        } 
         else
+        {
             throw new Exception(sprintf('Unknown action "%s"', $action));
+        }
 
         return $form;
     }
@@ -123,13 +139,13 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
             'template' => '@form/flat_sale.html.twig',
             'source_transformer' => new Ds_Form_Transformer_FlatTransformer(),
         ));
-        
+
         $form->addForm(new Spv_Form_Field_InputText('building_num', array(
             'templating_key' => 'ds_twig',
             'template' => '@spv/input_text.html.twig',
             'label' => 'Номер дома:',
         )));
-        
+
         $form->addForm(new Ds_Form_Field_RoomsField());
 
         $form->addForm(new Ds_Form_Field_PriceField());
@@ -206,9 +222,11 @@ class Ds_Form_Builder_FlatFormBuilder extends Ds_Form_Builder_BaseFormBuilder
         $form->addForm(new Ds_Form_Field_TypeField());
 
         $form->addForm(new Ds_Form_Field_StateField());
-        
-        $form->addForm(new Ds_Form_Field_BuildingMaterialField());
 
+        if (!$this->in_region)
+        {
+            $form->addForm(new Ds_Form_Field_BuildingMaterialField());
+        }
         return $form;
     }
 

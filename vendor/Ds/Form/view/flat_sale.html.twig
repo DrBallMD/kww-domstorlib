@@ -41,6 +41,8 @@
 <div class="row-fluid form-row">
     <div class="span5 type_flat">{{ form.getForm('type').renderLabel('Тип квартиры:', {class: 'label-heads'}) }} {{ form.getForm('type').render() }}</div>
     <div class="span5 status">{{ form.getForm('state').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('state').render() }}</div>
-    <div class="span5 building_material">{{ form.getForm('building_material').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('building_material').render() }}</div>
+    {% if form.hasForm('building_material') %}
+        <div class="span5 building_material">{{ form.getForm('building_material').renderLabel(null, {class: 'label-heads'}) }} {{ form.getForm('building_material').render() }}</div>
+    {% endif %}
 </div>
 {% endblock %}
