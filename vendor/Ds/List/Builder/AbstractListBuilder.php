@@ -101,7 +101,7 @@ abstract class Ds_List_Builder_AbstractListBuilder implements Ds_List_Builder_Li
         else {
             $list->addColumn('district ', $this->createColumn('list.column', array(
                 'template' => '@list/columns/district.html.twig',
-                'title' => 'Район',
+                'title' => 'Район/Пригород/Населенный<br>пункт',
                 'classes' => array('domstor_district'),
                 'sort' => 'district',
             )));
